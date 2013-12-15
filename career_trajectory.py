@@ -85,7 +85,7 @@ def extract_top_skills(training_data):
     for skill in skills_dict:
         skill_list = skills_dict[skill]
         skill_count = Counter(skill_list)
-        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:50]
+        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:150]
         skill_features += top_job_skills
 
     top_job_skills = list(set(skill_features))
@@ -249,9 +249,9 @@ def main():
     fd = FreqDist(words)
     fd_bi = FreqDist(bigrams_list)
 
-    top_unigrams = [porter.stem(word) for word in fd.keys()[:150] if word not in stopwords]
+    top_unigrams = [porter.stem(word) for word in fd.keys()[:500] if word not in stopwords]
     top_unigrams = list(set(top_unigrams + top_skills))
-    top_bigrams = fd_bi.keys()[:100]
+    top_bigrams = fd_bi.keys()[:200]
 
     # Create a training featureset from the top unigrams, skills and bigrams.
     train_featureset = feature_consolidation(train_resumes, top_unigrams, top_bigrams, True)
