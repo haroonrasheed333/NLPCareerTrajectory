@@ -2,6 +2,6 @@ Career Trajectory Predictor
 ===========================
 
 ### Team Members
-Divya Karthikeyan
-Haroon Rasheed Paul Mohamed
+1. Divya Karthikeyan
+1. Haroon Rasheed Paul Mohamed
 
