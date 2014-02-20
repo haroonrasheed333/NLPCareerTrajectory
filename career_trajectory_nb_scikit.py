@@ -1,4 +1,3 @@
-from __future__ import division
 import os
 import random
 import numpy as np
@@ -7,7 +6,7 @@ from nltk.stem.porter import PorterStemmer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.svm import LinearSVC, libsvm
+from sklearn.svm import LinearSVC
 from career_trajectory import ResumeCorpus
 from sklearn.metrics import precision_score, recall_score, classification_report
 from collections import defaultdict
@@ -97,7 +96,7 @@ if __name__ == '__main__':
     count_vect = CountVectorizer()
     train_counts = vectorize(count_vect, train_resumes)
     tfidf_train = tfidftransform(train_counts)
-    clf = trainsvm(tfidf_train, train_labels)
+    clf = trainnb(tfidf_train, train_labels)
 
     test_resumes = data_dict['data'][int(num_resumes*0.9) + 1:]
     test_labels = data_dict['label'][int(num_resumes*0.9) + 1:]
@@ -105,7 +104,7 @@ if __name__ == '__main__':
     test_counts = count_vect.transform(test_resumes)
     tfidf_test = tfidftransform(test_counts)
     predicted = clf.predict(tfidf_test)
-    predicted_decision = clf.decision_function(tfidf_test)
+    predicted_prob = clf.predict_proba(tfidf_test)
 
     #accuracy = np.mean(predicted == test_labels)
     #p = precision_score(test_labels, predicted, average='macro')
@@ -121,27 +120,14 @@ if __name__ == '__main__':
 
     for i in range(len(test_labels)):
         actual_label = test_labels[i]
-        predicted_dec_dup = predicted_decision[i]
-        predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
+        predicted_prob_dup = predicted_prob[i]
+        predicted_prob_dup_sorted = sorted(predicted_prob_dup, reverse=True)
         top_five_predictions = []
         for j in range(5):
-            top_five_predictions.append(label_dict1[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])])
+            top_five_predictions.append(label_dict1[predicted_prob[i].tolist().index(predicted_prob_dup_sorted[j])])
 
         actual_vs_predicted.append([label_dict1[actual_label], top_five_predictions])
 
     for l in actual_vs_predicted:
         print "\nActual: " + l[0]
         print "Predicted: " + ", ".join(l[1])
-
-    accuracy_list = []
-
-    print "Actual Accuracy: " + str(np.mean(predicted == test_labels))
-
-    for i in range(len(test_labels)):
-        accuracy_list.append(0)
-
-    for j in range(len(test_labels)):
-        if actual_vs_predicted[j][0] in actual_vs_predicted[j][1]:
-            accuracy_list[j] = 1
-
-    print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list) / len(accuracy_list))

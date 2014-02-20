@@ -166,7 +166,7 @@ def feature_consolidation(resumes, top_unigram_list, top_bigram_list,  add_true_
         uni_feats = [(unigram_features(resume_text, top_unigram_list), label) for (resume_text, label, fname) in resumes]
         bi_feats = [(bigram_features(resume_text, top_bigram_list), label) for (resume_text, label, fname) in resumes]
         consolidated_features = uni_feats + bi_feats
-    else:   
+    else:
         uni_feats = unigram_features(resumes, top_unigram_list)
         bi_feats = bigram_features(resumes, top_bigram_list)
         consolidated_features = dict(uni_feats.items() + bi_feats.items())
