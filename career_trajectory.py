@@ -105,7 +105,7 @@ class ResumeCorpus():
         
         self.source_dir = source_dir
         if not labels_file:
-            self.labels_file = self.source_dir + '/labels.txt'
+            self.labels_file = self.source_dir + '/labels_0219.txt'
         else:
             self.labels_file = labels_file
         self.resumes = self.read_files()
@@ -127,7 +127,7 @@ class ResumeCorpus():
                 filename_tag = line.split('\t')
                 filename = filename_tag[0]
                 resume_tag = filename_tag[1].rstrip()
-                resumes.append((open(self.source_dir + '/training/' + filename).read(), resume_tag, filename))
+                resumes.append((open(self.source_dir + '/training_0219/' + filename).read(), resume_tag, filename))
             except IOError, (ErrorNumber, ErrorMessage):
                 if ErrorNumber == 2:
                     pass

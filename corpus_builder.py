@@ -18,11 +18,11 @@ def split_data(labels_list):
     """
 
     # Path where the sample text resumes are present
-    source_dir = '/Users/' + user_name + '/Documents/Data/samples_text'
+    source_dir = '/Users/' + user_name + '/Documents/Data/samples_0219_text'
 
     # Store the training and heldout data in different directories.
-    training_dir = '/Users/' + user_name + '/Documents/Data/training'
-    heldout_dir = '/Users/' + user_name + '/Documents/Data/heldout'
+    training_dir = '/Users/' + user_name + '/Documents/Data/training_0219'
+    heldout_dir = '/Users/' + user_name + '/Documents/Data/heldout_0219'
 
     random.seed(int(time.time()))
     random.shuffle(labels_list)
@@ -33,8 +33,8 @@ def split_data(labels_list):
     training_files = labels_list[:int(num_files*0.8)]
     heldout_files = labels_list[int(num_files*0.8) + 1:]
 
-    labels = open('/Users/' + user_name + '/Documents/Data/labels.txt', 'w')
-    labels_heldout = open('/Users/' + user_name + '/Documents/Data/labels_heldout.txt', 'w')
+    labels = open('/Users/' + user_name + '/Documents/Data/labels_0219.txt', 'w')
+    labels_heldout = open('/Users/' + user_name + '/Documents/Data/labels_heldout_0219.txt', 'w')
 
     for (filename, tag) in training_files:
         shutil.copy2(source_dir + '/' + filename, training_dir)
@@ -79,15 +79,24 @@ def prepare_data(source_dir):
     job_titles = []
 
     # Since there are hundreds of job titles, just restrict to the top 20 job titles.
-    top_jobs = [
-        'Director', 'Consultant', 'Administrative Assistant', 'Project Manager', 'Manager', 'Vice President',
-        'Sales Associate', 'Graphic Designer', 'Customer Service Representative', 'Intern', 'Research Assistant',
-        'President', 'Software Engineer', 'Business Analyst', 'Web Developer', 'Assistant Manager', 'Marketing Manager',
-        'Senior Manager', 'Senior Software Engineer', 'Business Development Manager', 'Associate',
-        'Medical Assistant', 'Marketing Consultant', 'Executive Assistant', 'Computer Technician', 'Senior Consultant',
-        'Bookkeeper', 'VP', 'Owner', 'Staff Accountant', 'Senior Project Manager', 'Senior Accountant'
-    ]
-    top_jobs = top_jobs[:20]
+    #top_jobs = [
+    #    'Director', 'Consultant', 'Administrative Assistant', 'Project Manager', 'Manager', 'Vice President',
+    #    'Sales Associate', 'Graphic Designer', 'Customer Service Representative', 'Intern', 'Research Assistant',
+    #    'President', 'Software Engineer', 'Business Analyst', 'Web Developer', 'Assistant Manager', 'Marketing Manager',
+    #    'Senior Manager', 'Senior Software Engineer', 'Business Development Manager', 'Associate',
+    #    'Medical Assistant', 'Marketing Consultant', 'Executive Assistant', 'Computer Technician', 'Senior Consultant',
+    #    'Bookkeeper', 'VP', 'Owner', 'Staff Accountant', 'Senior Project Manager', 'Senior Accountant'
+    #]
+    top_jobs = ['Director', 'Consultant', 'Accountant', 'Vice President', 'Software Engineer', 'Senior Software Engineer',
+                'Manager', 'Project Manager', 'Graphic Designer', 'Administrative Assistant', 'Executive Assistant',
+                'Web Developer', 'Senior Project Manager', 'Senior Manager', 'Marketing Manager', 'Business Analyst',
+                'Account Manager', 'Senior Consultant', 'Program Manager', 'Business Development Manager',
+                'Customer Service Representative', 'General Manager', 'Account Executive', 'Assistant Manager',
+                'Sales Representative', 'Office Assistant', 'Owner', 'Office Manager', 'Contractor', 'Sales Associate',
+                'President / Chief Executive Officer', 'Lead', 'Senior Business Analyst', 'Independent Consultant',
+                'Controller', 'Analyst', 'Senior Director', 'Sales Manager', 'Product Manager', 'Associate',
+                'Regional Manager', 'Marketing Consultant', 'Executive Director', 'Managing Director', 'Financial Analyst',
+                'Operations Manager', 'Marketing Director', 'Adjunct Faculty', 'Sales Consultant', 'Chief Information Officer']
 
     numberjobs = {}
     for i in range(0,len(top_jobs)-1):
@@ -166,7 +175,7 @@ def prepare_data(source_dir):
                     number = numberjobs[current_job_title[0]]
 
                     if current_job_title:
-                        directory = '/Users/' + user_name + '/Documents/Data/samples_text/'
+                        directory = '/Users/' + user_name + '/Documents/Data/samples_0219_text/'
                         f = open(directory + '%s' %fname[:-4] +'_plaintext.txt', 'w')
                         f.write(text_data)
                         f.close()
@@ -199,5 +208,5 @@ def pbar(size):
     return bar
 
 if __name__ == "__main__":
-    prepare_data('/Users/' + user_name + '/Documents/Data/samples_1207')
+    prepare_data('/Users/' + user_name + '/Documents/Data/samples_0219')
 

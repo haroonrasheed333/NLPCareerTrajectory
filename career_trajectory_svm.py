@@ -41,11 +41,24 @@ def prepare_data():
     user_name = os.environ.get('USER')
     traintest_corpus = ResumeCorpus('/Users/' + user_name + '/Documents/Data')
     random.shuffle(traintest_corpus.resumes)
-    label_dict = {'Administrative Assistant': 0, 'Assistant Manager': 1, 'Business Analyst': 2, 'Consultant': 3,
-                  'Customer Service Representative': 4, 'Director': 5, 'Graphic Designer': 6, 'Intern': 7,
-                  'Manager': 8, 'Marketing Manager': 9, 'President': 10, 'Project Manager': 11, 'Research Assistant': 12,
-                  'Sales Associate': 13, 'Senior Manager': 14, 'Senior Software Engineer': 15, 'Software Engineer': 16,
-                  'Vice President': 17, 'Web Developer': 18}
+    #label_dict = {'Administrative Assistant': 0, 'Assistant Manager': 1, 'Business Analyst': 2, 'Consultant': 3,
+    #              'Customer Service Representative': 4, 'Director': 5, 'Graphic Designer': 6, 'Intern': 7,
+    #              'Manager': 8, 'Marketing Manager': 9, 'President': 10, 'Project Manager': 11, 'Research Assistant': 12,
+    #              'Sales Associate': 13, 'Senior Manager': 14, 'Senior Software Engineer': 15, 'Software Engineer': 16,
+    #              'Vice President': 17, 'Web Developer': 18}
+    label_dict = {'Account Executive':0,'Account Manager':1,'Accountant':2,'Adjunct Faculty':3,
+                  'Administrative Assistant':4,'Analyst':5,'Assistant Manager':6,'Associate':7,'Business Analyst':8,
+                  'Business Development Manager':9,'Chief Information Officer':10,'Consultant':11,'Contractor':12,
+                  'Controller':13,'Customer Service Representative':14,'Director':15,'Executive Assistant':16,
+                  'Executive Director':17,'Financial Analyst':18,'General Manager':19,'Graphic Designer':20,
+                  'Independent Consultant':21,'Lead':22,'Manager':23,'Managing Director':24,'Marketing Consultant':25,
+                  'Marketing Director':26,'Marketing Manager':27,'Office Assistant':28,'Office Manager':29,
+                  'Operations Manager':30,'Owner':31,'President / Chief Executive Officer':32,'Product Manager':33,
+                  'Program Manager':34,'Project Manager':35,'Regional Manager':36,'Sales Associate':37,
+                  'Sales Consultant':38,'Sales Manager':39,'Sales Representative':40,'Senior Business Analyst':41,
+                  'Senior Consultant':42,'Senior Director':43,'Senior Manager':44,'Senior Project Manager':45,
+                  'Senior Software Engineer':46,'Software Engineer':47,'Vice President':48,'Web Developer':49}
+
     for resume in traintest_corpus.resumes:
         try:
             review_text = pre_processing(resume[0])
@@ -82,11 +95,23 @@ if __name__ == '__main__':
     # Prepare data
     prepare_data()
 
-    label_dict1 = {0: 'Administrative Assistant', 1: 'Assistant Manager', 2: 'Business Analyst', 3: 'Consultant',
-                  4: 'Customer Service Representative', 5: 'Director', 6: 'Graphic Designer', 7: 'Intern',
-                  8: 'Manager', 9: 'Marketing Manager', 10: 'President', 11: 'Project Manager', 12: 'Research Assistant',
-                  13: 'Sales Associate', 14: 'Senior Manager', 15: 'Senior Software Engineer', 16: 'Software Engineer',
-                  17: 'Vice President', 18: 'Web Developer'}
+    #label_dict1 = {0: 'Administrative Assistant', 1: 'Assistant Manager', 2: 'Business Analyst', 3: 'Consultant',
+    #              4: 'Customer Service Representative', 5: 'Director', 6: 'Graphic Designer', 7: 'Intern',
+    #              8: 'Manager', 9: 'Marketing Manager', 10: 'President', 11: 'Project Manager', 12: 'Research Assistant',
+    #              13: 'Sales Associate', 14: 'Senior Manager', 15: 'Senior Software Engineer', 16: 'Software Engineer',
+    #              17: 'Vice President', 18: 'Web Developer'}
+
+    label_dict1 = {0:'Account Executive',1:'Account Manager',2:'Accountant',3:'Adjunct Faculty',4:'Administrative Assistant',
+                   5:'Analyst',6:'Assistant Manager',7:'Associate',8:'Business Analyst',9:'Business Development Manager',
+                   10:'Chief Information Officer',11:'Consultant',12:'Contractor',13:'Controller',14:'Customer Service Representative',
+                   15:'Director',16:'Executive Assistant',17:'Executive Director',18:'Financial Analyst',19:'General Manager',
+                   20:'Graphic Designer',21:'Independent Consultant',22:'Lead',23:'Manager',24:'Managing Director',
+                   25:'Marketing Consultant',26:'Marketing Director',27:'Marketing Manager',28:'Office Assistant',
+                   29:'Office Manager',30:'Operations Manager',31:'Owner',32:'President / Chief Executive Officer',
+                   33:'Product Manager',34:'Program Manager',35:'Project Manager',36:'Regional Manager',37:'Sales Associate',
+                   38:'Sales Consultant',39:'Sales Manager',40:'Sales Representative',41:'Senior Business Analyst',
+                   42:'Senior Consultant',43:'Senior Director',44:'Senior Manager',45:'Senior Project Manager',
+                   46:'Senior Software Engineer',47:'Software Engineer',48:'Vice President',49:'Web Developer'}
 
     num_resumes = len(data_dict['label'])
 
@@ -129,9 +154,12 @@ if __name__ == '__main__':
 
         actual_vs_predicted.append([label_dict1[actual_label], top_five_predictions])
 
+    n = 0
     for l in actual_vs_predicted:
         print "\nActual: " + l[0]
+        print label_dict1[predicted[n]]
         print "Predicted: " + ", ".join(l[1])
+        n += 1
 
     accuracy_list = []
 
