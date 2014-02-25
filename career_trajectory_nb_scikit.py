@@ -1,3 +1,4 @@
+from __future__ import division
 import os
 import random
 import numpy as np
@@ -40,17 +41,17 @@ def prepare_data():
     user_name = os.environ.get('USER')
     traintest_corpus = ResumeCorpus('/Users/' + user_name + '/Documents/Data')
     random.shuffle(traintest_corpus.resumes)
-    label_dict = {'Administrative Assistant': 0, 'Assistant Manager': 1, 'Business Analyst': 2, 'Consultant': 3,
-                  'Customer Service Representative': 4, 'Director': 5, 'Graphic Designer': 6, 'Intern': 7,
-                  'Manager': 8, 'Marketing Manager': 9, 'President': 10, 'Project Manager': 11, 'Research Assistant': 12,
-                  'Sales Associate': 13, 'Senior Manager': 14, 'Senior Software Engineer': 15, 'Software Engineer': 16,
-                  'Vice President': 17, 'Web Developer': 18}
+    #label_dict = {'Administrative Assistant': 0, 'Assistant Manager': 1, 'Business Analyst': 2, 'Consultant': 3,
+    #              'Customer Service Representative': 4, 'Director': 5, 'Graphic Designer': 6, 'Intern': 7,
+    #              'Manager': 8, 'Marketing Manager': 9, 'President': 10, 'Project Manager': 11, 'Research Assistant': 12,
+    #              'Sales Associate': 13, 'Senior Manager': 14, 'Senior Software Engineer': 15, 'Software Engineer': 16,
+    #              'Vice President': 17, 'Web Developer': 18}
     for resume in traintest_corpus.resumes:
         try:
             review_text = pre_processing(resume[0])
             review_text = " ".join(review_text)
             data_dict['data'].append(review_text)
-            data_dict['label'].append(label_dict[resume[1]])
+            data_dict['label'].append(resume[1])
         except:
             pass
 
@@ -81,17 +82,19 @@ if __name__ == '__main__':
     # Prepare data
     prepare_data()
 
-    label_dict1 = {0: 'Administrative Assistant', 1: 'Assistant Manager', 2: 'Business Analyst', 3: 'Consultant',
-                  4: 'Customer Service Representative', 5: 'Director', 6: 'Graphic Designer', 7: 'Intern',
-                  8: 'Manager', 9: 'Marketing Manager', 10: 'President', 11: 'Project Manager', 12: 'Research Assistant',
-                  13: 'Sales Associate', 14: 'Senior Manager', 15: 'Senior Software Engineer', 16: 'Software Engineer',
-                  17: 'Vice President', 18: 'Web Developer'}
+    #label_dict1 = {0: 'Administrative Assistant', 1: 'Assistant Manager', 2: 'Business Analyst', 3: 'Consultant',
+    #              4: 'Customer Service Representative', 5: 'Director', 6: 'Graphic Designer', 7: 'Intern',
+    #              8: 'Manager', 9: 'Marketing Manager', 10: 'President', 11: 'Project Manager', 12: 'Research Assistant',
+    #              13: 'Sales Associate', 14: 'Senior Manager', 15: 'Senior Software Engineer', 16: 'Software Engineer',
+    #              17: 'Vice President', 18: 'Web Developer'}
 
     num_resumes = len(data_dict['label'])
 
     # Split the data training and test datasets
     train_resumes = data_dict['data'][0:int(num_resumes*0.9)]
     train_labels = data_dict['label'][0:int(num_resumes*0.9)]
+
+    labels_names = sorted(list(set(train_labels)))
 
     count_vect = CountVectorizer()
     train_counts = vectorize(count_vect, train_resumes)
@@ -117,17 +120,40 @@ if __name__ == '__main__':
     #print classification_report([t for t in test_labels], [p for p in predicted])
 
     actual_vs_predicted = []
+    predicted = []
 
     for i in range(len(test_labels)):
         actual_label = test_labels[i]
         predicted_prob_dup = predicted_prob[i]
         predicted_prob_dup_sorted = sorted(predicted_prob_dup, reverse=True)
         top_five_predictions = []
+        predicted.append(labels_names[predicted_prob[i].tolist().index(predicted_prob_dup_sorted[0])])
         for j in range(5):
-            top_five_predictions.append(label_dict1[predicted_prob[i].tolist().index(predicted_prob_dup_sorted[j])])
+            top_five_predictions.append(labels_names[predicted_prob[i].tolist().index(predicted_prob_dup_sorted[j])])
 
-        actual_vs_predicted.append([label_dict1[actual_label], top_five_predictions])
+        actual_vs_predicted.append([actual_label, top_five_predictions])
 
+    n = 0
     for l in actual_vs_predicted:
         print "\nActual: " + l[0]
+        print "Predicted: " + predicted[n]
         print "Predicted: " + ", ".join(l[1])
+        n += 1
+
+    accuracy_list = []
+    accuracy_list_top_5 = []
+
+    for i in range(len(test_labels)):
+        accuracy_list.append(0)
+        accuracy_list_top_5.append(0)
+
+    for j in range(len(test_labels)):
+        if actual_vs_predicted[j][0] in actual_vs_predicted[j][1]:
+            accuracy_list_top_5[j] = 1
+
+        if predicted[j] == test_labels[j]:
+            accuracy_list[j] = 1
+
+    print "Actual Accuracy: " + str(sum(accuracy_list) / len(accuracy_list))
+
+    print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
