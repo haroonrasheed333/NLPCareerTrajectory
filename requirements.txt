@@ -1,0 +1,6 @@
+Flask==0.10.1
+fuzzywuzzy==0.2
+lxml==3.2.3
+nltk==2.0.4
+numpy==1.7.1
+scikit-learn==0.14.1
