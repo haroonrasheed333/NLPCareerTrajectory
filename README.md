@@ -1,7 +1,7 @@
 iHire
 =====
 
-<a href='https://travis-ci.org/haroonrasheed333/NLPCareerTrajectory'><img src='https://travis-ci.org/haroonrasheed333/NLPCareerTrajectory.png?branch=master'></a>
+<a href='https://snap-ci.com/projects/haroonrasheed333/NLPCareerTrajectory/build_history'><img src='https://snap-ci.com/projects/haroonrasheed333/NLPCareerTrajectory/build_image'></a>
 
 ### Team Members
 1. Divya Karthikeyan
