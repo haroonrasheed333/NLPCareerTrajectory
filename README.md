@@ -1,9 +1,9 @@
 iHire
 =====
 
-<a href='https://snap-ci.com/projects/haroonrasheed333/NLPCareerTrajectory/build_history'><img src='https://snap-ci.com/projects/haroonrasheed333/NLPCareerTrajectory/build_image'></a>
+[![Snap Build Status](https://snap-ci.com/projects/haroonrasheed333/NLPCareerTrajectory/build_image)](https://snap-ci.com/projects/haroonrasheed333/NLPCareerTrajectory/build_history)
 
-<a href='https://travis-ci.org/haroonrasheed333/NLPCareerTrajectory/builds'><img src='https://travis-ci.org/haroonrasheed333/NLPCareerTrajectory.svg?branch=master'></a>
+[![Travis Build Status](https://travis-ci.org/haroonrasheed333/NLPCareerTrajectory.svg?branch=master)](https://travis-ci.org/haroonrasheed333/NLPCareerTrajectory/builds)
 
 
 

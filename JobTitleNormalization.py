@@ -1,8 +1,11 @@
 import re
+import nltk
 import string
 from nltk.tag import pos_tag
 from itertools import permutations
 from nltk.stem.porter import PorterStemmer
+
+nltk.data.path.append('nltk_data')
 
 expand = [
     ('asst.', 'assistant '),
@@ -47,20 +50,18 @@ def expand_job_title(actual_title):
 def title_permutations(title_expanded):
     title_tagged = pos_tag(title_expanded.split())
     st = PorterStemmer()
-    title_pos = [st.stem(word) for word,pos in title_tagged if pos != 'IN']
+    title_pos = [st.stem(word) for word, pos in title_tagged if pos != 'IN']
 
     title_perms = list(map("*".join, permutations(title_pos)))
     return title_perms
 
 
-def main():
-    f = open('JobTitles.txt')
-
-    titles = []
-    titles_original = []
+def normalize_job_titles(original_titles):
+    normalized_titles = []
     titles_dict = {}
-    for line in f:
-        temp_title = line.rstrip()
+
+    for original_title in original_titles:
+        temp_title = original_title.rstrip()
         if temp_title.find('\\') > -1:
             temp_title = temp_title.split('\\')[1]
         if temp_title.find('/') > -1:
@@ -82,23 +83,25 @@ def main():
             title = title_perms[0]
             titles_dict[title] = title_expand
 
-        titles.append(titles_dict[title])
+        normalized_titles.append(titles_dict[title])
 
-        titles_original.append(line.rstrip())
-
-    print len(titles_original)
-    print len(titles)
-    print len(set(titles_original))
-    print len(set(titles))
-
-    spacing = len(max(titles_original, key=len))
-    print '{:<45}'.format("Actual Title"), '{:<45}'.format("Normalized Title")
-    print "-------------------------------------------------------------------"
-
-    for i in range(len(titles)):
-        print '{:<45}'.format(titles_original[i]), '{:<45}'.format(string.capwords(titles[i]))
+    return normalized_titles
 
 
 
 if __name__ == '__main__':
-    main()
+    job_titles_file = 'JobTitles.txt'
+    f = open(job_titles_file)
+    original_titles = f.readlines()
+    normalized_titles = normalize_job_titles(original_titles)
+
+    print len(original_titles)
+    print len(normalized_titles)
+    print len(set(original_titles))
+    print len(set(normalized_titles))
+
+    print '{:<45}'.format("Actual Title"), '{:<45}'.format("Normalized Title")
+    print "-------------------------------------------------------------------"
+
+    for i in range(len(normalized_titles)):
+        print '{:<45}'.format(original_titles[i].rstrip()), '{:<45}'.format(string.capwords(normalized_titles[i]))
