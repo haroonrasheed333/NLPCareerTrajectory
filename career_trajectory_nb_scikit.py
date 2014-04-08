@@ -8,7 +8,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.svm import LinearSVC
-from career_trajectory import ResumeCorpus
+from util import ResumeCorpus
 from sklearn.metrics import precision_score, recall_score, classification_report
 from collections import defaultdict
 

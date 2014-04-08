@@ -2,13 +2,14 @@ from __future__ import division
 import os
 import random
 import numpy as np
+from nltk import bigrams
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.svm import LinearSVC, libsvm
-from career_trajectory import ResumeCorpus
+from util import ResumeCorpus
 from sklearn.metrics import precision_score, recall_score, classification_report
 from collections import defaultdict
 
@@ -25,13 +26,16 @@ def pre_processing(resume):
         resume -- text of the resume as string.
 
     Returns:
-        vocab - list of stemmed unigrams from the resume string.
+        vocab - list of stemmed unigrams and bigrams from the resume string.
     """
-    unigrams = resume.split()
-    word_list = [word.lower() for word in unigrams if word.lower() not in stopwords]
-    word_list = [st.stem(word) for word in word_list if word]
-    vocab = [word for word in word_list if word not in stopwords]
-    return vocab
+    unigrams = resume.lower().split()
+    vocab = [st.stem(word) for word in unigrams if word not in stopwords]
+
+    bigrms = bigrams(unigrams)
+    bigrams_list = []
+    bigrams_list += [bigr[0] + bigr[1] for bigr in bigrms if (bigr[0] not in stopwords and bigr[1] not in stopwords)]
+
+    return vocab + bigrams_list
 
 
 def prepare_data():

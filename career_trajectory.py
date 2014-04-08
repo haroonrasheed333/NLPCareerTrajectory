@@ -9,6 +9,7 @@ from lxml import etree
 from nltk import bigrams
 from nltk import FreqDist
 from collections import Counter
+from util import ResumeCorpus
 
 user_name = os.environ.get('USER')
 punct = string.punctuation
@@ -90,49 +91,6 @@ def extract_top_skills(training_data):
 
     top_job_skills = list(set(skill_features))
     return top_job_skills
-
-
-class ResumeCorpus():
-    """
-    Class to read the source files from source directory and create a list of tuples with resume_text, tag and filename
-    for each resume.
-
-    Args:
-        source_dir -- string. The path of the source directory.
-        labels_file -- string. The path of the labels file (default: None)
-    """
-    def __init__(self, source_dir, labels_file=None):
-        
-        self.source_dir = source_dir
-        if not labels_file:
-            self.labels_file = self.source_dir + '/labels_0219.txt'
-        else:
-            self.labels_file = labels_file
-        self.resumes = self.read_files()
-        
-    def read_files(self):
-        """
-        Method to return a list of tuples with resume_text, tag and filename for the training data
-
-        Args:
-            No Argument
-
-        Returns:
-            resumes -- list of tuples with resume_text, tag and filename for the training data
-        """
-        resumes = []
-
-        for line in open(self.labels_file).readlines():
-            try:
-                filename_tag = line.split('\t')
-                filename = filename_tag[0]
-                resume_tag = filename_tag[1].rstrip()
-                resumes.append((open(self.source_dir + '/training_0219/' + filename).read(), resume_tag, filename))
-            except IOError, (ErrorNumber, ErrorMessage):
-                if ErrorNumber == 2:
-                    pass
-
-        return resumes
 
 
 def train_classifier(training_featureset):
