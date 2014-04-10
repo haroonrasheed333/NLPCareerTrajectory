@@ -1,0 +1,67 @@
+<html><head>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <title>UC Berkeley: Career predictor</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/demo.css">
+
+</head>
+<body>
+<!-- left column top -->
+<div id="all">
+  <div id="left">
+      <div id="getinput">
+          <div class="upload">
+              <br><b><u>Upload text resume to begin career analysis</u></b><br><br>
+                <form style="margin: 0px;" id="file-upload" enctype="multipart/form-data">
+                    <div class="row-fluid">
+                        <span class="btn btn-success fileinput-button">
+                            <i class="icon-plus icon-white"></i>
+                            <input id="fileupload" type="file" name="file">
+                        </span>
+                        <span class="files">
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <br/>
+            <div id="uploadbutton">
+              <input class="btn btn-primary pull-right" id="analyze" type="button" value="Begin my career analysis" />
+          </div>
+    </div>
+
+<!-- /left column top -->
+<!-- left column bottom -->
+<div id="titles"></div>
+<!-- /left column bottom -->
+</div>
+<div id="right">
+<!-- right column top -->
+
+<div id="about"><a href="http://127.0.0.1:5000/about"><h5>About this tool</h5></a><h5><a href="http://127.0.0.1:5000/about"></a></h5></div>
+<!-- /right column top -->
+<!-- right column bottom -->
+<div id="social">
+  </div>
+
+<!-- /right column bottom -->
+
+</div>
+</div>
+<!-- JS -->
+
+
+      <script src="./static/js/panel.js" type="text/javascript" />
+      <script src="./static/js/main.js" type="text/javascript" />
+      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="{{ url_for('static', filename='js/d3.layout.cloud.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/jquery-1.8.1.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/jquery.ui.widget.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/jquery.iframe-transport.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/jquery.fileupload.js') }}"></script>
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+      <script src="http://code.highcharts.com/highcharts.js"></script>
+      <script src="http://code.highcharts.com/highcharts-more.js"></script>
+      <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+
+</body></html>

@@ -1,0 +1,60 @@
+/*
+Theme Name:     The Conversation
+Theme URI:      http://findtheconversation.com/
+Description:    The Conversation, based on Oxygen theme
+Author:         Chris Willard
+Author URI:     http://wllrd.com
+Template:       oxygen
+Version:        1
+*/
+
+@import url("./stylefinal.css");
+
+#all{
+    width:100%;
+    height:100%;
+}
+#left{
+    margin-left: 10px;
+    width:48%;
+    height:100%;
+    float: left;
+}
+#right{
+    width:48%;
+    height:100%;
+    float: right;
+}
+
+
+a{
+    float: right;
+    margin-right: 10px;
+}
+
+#getinput {
+    float: center;
+    margin-left: 0px;
+}
+/* map */
+svg {
+  font-family: Abel,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 13px;
+  margin-right: 10px;
+  size: 1000px X 1000px;
+}
+
+path {
+  fill: none;
+}
+
+/* map */
+#map .leaflet-popup-content a {
+  display: block;
+  margin-top: 10px;
+  border-bottom: 1px solid transparent;
+}
+#map .leaflet-popup-content a:hover {
+  color: #000;
+  border-bottom-color: #0da4d3;
+}
