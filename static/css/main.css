@@ -14,47 +14,56 @@ Version:        1
     width:100%;
     height:100%;
 }
+#top{
+
+    width:100%;
+    height:20%;
+}
+#logo{
+  float:middle;
+  margin-left: auto;
+  margin-right: auto;
+  width:10%;
+  height:100%;
+}
+#middle{
+    width:100%;
+    height:20%;
+
+}
+#about{
+  float:right;
+  width:10%;
+}
+
+#bottom{
+  width:100%;
+  height:50%;
+  float:left;
+}
+
 #left{
-    margin-left: 10px;
-    width:48%;
-    height:100%;
-    float: left;
+  width: 45%;
+  height:80%;
+  float:left;
 }
 #right{
-    width:48%;
-    height:100%;
-    float: right;
+    width: 45%;
+  height:80%;
+  float:right;
+
+}
+
+#getinput{
+  margin-left: auto;
+  margin-right: auto;
+  width:20%;
+  height:100%;
 }
 
 
-a{
-    float: right;
-    margin-right: 10px;
-}
-
-#getinput {
-    float: center;
-    margin-left: 0px;
-}
-/* map */
-svg {
-  font-family: Abel,"Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size: 13px;
-  margin-right: 10px;
-  size: 1000px X 1000px;
-}
 
 path {
   fill: none;
 }
 
-/* map */
-#map .leaflet-popup-content a {
-  display: block;
-  margin-top: 10px;
-  border-bottom: 1px solid transparent;
-}
-#map .leaflet-popup-content a:hover {
-  color: #000;
-  border-bottom-color: #0da4d3;
-}
