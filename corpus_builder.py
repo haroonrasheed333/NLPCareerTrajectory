@@ -5,6 +5,7 @@ import random
 import shutil
 import progressbar
 from lxml import etree
+from JobTitleNormalization import normalize_job_titles
 
 user_name = os.environ.get('USER')
 
@@ -18,11 +19,11 @@ def split_data(labels_list):
     """
 
     # Path where the sample text resumes are present
-    source_dir = '/Users/' + user_name + '/Documents/Data/samples_0219_text'
+    source_dir = '/Users/' + user_name + '/Documents/Data/samples_0408_text'
 
     # Store the training and heldout data in different directories.
-    training_dir = '/Users/' + user_name + '/Documents/Data/training_0219'
-    heldout_dir = '/Users/' + user_name + '/Documents/Data/heldout_0219'
+    training_dir = '/Users/' + user_name + '/Documents/Data/training_0408'
+    heldout_dir = '/Users/' + user_name + '/Documents/Data/heldout_0408'
 
     random.seed(int(time.time()))
     random.shuffle(labels_list)
@@ -33,8 +34,8 @@ def split_data(labels_list):
     training_files = labels_list[:int(num_files*0.8)]
     heldout_files = labels_list[int(num_files*0.8) + 1:]
 
-    labels = open('/Users/' + user_name + '/Documents/Data/labels_0219.txt', 'w')
-    labels_heldout = open('/Users/' + user_name + '/Documents/Data/labels_heldout_0219.txt', 'w')
+    labels = open('/Users/' + user_name + '/Documents/Data/labels_0408.txt', 'w')
+    labels_heldout = open('/Users/' + user_name + '/Documents/Data/labels_heldout_0408.txt', 'w')
 
     for (filename, tag) in training_files:
         shutil.copy2(source_dir + '/' + filename, training_dir)
@@ -78,25 +79,18 @@ def prepare_data(source_dir):
     names = []
     job_titles = []
 
-    # Since there are hundreds of job titles, just restrict to the top 20 job titles.
-    #top_jobs = [
-    #    'Director', 'Consultant', 'Administrative Assistant', 'Project Manager', 'Manager', 'Vice President',
-    #    'Sales Associate', 'Graphic Designer', 'Customer Service Representative', 'Intern', 'Research Assistant',
-    #    'President', 'Software Engineer', 'Business Analyst', 'Web Developer', 'Assistant Manager', 'Marketing Manager',
-    #    'Senior Manager', 'Senior Software Engineer', 'Business Development Manager', 'Associate',
-    #    'Medical Assistant', 'Marketing Consultant', 'Executive Assistant', 'Computer Technician', 'Senior Consultant',
-    #    'Bookkeeper', 'VP', 'Owner', 'Staff Accountant', 'Senior Project Manager', 'Senior Accountant'
-    #]
-    top_jobs = ['Director', 'Consultant', 'Accountant', 'Vice President', 'Software Engineer', 'Senior Software Engineer',
-                'Manager', 'Project Manager', 'Graphic Designer', 'Administrative Assistant', 'Executive Assistant',
-                'Web Developer', 'Senior Project Manager', 'Senior Manager', 'Marketing Manager', 'Business Analyst',
-                'Account Manager', 'Senior Consultant', 'Program Manager', 'Business Development Manager',
-                'Customer Service Representative', 'General Manager', 'Account Executive', 'Assistant Manager',
-                'Sales Representative', 'Office Assistant', 'Owner', 'Office Manager', 'Contractor', 'Sales Associate',
-                'President / Chief Executive Officer', 'Lead', 'Senior Business Analyst', 'Independent Consultant',
-                'Controller', 'Analyst', 'Senior Director', 'Sales Manager', 'Product Manager', 'Associate',
-                'Regional Manager', 'Marketing Consultant', 'Executive Director', 'Managing Director', 'Financial Analyst',
-                'Operations Manager', 'Marketing Director', 'Adjunct Faculty', 'Sales Consultant', 'Chief Information Officer']
+    top_jobs = \
+        ['consultant', 'director', 'project manager', 'manager', 'vice president', 'software engineer',
+         'graphic designer', 'administrative assistant', 'president', 'senior software engineer', 'accountant',
+         'web developer', 'executive assistant', 'senior manager', ' business analyst', 'senior project manager',
+         'research assistant', ' program manager', 'accounting manager', 'senior consultant', 'marketing manager',
+         'customer service representative', 'owner', 'staff accountant', 'business development manager', 'supervisor',
+         'general manager', 'assistant manager', 'office assistant', 'contractor', 'sales representative',
+         'account executive', ' office manager', 'senior accountant', 'chief executive officer', 'intern',
+         'volunteer', 'sales associate', 'principal', 'controller', 'marketing director', 'senior business analyst',
+         'senior director', 'product manager', 'designer', ' marketing consultant', 'independent consultant',
+         'cashier', 'operations manager', ' analyst'
+        ]
 
     numberjobs = {}
     for i in range(0,len(top_jobs)-1):
@@ -113,6 +107,7 @@ def prepare_data(source_dir):
 
         # Extract the current job title, and current job element from xml
         current_job_title = xml.xpath('//job[@end = "present"]/title/text()')
+        current_job_title = normalize_job_titles(current_job_title)
         current_job = xml.xpath('//job[@end = "present"]')
 
         # Extract the contact information from xml.
@@ -175,7 +170,7 @@ def prepare_data(source_dir):
                     number = numberjobs[current_job_title[0]]
 
                     if current_job_title:
-                        directory = '/Users/' + user_name + '/Documents/Data/samples_0219_text/'
+                        directory = '/Users/' + user_name + '/Documents/Data/samples_0408_text/'
                         f = open(directory + '%s' %fname[:-4] +'_plaintext.txt', 'w')
                         f.write(text_data)
                         f.close()
@@ -208,5 +203,5 @@ def pbar(size):
     return bar
 
 if __name__ == "__main__":
-    prepare_data('/Users/' + user_name + '/Documents/Data/samples_0219')
+    prepare_data('/Users/' + user_name + '/Documents/Data/samples_0408')
 

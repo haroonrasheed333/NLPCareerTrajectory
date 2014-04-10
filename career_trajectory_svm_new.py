@@ -207,9 +207,9 @@ if __name__ == '__main__':
     print len(words)
     print len(bigrams_list)
 
-    top_unigrams = fd.keys()[:5000]
+    top_unigrams = fd.keys()[:1]
     top_unigrams = list(set(top_unigrams + top_skills))
-    top_bigrams = fd_bi.keys()[:5000]
+    top_bigrams = fd_bi.keys()[:1]
 
     # Create a training featureset from the top unigrams, skills and bigrams.
     train_featureset = feature_consolidation(train_resumes, top_unigrams, top_bigrams, True)

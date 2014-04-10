@@ -23,7 +23,7 @@ class ResumeCorpus():
         
         self.source_dir = source_dir
         if not labels_file:
-            self.labels_file = self.source_dir + '/labels_0219.txt'
+            self.labels_file = self.source_dir + '/labels_0408.txt'
         else:
             self.labels_file = labels_file
         self.resumes = self.read_files()
@@ -45,7 +45,7 @@ class ResumeCorpus():
                 filename_tag = line.split('\t')
                 filename = filename_tag[0]
                 resume_tag = filename_tag[1].rstrip()
-                resumes.append((open(self.source_dir + '/training_0219/' + filename).read(), resume_tag, filename))
+                resumes.append((open(self.source_dir + '/training_0408/' + filename).read(), resume_tag, filename))
             except IOError, (ErrorNumber, ErrorMessage):
                 if ErrorNumber == 2:
                     pass
@@ -67,7 +67,7 @@ def create_skills_json(data):
     skills_dict = dict()
 
     # Get the skills for each resume from its corresponding xml file.
-    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0219'
+    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0408'
     for (resume_text, tag_name, filename) in data:
         xml_file = filename.split('_')[0] + '.txt'
         xml = etree.parse(xml_directory + '/' + xml_file)

@@ -33,6 +33,7 @@ expand = [
     ('csr', 'customer service representative'),
     ('sw', 'software'),
     ('tech', 'technical'),
+    ('software developer', 'software engineer'),
 ]
 
 
@@ -61,13 +62,17 @@ def normalize_job_titles(original_titles):
     titles_dict = {}
 
     for original_title in original_titles:
-        temp_title = original_title.rstrip()
+        temp_title = original_title.splitlines()[0].rstrip()
         if temp_title.find('\\') > -1:
             temp_title = temp_title.split('\\')[1]
         if temp_title.find('/') > -1:
             temp_title = temp_title.split('/')[1]
+        if temp_title.find('|') > -1:
+            temp_title = temp_title.split('|')[1]
         if temp_title.find('&') > -1:
             temp_title = temp_title.split('&')[1]
+        if temp_title.find(',') > -1:
+            temp_title = temp_title.split(',')[1]
 
         title_expand = expand_job_title(temp_title)
         title_perms = title_permutations(title_expand)
