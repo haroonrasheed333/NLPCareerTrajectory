@@ -52,7 +52,38 @@ class ResumeCorpus():
 
         return resumes
 
+def unigram_features(resume_text, top_unigram_list):
+    """
+    Function to create unigram features from the resume text
 
+    Args:
+        resume_text -- content of resume as string
+        top_unigram_list -- list of top unigrams
+
+    Returns:
+        uni_features -- list of unigram features
+    """
+    resume_text = re.sub('[^A-Za-z\' ]+', '', str(resume_text))
+    tokens = nltk.word_tokenize(resume_text.lower())
+    tokens = [st.stem(token) for token in tokens]
+    # c = Counter(tokens)
+    uni_features = []
+    for top_uni in top_unigram_list:
+        try:
+            uni_stem = str(st.stem(top_uni))
+            if uni_stem in tokens:
+                # uni_features.append(c[uni_stem])
+                uni_features.append(1)
+                # avg_word_len += len(token_stem)
+                # count += 1
+            else:
+                uni_features.append(0)
+        except UnicodeEncodeError:
+            pass
+    # uni_features['average_word_length'] = avg_word_len/(count+1)
+    # uni_features['docu_length'] = len(tokens)
+    return uni_features
+    
 def create_skills_json(data):
     """
     This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
