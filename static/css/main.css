@@ -15,6 +15,7 @@ Version:        1
     height:100%;
 }
 #left{
+    margin-left: 10px;
     width:48%;
     height:100%;
     float: left;

@@ -1,10 +1,7 @@
 <html><head>
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-    <script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
     <title>UC Berkeley: Career predictor</title>
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
-    <script src="{{ url_for('static', filename='js/panel.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/highlight.pack.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/demo.css">
 
 </head>
@@ -26,6 +23,10 @@
                     </div>
                 </form>
             </div>
+            <br/>
+            <div id="uploadbutton">
+              <input class="btn btn-primary pull-right" id="analyze" type="button" value="Begin my career analysis" />
+          </div>
     </div>
 
 <!-- /left column top -->
@@ -49,9 +50,9 @@
 <!-- JS -->
 
 
-      <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-
-
+      <script src="./static/js/panel.js" type="text/javascript" />
+      <script src="./static/js/main.js" type="text/javascript" />
+      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
       <script src="{{ url_for('static', filename='js/d3.layout.cloud.js') }}"></script>
       <script src="{{ url_for('static', filename='js/jquery-1.8.1.min.js') }}"></script>
       <script src="{{ url_for('static', filename='js/jquery.ui.widget.js') }}"></script>
