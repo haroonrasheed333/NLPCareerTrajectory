@@ -1,5 +1,11 @@
-from nose.tools import eq_
+"""
+Verify job title normalization functionality
+"""
+
+from nose.tools import *
 from JobTitleNormalization import normalize_job_titles
+
+# Tests
 
 
 def test_should_normalize_different_permutations_of_same_job_titles():
@@ -17,7 +23,7 @@ def test_should_normalize_different_permutations_of_same_job_titles():
     normalized_titles = normalize_job_titles(original_titles)
 
     for normalized_title in normalized_titles:
-        eq_(expected_normalized_title, normalized_title)
+        assert_equals(expected_normalized_title, normalized_title)
 
 
 def test_should_expand_job_titles():
@@ -37,4 +43,4 @@ def test_should_expand_job_titles():
     normalized_titles = normalize_job_titles(original_titles)
 
     for normalized_title in normalized_titles:
-        eq_(expected_normalized_title, normalized_title)
+        assert_equals(expected_normalized_title, normalized_title)
