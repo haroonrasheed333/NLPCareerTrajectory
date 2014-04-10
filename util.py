@@ -1,6 +1,7 @@
 import os
 import nltk
 import json
+import re
 from lxml import etree
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer

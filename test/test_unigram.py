@@ -1,5 +1,5 @@
 from nose.tools import eq_
-from career_trajectory_svm_new import unigram_features
+from util import unigram_features
 
 def test_should_generate_unigrams_from_text_and_create_feature_set():
   test_text = "Responsible for implementing high level security features successfully"
