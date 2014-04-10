@@ -7,10 +7,10 @@ from nltk import bigrams
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 
+nltk.data.path.append('nltk_data')
 user_name = os.environ.get('USER')
 st = PorterStemmer()
 stopwords = stopwords.words('english')
-nltk.data.path.append('nltk_data')
 
 
 class ResumeCorpus():
