@@ -10,6 +10,7 @@ from nltk.stem import PorterStemmer
 user_name = os.environ.get('USER')
 st = PorterStemmer()
 stopwords = stopwords.words('english')
+nltk.data.path.append('nltk_data')
 
 
 class ResumeCorpus():
