@@ -3,6 +3,7 @@ import nltk
 import json
 import re
 from lxml import etree
+from nltk import bigrams
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 
@@ -53,6 +54,7 @@ class ResumeCorpus():
 
         return resumes
 
+
 def unigram_features(resume_text, top_unigram_list):
     """
     Function to create unigram features from the resume text
@@ -84,6 +86,33 @@ def unigram_features(resume_text, top_unigram_list):
     # uni_features['average_word_length'] = avg_word_len/(count+1)
     # uni_features['docu_length'] = len(tokens)
     return uni_features
+
+
+def bigram_features(resume_text, top_bigram_list):
+    """
+    Function to create bigram features from the resume text
+
+    Args:
+        resume_text -- content of resume as string
+        top_bigram_list -- list of top bigrams
+
+    Returns:
+        bi_features -- list of bigram features
+    """
+    tokens = [st.stem(word) for word in resume_text.lower().split() if word not in stopwords]
+    bigrs = bigrams(tokens)
+    bigram_list = []
+    bigram_list += [(bigrm[0], bigrm[1]) for bigrm in bigrs if (bigrm[0] not in stopwords and bigrm[1] not in stopwords)]
+    # c = Counter(bigrams_list)
+    bi_features = []
+    for top_bi in top_bigram_list:
+        if top_bi in bigram_list:
+            # bi_features.append(c[top_bi])
+            bi_features.append(1)
+        else:
+            bi_features.append(0)
+    return bi_features
+
     
 def create_skills_json(data):
     """

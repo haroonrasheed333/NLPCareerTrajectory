@@ -118,7 +118,7 @@ def bigram_features(resume_text, top_bigram_list):
     Returns:
         bi_features -- list of bigram features
     """
-    tokens = nltk.word_tokenize(resume_text)
+    tokens = [st.stem(word) for word in resume_text.lower().split() if word not in stopwords]
     bigrs = bigrams(tokens)
     bigram_list = []
     bigram_list += [(bigrm[0], bigrm[1]) for bigrm in bigrs if (bigrm[0] not in stopwords and bigrm[1] not in stopwords)]
@@ -176,8 +176,8 @@ if __name__ == '__main__':
     train_resumes = traintest_corpus.resumes[0:int(num_resumes*0.9)]
     test_resumes = traintest_corpus.resumes[int(num_resumes*0.9) + 1:]
 
-    # train_resumes = traintest_corpus.resumes[0:200]
-    # test_resumes = traintest_corpus.resumes[200:250]
+    # train_resumes = traintest_corpus.resumes[0:20]
+    # test_resumes = traintest_corpus.resumes[20:25]
 
     train_labels = []
     for (text, label, fname) in train_resumes:
@@ -207,9 +207,9 @@ if __name__ == '__main__':
     print len(words)
     print len(bigrams_list)
 
-    top_unigrams = fd.keys()[:1]
+    top_unigrams = fd.keys()[:5000]
     top_unigrams = list(set(top_unigrams + top_skills))
-    top_bigrams = fd_bi.keys()[:1]
+    top_bigrams = fd_bi.keys()[:5000]
 
     # Create a training featureset from the top unigrams, skills and bigrams.
     train_featureset = feature_consolidation(train_resumes, top_unigrams, top_bigrams, True)
