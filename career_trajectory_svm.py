@@ -1,6 +1,7 @@
 from __future__ import division
 import os
 import random
+import pickle
 import numpy as np
 from nltk import bigrams
 from nltk.corpus import stopwords
@@ -92,6 +93,9 @@ if __name__ == '__main__':
 
     labels_names = sorted(list(set(train_labels)))
 
+    with open('label_names.pkl', 'wb') as lab_names:
+        pickle.dump(labels_names, lab_names)
+
     count_vect = CountVectorizer()
     train_counts = vectorize(count_vect, train_resumes)
     tfidf_train = tfidftransform(train_counts)
@@ -139,10 +143,6 @@ if __name__ == '__main__':
     accuracy_list = []
     accuracy_list_top_5 = []
 
-
-
-
-
     for i in range(len(test_labels)):
         accuracy_list.append(0)
         accuracy_list_top_5.append(0)
@@ -157,3 +157,10 @@ if __name__ == '__main__':
     print "Actual Accuracy: " + str(sum(accuracy_list) / len(accuracy_list))
 
     print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
+
+    # Pickle the classifier and training features to test it on the heldout dataset.
+    with open('svmclassifier.pkl', 'wb') as outfile:
+        pickle.dump(clf, outfile)
+
+    with open('count_vect.pkl', 'wb') as count_v:
+        pickle.dump(count_vect, count_v)

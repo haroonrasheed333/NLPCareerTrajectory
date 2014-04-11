@@ -80,21 +80,16 @@ def prepare_data(source_dir):
     job_titles = []
 
     top_jobs = \
-        ['consultant', 'director', 'project manager', 'manager', 'vice president', 'software engineer',
-         'graphic designer', 'administrative assistant', 'president', 'senior software engineer', 'accountant',
-         'web developer', 'executive assistant', 'senior manager', ' business analyst', 'senior project manager',
-         'research assistant', ' program manager', 'accounting manager', 'senior consultant', 'marketing manager',
-         'customer service representative', 'owner', 'staff accountant', 'business development manager', 'supervisor',
-         'general manager', 'assistant manager', 'office assistant', 'contractor', 'sales representative',
-         'account executive', ' office manager', 'senior accountant', 'chief executive officer', 'intern',
-         'volunteer', 'sales associate', 'principal', 'controller', 'marketing director', 'senior business analyst',
-         'senior director', 'product manager', 'designer', ' marketing consultant', 'independent consultant',
-         'cashier', 'operations manager', ' analyst'
+        ['consultant', 'director', 'project manager', 'vice president', 'software engineer', 'graphic designer',
+         'administrative assistant', 'president', 'senior software engineer', 'accountant', 'web developer',
+         'executive assistant', 'senior manager', 'business analyst', 'senior project manager',
+         'research assistant', 'program manager', 'accounting manager', 'senior consultant', 'marketing manager',
+         'customer service representative', 'staff accountant', 'business development manager', 'general manager',
+         'assistant manager', 'office assistant', 'sales representative', 'account executive', 'office manager',
+         'senior accountant', 'chief executive officer', 'sales associate', 'marketing director',
+         'senior business analyst', 'senior director', 'product manager', 'designer', 'marketing consultant',
+         'operations manager', 'analyst'
         ]
-
-    numberjobs = {}
-    for i in range(0,len(top_jobs)-1):
-        numberjobs[top_jobs[i]] = i+1
 
     j, bar = 0, pbar(len(files))
     bar.start()
@@ -149,29 +144,25 @@ def prepare_data(source_dir):
                         i = 0
                         if len(current_job_title) > 1:
                             while i < len(current_job_title):
-                                text_data = text_data.replace(current_job_title[i], '')
-                                job_titles.append(current_job_title[i])
+                                text_data = text_data.replace(current_job_title[i].strip(), '')
+                                job_titles.append(current_job_title[i].strip())
                                 i += 1
 
                                 # Set flag to 1 if the current job title is present in top 20 jobs.
                                 if current_job_title[i] in top_jobs:
-                                    job_title = current_job_title[i]
                                     flag = 1
                         else:
-                            text_data = text_data.replace(current_job_title[0], '')
-                            job_titles.append(current_job_title[0])
+                            text_data = text_data.replace(current_job_title[0].strip(), '')
+                            job_titles.append(current_job_title[0].strip())
                             if current_job_title[i] in top_jobs:
-                                job_title = current_job_title[i]
                                 flag = 1
 
                 # Only save the resumes whose current job title is present in the top 20 jobs
                 if flag == 1:
 
-                    number = numberjobs[current_job_title[0]]
-
                     if current_job_title:
                         directory = '/Users/' + user_name + '/Documents/Data/samples_0408_text/'
-                        f = open(directory + '%s' %fname[:-4] +'_plaintext.txt', 'w')
+                        f = open(directory + '%s' % fname[:-4] + '_plaintext.txt', 'w')
                         f.write(text_data)
                         f.close()
 
@@ -183,7 +174,7 @@ def prepare_data(source_dir):
         bar.update(j)
     bar.finish()
 
-    # Split the saved resumes (resumes belonging to top 20 job titles) into training and heldout datasets.
+    # Split the saved resumes (resumes belonging to top 50 job titles) into training and heldout datasets.
     split_data(labels_list)
 
     return

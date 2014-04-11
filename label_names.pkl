@@ -1,0 +1,82 @@
+(lp0
+S'account executive'
+p1
+aS'accountant'
+p2
+aS'accounting manager'
+p3
+aS'administrative assistant'
+p4
+aS'analyst'
+p5
+aS'assistant manager'
+p6
+aS'business analyst'
+p7
+aS'business development manager'
+p8
+aS'chief executive officer'
+p9
+aS'consultant'
+p10
+aS'customer service representative'
+p11
+aS'designer'
+p12
+aS'director'
+p13
+aS'executive assistant'
+p14
+aS'general manager'
+p15
+aS'graphic designer'
+p16
+aS'marketing consultant'
+p17
+aS'marketing director'
+p18
+aS'marketing manager'
+p19
+aS'office assistant'
+p20
+aS'office manager'
+p21
+aS'operations manager'
+p22
+aS'president'
+p23
+aS'product manager'
+p24
+aS'program manager'
+p25
+aS'project manager'
+p26
+aS'research assistant'
+p27
+aS'sales associate'
+p28
+aS'sales representative'
+p29
+aS'senior accountant'
+p30
+aS'senior business analyst'
+p31
+aS'senior consultant'
+p32
+aS'senior director'
+p33
+aS'senior manager'
+p34
+aS'senior project manager'
+p35
+aS'senior software engineer'
+p36
+aS'software engineer'
+p37
+aS'staff accountant'
+p38
+aS'vice president'
+p39
+aS'web developer'
+p40
+a.

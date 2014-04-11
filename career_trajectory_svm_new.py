@@ -1,18 +1,15 @@
 from __future__ import division
 import os
-import re
-import nltk
 import json
 import random
-import numpy as np
-from lxml import etree
+import pickle
 from nltk import bigrams
 from nltk import FreqDist
 from collections import Counter
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from sklearn.svm import LinearSVC
-from util import ResumeCorpus
+from util import ResumeCorpus, unigram_features, bigram_features
 from collections import defaultdict
 
 st = PorterStemmer()
@@ -67,70 +64,11 @@ def extract_top_skills(training_data):
     for skill in skills_dict:
         skill_list = skills_dict[skill]
         skill_count = Counter(skill_list)
-        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:200]
+        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:300]
         skill_features += top_job_skills
 
     top_job_skills = list(set(skill_features))
     return top_job_skills
-
-
-def unigram_features(resume_text, top_unigram_list):
-    """
-    Function to create unigram features from the resume text
-
-    Args:
-        resume_text -- content of resume as string
-        top_unigram_list -- list of top unigrams
-
-    Returns:
-        uni_features -- list of unigram features
-    """
-    resume_text = re.sub('[^A-Za-z\' ]+', '', str(resume_text))
-    tokens = nltk.word_tokenize(resume_text.lower())
-    tokens = [st.stem(token) for token in tokens]
-    # c = Counter(tokens)
-    uni_features = []
-    for top_uni in top_unigram_list:
-        try:
-            uni_stem = str(st.stem(top_uni))
-            if uni_stem in tokens:
-                # uni_features.append(c[uni_stem])
-                uni_features.append(1)
-                # avg_word_len += len(token_stem)
-                # count += 1
-            else:
-                uni_features.append(0)
-        except UnicodeEncodeError:
-            pass
-    # uni_features['average_word_length'] = avg_word_len/(count+1)
-    # uni_features['docu_length'] = len(tokens)
-    return uni_features
-
-
-def bigram_features(resume_text, top_bigram_list):
-    """
-    Function to create bigram features from the resume text
-
-    Args:
-        resume_text -- content of resume as string
-        top_bigram_list -- list of top bigrams
-
-    Returns:
-        bi_features -- list of bigram features
-    """
-    tokens = [st.stem(word) for word in resume_text.lower().split() if word not in stopwords]
-    bigrs = bigrams(tokens)
-    bigram_list = []
-    bigram_list += [(bigrm[0], bigrm[1]) for bigrm in bigrs if (bigrm[0] not in stopwords and bigrm[1] not in stopwords)]
-    # c = Counter(bigrams_list)
-    bi_features = []
-    for top_bi in top_bigram_list:
-        if top_bi in bigram_list:
-            # bi_features.append(c[top_bi])
-            bi_features.append(1)
-        else:
-            bi_features.append(0)
-    return bi_features
 
 
 def feature_consolidation(resumes, top_unigram_list, top_bigram_list,  add_true_score=False):
@@ -207,9 +145,9 @@ if __name__ == '__main__':
     print len(words)
     print len(bigrams_list)
 
-    top_unigrams = fd.keys()[:5000]
+    top_unigrams = fd.keys()[:4000]
     top_unigrams = list(set(top_unigrams + top_skills))
-    top_bigrams = fd_bi.keys()[:5000]
+    top_bigrams = fd_bi.keys()[:4000]
 
     # Create a training featureset from the top unigrams, skills and bigrams.
     train_featureset = feature_consolidation(train_resumes, top_unigrams, top_bigrams, True)
@@ -269,3 +207,17 @@ if __name__ == '__main__':
     print "Actual Accuracy: " + str(sum(accuracy_list) / len(accuracy_list))
 
     print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
+
+    # Pickle the classifier and training features to test it on the heldout dataset.
+    with open('svmclassifier_new.pkl', 'wb') as outfile:
+        pickle.dump(clf, outfile)
+
+    features = dict()
+    features['top_unigrams'] = top_unigrams
+    features['top_bigrams'] = top_bigrams
+
+    with open('features.pkl', 'wb') as f:
+        pickle.dump(features, f)
+
+    with open('label_names.pkl', 'wb') as lab_names:
+        pickle.dump(labels_names, lab_names)
