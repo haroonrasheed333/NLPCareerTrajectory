@@ -7,7 +7,7 @@ $(document).ready(function () {
         var data = added_files[added_files.length-1];
         event.preventDefault();
         console.log("Now i would work.")
-        if (document.getElementById("cluster"))
+        if (document.getElementById("analyze"))
         {
         console.log("button clicked");
         console.log(added_files)
