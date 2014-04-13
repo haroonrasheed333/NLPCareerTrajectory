@@ -6,6 +6,7 @@ from lxml import etree
 from nltk import bigrams
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
+from collections import Counter
 
 nltk.data.path.append('nltk_data')
 user_name = os.environ.get('USER')
@@ -85,6 +86,31 @@ def read_skills_from_json_file(training_data):
                     skills_dict[title.lower()] = file_name[file_name.keys()[0]]
 
     return skills_dict
+
+
+def extract_top_skills(training_data):
+    """
+    Extract Top Skills for each Job Title from the training dataset.
+
+    Args:
+        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    Returns:
+        A consolidated list of top skills for all the Job Titles
+
+    """
+    skills_dict = read_skills_from_json_file(training_data)
+
+    # Read the top n skills for each Job TiTle
+    skill_features = []
+    for skill in skills_dict:
+        skill_list = skills_dict[skill]
+        skill_count = Counter(skill_list)
+        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:3]
+        skill_features += top_job_skills
+
+    top_job_skills = list(set(skill_features))
+    return top_job_skills
 
 
 
