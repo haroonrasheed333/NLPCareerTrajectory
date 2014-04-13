@@ -71,7 +71,7 @@ def read_skills_from_json_file(training_data):
     """
 
     skills_dict = dict()
-    temp_dict = json.loads(open("./skillstest.json").read())
+    temp_dict = json.loads(open("skills.json").read())
     training_files = [fname for (resume, resume_label, fname) in training_data]
 
     for title in temp_dict:
