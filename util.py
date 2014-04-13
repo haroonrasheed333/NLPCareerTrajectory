@@ -87,6 +87,40 @@ def read_skills_from_json_file(training_data):
     return skills_dict
 
 
+
+def miscellaneous_features(resume_text):
+	"""
+	FUnction to create miscellaneous features
+	
+	
+    	Args:
+        resume_text -- content of resume as string
+        
+
+    	Returns:
+        mis_features -- list of miscellaneous features
+	"""	
+	
+	resume_text = re.sub('[^A-Za-z\' ]+', '', str(resume_text))
+    	tokens = nltk.word_tokenize(resume_text.lower())
+	mis_features =dict()
+	mis_features["length"] = len(tokens)
+	sum = 0
+	adj_count = 0
+	noun_count = 0
+	pos_tagged_text = nltk.pos_tag(tokens)
+	for t in pos_tagged_text:
+		sum = sum + len(t[0])
+		if t[1] == "NN":
+			noun_count += 1
+		if t[1] == "JJ":
+			adj_count += 1 
+		
+	mis_features["avg_word_length"] = sum/ len(tokens)
+	mis_features["adj_count"] = adj_count
+	mis_features["noun_count"] = noun_count
+	return mis_features
+	
 def unigram_features(resume_text, top_unigram_list):
     """
     Function to create unigram features from the resume text
