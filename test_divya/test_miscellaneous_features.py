@@ -42,7 +42,7 @@ def test_avg_word_length():
 	file = open("test_resume.txt","r")
         raw_text = file.read()
         feature_dict = miscellaneous_features(raw_text)
-        word_length = 6
-        eq_(word_length, feature_dict["avg_word_length"])
+        avg_word_length = 6
+        eq_(avg_word_length, feature_dict["avg_word_length"])
 
 

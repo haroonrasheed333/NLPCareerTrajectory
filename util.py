@@ -90,7 +90,7 @@ def read_skills_from_json_file(training_data):
 
 def miscellaneous_features(resume_text):
 	"""
-	FUnction to create miscellaneous features
+	Function to create miscellaneous features
 	
 	
     	Args:
