@@ -56,6 +56,37 @@ class ResumeCorpus():
         return resumes
 
 
+
+
+def read_skills_from_json_file(training_data):
+    """
+    This function will read from the skills json file, extract the skills that are part of the training data and create
+    a dictionary with Job Titles as keys and list of all the skills for that Job Title as values
+
+    Args:
+        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    Returns:
+        skills_dict -- A dictionary with Job Titles as keys and list of all the skills for that Job Title as values
+    """
+
+    skills_dict = dict()
+    temp_dict = json.loads(open("./skillstest.json").read())
+    training_files = [fname for (resume, resume_label, fname) in training_data]
+
+    for title in temp_dict:
+        for file_name in temp_dict[title]:
+            if file_name.keys()[0] in training_files:
+                value = skills_dict.get(title.lower(), None)
+                if value is not None:
+                    skills_dict[title.lower()] = value + file_name[file_name.keys()[0]]
+                else:
+                    skills_dict[title.lower()] = []
+                    skills_dict[title.lower()] = file_name[file_name.keys()[0]]
+
+    return skills_dict
+
+
 def unigram_features(resume_text, top_unigram_list):
     """
     Function to create unigram features from the resume text
