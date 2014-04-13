@@ -1,0 +1,57 @@
+{
+"vice president":[
+{
+
+"327099_plaintext.txt": [
+                "train", 
+                "system", 
+                "softwar", 
+                "lappin", 
+                "group", 
+                "profici", 
+                "sale", 
+                "spss", 
+                "offic", 
+                "program", 
+                "conjoint"
+            ]
+},
+{
+
+"369150_plaintext.txt": [
+                "core", 
+                "compet"
+            ]
+
+
+}
+],
+"sales manager": [
+        {
+            "67255_plaintext.txt": [
+                "comput", 
+                "administr", 
+                "literaci", 
+                "product", 
+                "microsoft", 
+                "edward", 
+                "word", 
+                "prophet", 
+                "excel", 
+                "sage", 
+                "access", 
+                "syspro", 
+                "accpacc", 
+                "salesforcecom", 
+                "jd", 
+                "powerpoint", 
+                "crm"
+            ]
+        }
+]
+}
+
+
+
+
+}
