@@ -1,5 +1,4 @@
 import os
-import nose
 from nose.tools import *
 from corpus_builder import prepare_data
 
@@ -116,12 +115,12 @@ class TestSplitData():
                 os.rmdir(root)
 
 
-t = TestSplitData()
-t.setup_class()
-t.test_should_split_data_into_training_and_heldout_datasets()
-t.test_should_create_label_files()
-t.test_number_of_training_files_should_be_80_percent_of_sample_plaintext_files()
-t.test_number_of_heldout_files_should_be_20_percent_of_sample_plaintext_files()
-t.test_number_of_training_files_should_equal_the_number_of_items_in_labels_file()
-t.test_number_of_heldout_files_should_equal_the_number_of_items_in_heldout_labels_file()
-t.teardown_class()
+# t = TestSplitData()
+# t.setup_class()
+# t.test_should_split_data_into_training_and_heldout_datasets()
+# t.test_should_create_label_files()
+# t.test_number_of_training_files_should_be_80_percent_of_sample_plaintext_files()
+# t.test_number_of_heldout_files_should_be_20_percent_of_sample_plaintext_files()
+# t.test_number_of_training_files_should_equal_the_number_of_items_in_labels_file()
+# t.test_number_of_heldout_files_should_equal_the_number_of_items_in_heldout_labels_file()
+# t.teardown_class()
