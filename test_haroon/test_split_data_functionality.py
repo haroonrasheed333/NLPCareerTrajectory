@@ -1,25 +1,10 @@
 import os
+import nose
 from nose.tools import *
 from corpus_builder import prepare_data
 
 
-# List of sample resume filenames with their present job title
-# 1.txt  Software Engineer
-# 2.txt	 Senior Software Engineer
-# 3.txt	 Software Developer
-# 4.txt	 No present job
-# 5.txt	 Web Developer
-# 6.txt	 Business Analyst
-# 7.txt	 No present job
-# 8.txt	 Project Manager
-# 9.txt	 Graphic Designer
-# 10.txt Sr. Project Manager
-# 11.txt Intern (Not a top job title)
-# 12.txt CEO
-# 13.txt VP
-
-
-class TestCorpusBuilder:
+class TestSplitData():
     def __init__(self):
         self.paths = dict()
         self.paths['main_source_directory'] = os.path.dirname(os.path.realpath(__file__))
@@ -28,7 +13,7 @@ class TestCorpusBuilder:
         self.paths['training_directory'] = 'training'
         self.paths['heldout_directory'] = 'heldout'
         self.paths['labels_file_path'] = 'labels.txt'
-        self. paths['labels_heldout_file_path'] = 'labels_heldout.txt'
+        self.paths['labels_heldout_file_path'] = 'labels_heldout.txt'
         self.plaintext_directory = self.paths['main_source_directory'] + '/' + self.paths['plaintext_data_directory']
         self.labels_file = self.paths['main_source_directory'] + '/' + self.paths['labels_file_path']
         self.labels_heldout_file = self.paths['main_source_directory'] + '/' + self.paths['labels_heldout_file_path']
@@ -64,23 +49,41 @@ class TestCorpusBuilder:
         self = cls()
         self.remove_files_created_during_previous_runs()
 
-    def test_should_extract_resume_content_from_xml_files_and_save_as_plaintext_files(self):
-        filenames = next(os.walk(self.plaintext_directory))[2]
-        assert_true(len(filenames))
+    def test_should_split_data_into_training_and_heldout_datasets(self):
+        assert_true(os.path.exists(self.training_path))
+        assert_true(os.path.exists(self.heldout_path))
 
-    def test_should_not_select_resumes_without_present_job(self):
-        resumes_without_present_job = ['4_plaintext.txt', '7_plaintext.txt']
+        training_files = next(os.walk(self.training_path))[2]
+        heldout_files = next(os.walk(self.heldout_path))[2]
+
+        assert_true(len(training_files))
+        assert_true(len(heldout_files))
+
+    def test_should_create_label_files(self):
+        assert_true(os.path.isfile(self.labels_file))
+        assert_true(os.path.isfile(self.labels_heldout_file))
+
+    def test_number_of_training_files_should_be_80_percent_of_sample_plaintext_files(self):
+        training_files = next(os.walk(self.training_path))[2]
         plaintext_files = next(os.walk(self.plaintext_directory))[2]
+        assert_equals(len(training_files), 0.8*len(plaintext_files))
 
-        for f in resumes_without_present_job:
-            assert_false(f in plaintext_files)
-
-    def test_should_not_select_resumes_with_present_job_not_in_top_jobs(self):
-        resumes_with_present_job_not_in_top_jobs = ['11_plaintext.txt']
+    def test_number_of_heldout_files_should_be_20_percent_of_sample_plaintext_files(self):
+        heldout_files = next(os.walk(self.heldout_path))[2]
         plaintext_files = next(os.walk(self.plaintext_directory))[2]
+        assert_equals(len(heldout_files), 0.2*len(plaintext_files))
 
-        for f in resumes_with_present_job_not_in_top_jobs:
-            assert_false(f in plaintext_files)
+    def test_number_of_training_files_should_equal_the_number_of_items_in_labels_file(self):
+        training_files = next(os.walk(self.training_path))[2]
+
+        num_labels = len(open(self.labels_file).readlines())
+        assert_equals(len(training_files), num_labels)
+
+    def test_number_of_heldout_files_should_equal_the_number_of_items_in_heldout_labels_file(self):
+        heldout_files = next(os.walk(self.heldout_path))[2]
+
+        num_heldout_labels = len(open(self.labels_heldout_file).readlines())
+        assert_equals(len(heldout_files), num_heldout_labels)
 
     def remove_files_created_during_previous_runs(self):
         for root, dirs, files in os.walk(self.plaintext_directory, topdown=False):
@@ -113,9 +116,12 @@ class TestCorpusBuilder:
                 os.rmdir(root)
 
 
-# t = TestCorpusBuilder()
-# t.setup_class()
-# t.test_should_extract_resume_content_from_xml_files_and_save_as_plaintext_files()
-# t.test_should_not_select_resumes_without_present_job()
-# t.test_should_not_select_resumes_with_present_job_not_in_top_jobs()
-# t.teardown_class()
+t = TestSplitData()
+t.setup_class()
+t.test_should_split_data_into_training_and_heldout_datasets()
+t.test_should_create_label_files()
+t.test_number_of_training_files_should_be_80_percent_of_sample_plaintext_files()
+t.test_number_of_heldout_files_should_be_20_percent_of_sample_plaintext_files()
+t.test_number_of_training_files_should_equal_the_number_of_items_in_labels_file()
+t.test_number_of_heldout_files_should_equal_the_number_of_items_in_heldout_labels_file()
+t.teardown_class()
