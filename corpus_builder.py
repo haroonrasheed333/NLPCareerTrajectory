@@ -5,6 +5,7 @@ import random
 import shutil
 import progressbar
 from lxml import etree
+from util import stripxml
 from JobTitleNormalization import normalize_job_titles
 
 user_name = os.environ.get('USER')
@@ -47,21 +48,6 @@ def split_data(labels_list):
 
     labels.close()
     labels_heldout.close()
-
-
-def stripxml(data):
-    """
-    Strip the xml tags from the xml to make it plaintext
-
-    Args:
-        data -- Resume xml
-
-    Returns:
-        text -- plaintext resume without any xml tags.
-    """
-    pattern = re.compile(r'<.*?>')
-    text = pattern.sub('', data)
-    return text
 
    
 def prepare_data(source_dir):

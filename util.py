@@ -146,7 +146,7 @@ def bigram_features(resume_text, top_bigram_list):
     return bi_features
 
     
-def create_skills_json(data):
+def create_skills_json(data, xml_directory, save_json=False):
     """
     This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
     keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
@@ -160,7 +160,6 @@ def create_skills_json(data):
     skills_dict = dict()
 
     # Get the skills for each resume from its corresponding xml file.
-    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0408'
     for (resume_text, tag_name, filename) in data:
         xml_file = filename.split('_')[0] + '.txt'
         xml = etree.parse(xml_directory + '/' + xml_file)
@@ -196,12 +195,32 @@ def create_skills_json(data):
                 skills_dict[tag_name.lower()] = []
                 skills_dict[tag_name.lower()].append(temp_dict)
 
-    j = json.dumps(skills_dict, indent=4)
-    f = open('skills.json', 'w')
-    print >> f, j
-    f.close()
+    if save_json:
+        j = json.dumps(skills_dict, indent=4)
+        f = open('skills.json', 'w')
+        print >> f, j
+        f.close()
+    else:
+        return skills_dict
+
+
+def stripxml(data):
+    """
+    Strip the xml tags from the xml to make it plaintext
+
+    Args:
+        data -- Resume xml
+
+    Returns:
+        text -- plaintext resume without any xml tags.
+    """
+    pattern = re.compile(r'<.*?>')
+    text = pattern.sub('', data)
+    return text
+
 
 if __name__ == '__main__':
     user_name = os.environ.get('USER')
     traintest_corpus = ResumeCorpus('/Users/' + user_name + '/Documents/Data')
-    create_skills_json(traintest_corpus.resumes)
+    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0408'
+    create_skills_json(traintest_corpus.resumes, xml_directory, True)
