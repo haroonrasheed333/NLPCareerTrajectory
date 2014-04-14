@@ -6,6 +6,7 @@ from lxml import etree
 from nltk import bigrams
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
+from collections import Counter
 
 nltk.data.path.append('nltk_data')
 user_name = os.environ.get('USER')
@@ -87,6 +88,65 @@ def read_skills_from_json_file(training_data):
     return skills_dict
 
 
+def extract_top_skills(training_data):
+    """
+    Extract Top Skills for each Job Title from the training dataset.
+
+    Args:
+        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    Returns:
+        A consolidated list of top skills for all the Job Titles
+
+    """
+    skills_dict = read_skills_from_json_file(training_data)
+
+    # Read the top n skills for each Job TiTle
+    skill_features = []
+    for skill in skills_dict:
+        skill_list = skills_dict[skill]
+        skill_count = Counter(skill_list)
+        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:3]
+        skill_features += top_job_skills
+
+    top_job_skills = list(set(skill_features))
+    return top_job_skills
+
+
+
+def miscellaneous_features(resume_text):
+	"""
+	Function to create miscellaneous features
+	
+	
+    	Args:
+        resume_text -- content of resume as string
+        
+
+    	Returns:
+        mis_features -- list of miscellaneous features
+	"""	
+	
+	resume_text = re.sub('[^A-Za-z\' ]+', '', str(resume_text))
+    	tokens = nltk.word_tokenize(resume_text.lower())
+	mis_features =dict()
+	mis_features["length"] = len(tokens)
+	sum = 0
+	adj_count = 0
+	noun_count = 0
+	pos_tagged_text = nltk.pos_tag(tokens)
+	for t in pos_tagged_text:
+		sum = sum + len(t[0])
+		if t[1] == "NN":
+			noun_count += 1
+		if t[1] == "JJ":
+			adj_count += 1 
+		
+	mis_features["avg_word_length"] = sum/ len(tokens)
+	mis_features["adj_count"] = adj_count
+	mis_features["noun_count"] = noun_count
+	return mis_features
+	
 def unigram_features(resume_text, top_unigram_list):
     """
     Function to create unigram features from the resume text
