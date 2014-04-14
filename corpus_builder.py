@@ -3,7 +3,7 @@ import re
 import time
 import random
 import shutil
-import progressbar
+# import progressbar
 from lxml import etree
 from util import stripxml
 from JobTitleNormalization import normalize_job_titles
@@ -11,7 +11,7 @@ from JobTitleNormalization import normalize_job_titles
 user_name = os.environ.get('USER')
 
 
-def split_data(labels_list):
+def split_data(labels_list, paths):
     """
     Function to split the dataset into training and heldout datasets
 
@@ -20,11 +20,11 @@ def split_data(labels_list):
     """
 
     # Path where the sample text resumes are present
-    source_dir = '/Users/' + user_name + '/Documents/Data/samples_0408_text'
+    source_dir = paths['main_source_directory'] + '/' + paths['plaintext_data_directory']
 
     # Store the training and heldout data in different directories.
-    training_dir = '/Users/' + user_name + '/Documents/Data/training_0408'
-    heldout_dir = '/Users/' + user_name + '/Documents/Data/heldout_0408'
+    training_dir = paths['main_source_directory'] + '/' + paths['training_directory']
+    heldout_dir = paths['main_source_directory'] + '/' + paths['heldout_directory']
 
     random.seed(int(time.time()))
     random.shuffle(labels_list)
@@ -33,10 +33,10 @@ def split_data(labels_list):
 
     # Split the training and heldout files
     training_files = labels_list[:int(num_files*0.8)]
-    heldout_files = labels_list[int(num_files*0.8) + 1:]
+    heldout_files = labels_list[int(num_files*0.8):]
 
-    labels = open('/Users/' + user_name + '/Documents/Data/labels_0408.txt', 'w')
-    labels_heldout = open('/Users/' + user_name + '/Documents/Data/labels_heldout_0408.txt', 'w')
+    labels = open(paths['main_source_directory'] + '/' + paths['labels_file_path'], 'w')
+    labels_heldout = open(paths['main_source_directory'] + '/' + paths['labels_heldout_file_path'], 'w')
 
     for (filename, tag) in training_files:
         shutil.copy2(source_dir + '/' + filename, training_dir)
@@ -50,15 +50,16 @@ def split_data(labels_list):
     labels_heldout.close()
 
    
-def prepare_data(source_dir):
+def prepare_data(paths):
     """
     Function to prepare data and split training and test data.
 
     Args:
-        source_dir -- path to the source xml files.
+        paths - dict containing paths of source directories
 
     """
 
+    source_dir = paths['main_source_directory'] + '/' + paths['xml_data_directory']
     # Get the files from the source directory
     files = [f for (dirpath, dirnames, filenames) in os.walk(source_dir) for f in filenames if f[-4:] == '.txt']
 
@@ -77,8 +78,8 @@ def prepare_data(source_dir):
          'operations manager', 'analyst'
         ]
 
-    j, bar = 0, pbar(len(files))
-    bar.start()
+    # j, bar = 0, pbar(len(files))
+    # bar.start()
     labels_list = []
 
     # From each xml file extract the information and store in plaintext files.
@@ -147,7 +148,7 @@ def prepare_data(source_dir):
                 if flag == 1:
 
                     if current_job_title:
-                        directory = '/Users/' + user_name + '/Documents/Data/samples_0408_text/'
+                        directory = paths['main_source_directory'] + '/' + paths['plaintext_data_directory'] + '/'
                         f = open(directory + '%s' % fname[:-4] + '_plaintext.txt', 'w')
                         f.write(text_data)
                         f.close()
@@ -156,29 +157,38 @@ def prepare_data(source_dir):
         except:
             pass
 
-        j += 1
-        bar.update(j)
-    bar.finish()
+    #     j += 1
+    #     bar.update(j)
+    # bar.finish()
 
     # Split the saved resumes (resumes belonging to top 50 job titles) into training and heldout datasets.
-    split_data(labels_list)
+    split_data(labels_list, paths)
 
     return
 
 
-def pbar(size):
-    """
-    Function to display the progress of a long running operation.
-
-    """
-    bar = progressbar.ProgressBar(maxval=size,
-                                  widgets=[progressbar.Bar('=', '[', ']'),
-                                           ' ', progressbar.Percentage(),
-                                           ' ', progressbar.ETA(),
-                                           ' ', progressbar.Counter(),
-                                           '/%s' % size])
-    return bar
+# def pbar(size):
+#     """
+#     Function to display the progress of a long running operation.
+#
+#     """
+#     bar = progressbar.ProgressBar(maxval=size,
+#                                   widgets=[progressbar.Bar('=', '[', ']'),
+#                                            ' ', progressbar.Percentage(),
+#                                            ' ', progressbar.ETA(),
+#                                            ' ', progressbar.Counter(),
+#                                            '/%s' % size])
+#     return bar
 
 if __name__ == "__main__":
-    prepare_data('/Users/' + user_name + '/Documents/Data/samples_0408')
+    paths = dict()
+    paths['main_source_directory'] = '/Users/' + user_name + '/Documents/Data/'
+    paths['xml_data_directory'] = 'samples_0408'
+    paths['plaintext_data_directory'] = 'samples_0408_text'
+    paths['training_directory'] = 'training_0408'
+    paths['heldout_directory'] = 'heldout_0408'
+    paths['labels_file_path'] = 'labels_0408.txt'
+    paths['labels_heldout_file_path'] = 'labels_heldout_0408.txt'
+
+    prepare_data(paths)
 

@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<ResDoc>
+<resume canonversion='2' dateversion='2' present='734579' xml:space='preserve'>
+<contact><name><givenname>Haroon Rasheed</givenname> <surname>Paul Mohamed</surname></name>
+<phone>(123) 456-7890</phone>
+<email>example@example.com</email></contact>
+<education>Education
+<school id='7'>
+<institution>University of California</institution>, <address><city>Berkeley</city>, <state abbrev='CA'>CA</state></address>
+<degree level='16'>Master of Information Management and Systems</degree></school>
+</education>
+<experience end='present' start='729757'>Experience
+
+<job end='present'>2013 - Present
+<employer>CalCentral, University of California, Berkeley</employer>
+<title>Software Engineer</title>
+<description>Part of the development team for CalCentral, UC Berkeley’s new online portal.
+Responsibilities include developing web application using HTML, AngularJS, CSS and Ruby on Rails</description>
+</job>
+
+<job>2013 - 2013
+<employer>EMC Corporation</employer>
+<title>Software Developer Intern</title>
+
+<description>Developed an application using HTML, JQuery, and Python to test the newly implemented xPlore REST services.
+Developed a C++ plugin that could be used to replace xPlore’s built-in text extractor with other text extractors.
+Created a custom report using XML and XQuery to evaluate the performance of search queries in xPlore application
+Researched and educated the team leads on implementing relationship based search functionality in xPlore application.</description></job> 
+
+<job>2008 - 2012
+<employer>Tata Consultancy Services</employer>
+<title>Systems Engineer</title>
+
+<description>Developed SSA (a framework derived from Windows NTDS and developed using Microsoft COM technology) components in VC++ and Visual Basic.
+Converted the existing SSA COM components from Visual Basic and VC++ to .Net framework.
+Additional Role: Crisis Management Lead (CML)
+Led the Crisis Management Team responsible for carrying out Business Impact Analysis, recovery strategies and maintaining Business Continuity Plan</description></job> 
+
+</experience>
+
+<skills>Skills
+C++, Python, HTML, JavaScript, jQuery, CSS, PHP, SQL, XML, XQuery, R, Git
+Learning AngularJS</skills>
+</resume>
+
+</ResDoc>
+
