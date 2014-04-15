@@ -1,6 +1,6 @@
 import os
 import re
-import progressbar
+#import progressbar
 from lxml import etree
 from collections import Counter
 from JobTitleNormalization import normalize_job_titles
@@ -115,7 +115,7 @@ def extract_top_jobs(source_dir):
 
     return top_normalized_jobs
 
-
+"""
 def pbar(size):
     """
     Function to display the progress of a long running operation.
@@ -128,6 +128,7 @@ def pbar(size):
                                            ' ', progressbar.Counter(),
                                            '/%s' % size])
     return bar
+"""
 
 if __name__ == "__main__":
     print extract_top_jobs('/Users/' + user_name + '/Documents/Data/samples_0219')
