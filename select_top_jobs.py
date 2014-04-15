@@ -117,17 +117,16 @@ def extract_top_jobs(source_dir):
 
 """
 def pbar(size):
-    """
-    Function to display the progress of a long running operation.
+Function to display the progress of a long running operation.
 
-    """
-    bar = progressbar.ProgressBar(maxval=size,
+    
+bar = progressbar.ProgressBar(maxval=size,
                                   widgets=[progressbar.Bar('=', '[', ']'),
                                            ' ', progressbar.Percentage(),
                                            ' ', progressbar.ETA(),
                                            ' ', progressbar.Counter(),
                                            '/%s' % size])
-    return bar
+return bar
 """
 
 if __name__ == "__main__":
