@@ -252,12 +252,12 @@ def feature_consolidation(resumes, top_unigram_list, top_bigram_list,  add_true_
     mis_feats = []
     pattern = re.compile(r'<.*?>')
     for (dataxml, label, fname) in resumes:
-	data = etree.tostring(dataxml, pretty_print=True)
-    	resume_text = str(pattern.sub('', data))
-	uni_feats.append(unigram_features(resume_text, top_unigram_list))
-    	bi_feats.append(bigram_features(resume_text, top_bigram_list))
-    	xml_feats.append(xml_features(dataxml))
-	mis_feats.append(miscellaneous_features(resume_text))
+        data = etree.tostring(dataxml, pretty_print=True)
+        resume_text = str(pattern.sub('', data))
+        uni_feats.append(unigram_features(resume_text, top_unigram_list))
+        bi_feats.append(bigram_features(resume_text, top_bigram_list))
+        xml_feats.append(xml_features(dataxml))
+        mis_feats.append(miscellaneous_features(resume_text))
     consolidated_features = []
     ind = 0
     while ind < len(uni_feats):

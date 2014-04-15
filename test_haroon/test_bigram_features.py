@@ -14,6 +14,11 @@ sample_failing_text = """Function to create unigrams and remove stopwords from t
 top_bigrams = [('contain', 'skill'), ('convert', 'store'), ('corpu', 'creat'), ('creat', 'dictionari')]
 
 
+def test_bigram_features_for_a_given_text_should_not_be_empty():
+    bigram_feats = bigram_features(sample_passing_text, top_bigrams)
+    assert_true(len(bigram_feats))
+
+
 def test_lengths_of_bigram_features_and_top_bigrams_should_be_equal():
     bigram_feats = bigram_features(sample_passing_text, top_bigrams)
     assert_equals(len(bigram_feats), len(top_bigrams))

@@ -22,7 +22,7 @@ class TestSplitData():
     @classmethod
     def setup_class(cls):
         """
-        Nose will execute this function before executing the tests.
+        Nose will execute setup_class before executing the tests in the class.
         Remove all the files generated during previous test runs, create necessary directories and run the prepare
         data function
         """
@@ -42,7 +42,7 @@ class TestSplitData():
     @classmethod
     def teardown_class(cls):
         """
-        Nose will execute this function after executing all the tests.
+        Nose will execute teardown_class after executing all the tests.
         Remove files generated during test runs
         """
         self = cls()
