@@ -23,35 +23,7 @@ def stripxml(data):
     return text
 
 
-def xml_features(data):
-    """
-    Extract details from selected xml tags
-    Strip the xml tags from the xml to make it plaintext
-
-    Args:
-        data -- Resume xml
-
-    Returns:
-        xml_features -- dictionary with plaintext resume without any xml tags and select xml features
-    """
-    xml_features = {}
-    jobs = data.xpath('//job/title/text()')
-    job_normalized = []
-    for title in jobs:
-    	job_normalized.append(normalize_job_titles(title))
-    xml_features["jobs"] = jobs
-    employers = data.xpath('//job/employer/text()')
-    institution = data.xpath('//education/school/institution/text()')
-    degree = data.xpath('//education/school/degree/text()')
-    xml_features["employers"] = employers
-    xml_features["institution"] = institution
-    xml_features["degree"] = degree
-    pattern = re.compile(r'<.*?>')
-    data = etree.tostring(data, pretty_print=True)
-    text = pattern.sub('', data)
-    xml_features["raw_resume"] = text
-    return xml_features
-   
+  
 def extract_top_jobs(source_dir):
     """
     Function to extract top jobs
@@ -115,19 +87,20 @@ def extract_top_jobs(source_dir):
 
     return top_normalized_jobs
 
-"""
-def pbar(size):
-Function to display the progress of a long running operation.
 
-    
-bar = progressbar.ProgressBar(maxval=size,
+def pbar(size):
+    """
+    Function to display the progress of a long running operation.
+
+    """
+    bar = progressbar.ProgressBar(maxval=size,
                                   widgets=[progressbar.Bar('=', '[', ']'),
                                            ' ', progressbar.Percentage(),
                                            ' ', progressbar.ETA(),
                                            ' ', progressbar.Counter(),
                                            '/%s' % size])
-return bar
-"""
+    return bar
+
 
 if __name__ == "__main__":
     print extract_top_jobs('/Users/' + user_name + '/Documents/Data/samples_0219')

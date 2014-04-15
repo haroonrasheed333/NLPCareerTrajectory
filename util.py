@@ -7,6 +7,7 @@ from nltk import bigrams
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from collections import Counter
+from JobTitleNormalization import normalize_job_titles
 
 nltk.data.path.append('nltk_data')
 user_name = os.environ.get('USER')
@@ -109,6 +110,36 @@ def extract_top_skills(training_data):
 
     top_job_skills = list(set(skill_features))
     return top_job_skills
+
+
+def xml_features(data):
+    """
+    Extract details from selected xml tags
+    Strip the xml tags from the xml to make it plaintext
+
+    Args:
+        data -- Resume xml
+
+    Returns:
+        xml_features -- dictionary with plaintext resume without any xml tags and select xml features
+    """
+    xml_features = {}
+    jobs = data.xpath('//job/title/text()')
+    job_normalized = []
+    for title in jobs:
+        job_normalized.append(normalize_job_titles(title))
+    xml_features["jobs"] = jobs
+    employers = data.xpath('//job/employer/text()')
+    institution = data.xpath('//education/school/institution/text()')
+    degree = data.xpath('//education/school/degree/text()')
+    xml_features["employers"] = employers
+    xml_features["institution"] = institution
+    xml_features["degree"] = degree
+    pattern = re.compile(r'<.*?>')
+    data = etree.tostring(data, pretty_print=True)
+    text = pattern.sub('', data)
+    xml_features["raw_resume"] = text
+    return xml_features
 
 
 def miscellaneous_features(resume_text):

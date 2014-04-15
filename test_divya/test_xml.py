@@ -4,7 +4,7 @@ Test xml manipulation and feature extraction functionality
 
 from nose.tools import eq_
 from select_top_jobs import stripxml
-from select_top_jobs import xml_features
+from util import xml_features
 from lxml import etree
 # Tests
 
