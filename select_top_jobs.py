@@ -23,7 +23,6 @@ def stripxml(data):
     return text
 
 
-  
 def extract_top_jobs(source_dir):
     """
     Function to extract top jobs

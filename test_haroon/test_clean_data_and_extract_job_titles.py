@@ -1,25 +1,10 @@
 import os
+from lxml import etree
 from nose.tools import *
-from corpus_builder import prepare_data
+from corpus_builder import clean_data_and_extract_job_titles
 
 
-# List of sample resume filenames with their present job title
-# 1.txt  Software Engineer
-# 2.txt	 Senior Software Engineer
-# 3.txt	 Software Developer
-# 4.txt	 No present job
-# 5.txt	 Web Developer
-# 6.txt	 Business Analyst
-# 7.txt	 No present job
-# 8.txt	 Project Manager
-# 9.txt	 Graphic Designer
-# 10.txt Sr. Project Manager
-# 11.txt Intern (Not a top job title)
-# 12.txt CEO
-# 13.txt VP
-
-
-class TestCorpusBuilder:
+class TestCleanDataAndExtractJobTitles():
     def __init__(self):
         self.paths = dict()
         self.paths['main_source_directory'] = os.path.dirname(os.path.realpath(__file__))
@@ -28,17 +13,18 @@ class TestCorpusBuilder:
         self.paths['training_directory'] = 'training'
         self.paths['heldout_directory'] = 'heldout'
         self.paths['labels_file_path'] = 'labels.txt'
-        self. paths['labels_heldout_file_path'] = 'labels_heldout.txt'
+        self.paths['labels_heldout_file_path'] = 'labels_heldout.txt'
         self.plaintext_directory = self.paths['main_source_directory'] + '/' + self.paths['plaintext_data_directory']
         self.labels_file = self.paths['main_source_directory'] + '/' + self.paths['labels_file_path']
         self.labels_heldout_file = self.paths['main_source_directory'] + '/' + self.paths['labels_heldout_file_path']
         self.training_path = self.paths['main_source_directory'] + '/' + self.paths['training_directory']
         self.heldout_path = self.paths['main_source_directory'] + '/' + self.paths['heldout_directory']
+        self.xml_files_path = self.paths['main_source_directory'] + '/' + self.paths['xml_data_directory']
 
     @classmethod
     def setup_class(cls):
         """
-        Nose will execute this function before executing the tests.
+        Nose will execute setup_class before executing the tests in the class.
         Remove all the files generated during previous test runs, create necessary directories and run the prepare
         data function
         """
@@ -53,34 +39,47 @@ class TestCorpusBuilder:
         if not os.path.exists(self.heldout_path):
             os.makedirs(self.heldout_path)
 
-        prepare_data(self.paths)
-
     @classmethod
     def teardown_class(cls):
         """
-        Nose will execute this function after executing all the tests.
+        Nose will execute teardown_class after executing all the tests.
         Remove files generated during test runs
         """
         self = cls()
         self.remove_files_created_during_previous_runs()
 
-    def test_should_extract_resume_content_from_xml_files_and_save_as_plaintext_files(self):
-        filenames = next(os.walk(self.plaintext_directory))[2]
-        assert_true(len(filenames))
+    def test_cleaned_resume_data_should_not_have_candidate_name(self):
+        (names, job_titles, labels_list) = clean_data_and_extract_job_titles("1.txt", self.paths, [], [], [])
+        candidate_name = names[0].split()
+        plaintext_filename = labels_list[0][0]
+        plaintext_data = open(self.plaintext_directory + '/' + plaintext_filename).read()
 
-    def test_should_not_select_resumes_without_present_job(self):
-        resumes_without_present_job = ['4_plaintext.txt', '7_plaintext.txt']
-        plaintext_files = next(os.walk(self.plaintext_directory))[2]
+        for n in candidate_name:
+            assert_false(n in plaintext_data)
 
-        for f in resumes_without_present_job:
-            assert_false(f in plaintext_files)
+    def test_cleaned_resume_data_should_not_have_candidate_contact(self):
+        (names, job_titles, labels_list) = clean_data_and_extract_job_titles("1.txt", self.paths, [], [], [])
+        resume_xml = etree.parse(self.xml_files_path + '/1.txt')
+        candidate_phone = resume_xml.xpath('//phone/text()')[0]
+        plaintext_filename = labels_list[0][0]
+        plaintext_data = open(self.plaintext_directory + '/' + plaintext_filename).read()
 
-    def test_should_not_select_resumes_with_present_job_not_in_top_jobs(self):
-        resumes_with_present_job_not_in_top_jobs = ['11_plaintext.txt']
-        plaintext_files = next(os.walk(self.plaintext_directory))[2]
+        assert_false(candidate_phone in plaintext_data)
 
-        for f in resumes_with_present_job_not_in_top_jobs:
-            assert_false(f in plaintext_files)
+    def test_cleaned_resume_data_should_not_have_present_job_information(self):
+        (names, job_titles, labels_list) = clean_data_and_extract_job_titles("1.txt", self.paths, [], [], [])
+        present_job_title = job_titles[0]
+        plaintext_filename = labels_list[0][0]
+        plaintext_data = open(self.plaintext_directory + '/' + plaintext_filename).read()
+
+        assert_false(present_job_title in plaintext_data)
+
+    def test_present_job_title_should_match_resume_label(self):
+        (names, job_titles, labels_list) = clean_data_and_extract_job_titles("1.txt", self.paths, [], [], [])
+        present_job_title = job_titles[0]
+        resume_label = labels_list[0][1]
+
+        assert_equals(present_job_title, resume_label)
 
     def remove_files_created_during_previous_runs(self):
         for root, dirs, files in os.walk(self.plaintext_directory, topdown=False):
@@ -113,9 +112,10 @@ class TestCorpusBuilder:
                 os.rmdir(root)
 
 
-t = TestCorpusBuilder()
-t.setup_class()
-t.test_should_extract_resume_content_from_xml_files_and_save_as_plaintext_files()
-t.test_should_not_select_resumes_without_present_job()
-t.test_should_not_select_resumes_with_present_job_not_in_top_jobs()
-t.teardown_class()
+# t = TestCleanDataAndExtractJobTitles()
+# t.setup_class()
+# t.test_cleaned_resume_data_should_not_have_candidate_name()
+# t.test_cleaned_resume_data_should_not_have_candidate_contact()
+# t.test_cleaned_resume_data_should_not_have_present_job_information()
+# t.test_present_job_title_should_match_resume_label()
+# t.teardown_class()
