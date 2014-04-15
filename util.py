@@ -232,6 +232,39 @@ def bigram_features(resume_text, top_bigram_list):
             bi_features.append(0)
     return bi_features
 
+
+def feature_consolidation(resumes, top_unigram_list, top_bigram_list,  add_true_score=False):
+    """
+    Function to consolidate all the featuresets for the training data
+
+    Args:
+        resumes -- list of tuples [(resume_text, tag, filename), (resume_text, tag, filename)...]
+        top_unigram_list -- list of top unigrams from the training dataset
+        top_bigram_list -- list of top bigrams from the training dataset
+        add_true_score -- boolean (default: False)
+
+    Returns:
+        consolidated_features -- list of consolidated features
+    """
+    uni_feats = []
+    bi_feats = []
+    xml_feats = []
+    mis_feats = []
+    pattern = re.compile(r'<.*?>')
+    for (dataxml, label, fname) in resumes:
+	data = etree.tostring(dataxml, pretty_print=True)
+    	resume_text = str(pattern.sub('', data))
+	uni_feats.append(unigram_features(resume_text, top_unigram_list))
+    	bi_feats.append(bigram_features(resume_text, top_bigram_list))
+    	xml_feats.append(xml_features(dataxml))
+	mis_feats.append(miscellaneous_features(resume_text))
+    consolidated_features = []
+    ind = 0
+    while ind < len(uni_feats):
+        consolidated_features.append((uni_feats[ind], bi_feats[ind] , xml_feats[ind], mis_feats[ind]))
+        ind += 1
+    return consolidated_features
+
     
 def create_skills_json(data, xml_directory, save_json=False):
     """
