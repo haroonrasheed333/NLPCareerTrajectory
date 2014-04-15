@@ -19,9 +19,38 @@ def stripxml(data):
         text -- plaintext resume without any xml tags.
     """
     pattern = re.compile(r'<.*?>')
-    text = pattern.sub('', data)
+    text = pattern.sub('', str(data))
     return text
 
+
+def xml_features(data):
+    """
+    Extract details from selected xml tags
+    Strip the xml tags from the xml to make it plaintext
+
+    Args:
+        data -- Resume xml
+
+    Returns:
+        xml_features -- dictionary with plaintext resume without any xml tags and select xml features
+    """
+    xml_features = {}
+    jobs = data.xpath('//job/title/text()')
+    job_normalized = []
+    for title in jobs:
+    	job_normalized.append(normalize_job_titles(title))
+    xml_features["jobs"] = jobs
+    employers = data.xpath('//job/employer/text()')
+    institution = data.xpath('//education/school/institution/text()')
+    degree = data.xpath('//education/school/degree/text()')
+    xml_features["employers"] = employers
+    xml_features["institution"] = institution
+    xml_features["degree"] = degree
+    pattern = re.compile(r'<.*?>')
+    data = etree.tostring(data, pretty_print=True)
+    text = pattern.sub('', data)
+    xml_features["raw_resume"] = text
+    return xml_features
    
 def extract_top_jobs(source_dir):
     """
