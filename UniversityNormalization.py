@@ -35,29 +35,75 @@ def normalize_universities():
     with open('UnivNames.txt') as u_names:
         univ_names = u_names.readlines()
         univ_dict_normalized = dict()
-        j, bar = 0, pbar(10000)
+        j, bar = 0, pbar(100)
         bar.start()
         i = 0
-        while i < 10000:
+        while i < 100:
             u = univ_names[i].strip()
             try:
                 if u:
+                    try:
+                        u = str(u).encode('utf-8')
+                    except:
+                        u = u.encode('utf-8')
                     api_key = "AIzaSyCYYNeN_1GIgpYKeTUNSwaUjUcn623UZl4"
                     service_url = 'https://www.googleapis.com/freebase/v1/search'
                     params = {
-                        'query': u,
+                        'query': u.strip(),
                         'key': api_key
                     }
                     url = service_url + '?' + urllib.urlencode(params)
                     response = json.loads(urllib.urlopen(url).read())
                     results = response['result']
-                    if len(results) > 0:
-                        univ_dict_normalized[u] = results[0]['name']
+                    if len(results) > 0 and results[0]['name']:
+                        univ_dict_normalized[u.strip()] = str(results[0]['name']).lower()
                     else:
-                        univ_dict_normalized[u] = u
+                        univ_dict_normalized[u.strip()] = u.strip()
                 i += 1
             except:
-                univ_dict_normalized[u] = u
+                i += 1
+
+            j += 1
+            bar.update(j)
+        bar.finish()
+
+        js = json.dumps(univ_dict_normalized, indent=4, ensure_ascii=False)
+        f = open('Universities_normalized1.json', 'w')
+        print >> f, js
+        f.close()
+
+
+def normalize_universities():
+    with open('UnivNames.txt') as u_names:
+        univ_names = u_names.readlines()
+        univ_dict_normalized = dict()
+        j, bar = 0, pbar(100)
+        bar.start()
+        i = 0
+        while i < 100:
+            u = univ_names[i].strip()
+            try:
+                if u:
+                    try:
+                        u = str(u).encode('utf-8')
+                    except:
+                        u = u.encode('utf-8')
+                    api_key = "AIzaSyCYYNeN_1GIgpYKeTUNSwaUjUcn623UZl4"
+                    service_url = 'https://www.googleapis.com/freebase/v1/search'
+                    params = {
+                        'query': u.strip(),
+                        'key': api_key
+                    }
+                    url = service_url + '?' + urllib.urlencode(params)
+                    response = json.loads(urllib.urlopen(url).read())
+                    results = response['result']
+                    if len(results) > 0 and results[0]['name']:
+                        univ_dict_normalized[u.strip()] = str(results[0]['name']).lower()
+                    else:
+                        univ_dict_normalized[u.strip()] = u.strip()
+                i += 1
+            except:
+                i += 1
 
             j += 1
             bar.update(j)
