@@ -44,8 +44,7 @@ def normalize_universities():
                 '/education/university',
                 '/education/educational_institution',
                 '/organization/organization',
-                '/education/school',
-                ''
+                '/education/school'
             ]
         while i < 100:
             u = univ_names[i].strip()
