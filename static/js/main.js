@@ -2,18 +2,19 @@ $(document).ready(function () {
 
     added_files = []
 
-    $('#file-upload').fileupload({
+    $('#fileupload').fileupload({
         dataType: 'json',
         singleFileUploads: true,
         forceIframeTransport: true,
         url: '/analyze',
         add: function (e, data) {
+            added_files = []
             added_files.push(data);
             console.log(added_files);
-            $('#uploadbutton').unbind('click');
-            $('#uploadbutton').on('click', function(e) {
+            $('#upload-button').unbind('click');
+            $('#upload-button').on('click', function(e) {
                 e.preventDefault();
-                data.formData = $('#file-upload').serializeArray();
+                data.formData = $('#fileupload').serializeArray();
                 var original_data = data;
                 var new_data = {files: [], originalFiles: [], paramName: []};
                 jQuery.each(added_files, function(index, file) {
@@ -35,13 +36,13 @@ $(document).ready(function () {
         send: function (e, data) {
             console.log(data);
         },
-        success: function(data1){            
+        success: function(data1){   
+            // console.log(document.getElementById(fileupload).val());
 
-            $('#analyze').click(function(){
 
             console.log("yay");
 
-            })
+
 
         }
 

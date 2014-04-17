@@ -48,6 +48,7 @@ def hello_world():
 @app.route("/analyze", methods=['POST','GET'])
 def analyze():
     if request.method:
+        # Get and save file from browser upload
         file = request.files['file']
         if file :
             filename = file.filename
@@ -56,19 +57,9 @@ def analyze():
             f = codecs.open(filename)
             raw = f.read()
             raw = unicode(raw, errors='ignore')
-            print raw
-            rand = ''.join(random.choice(string.ascii_uppercase) for i in range(12))
-
-            with open(filename, 'rU') as csv_file:
-                reader = csv.reader(csv_file)
-
-                header = reader.next()
-
-            response = {'update': rand, 'filename': filename, 'header': header}
-
 
     # Get the pickled classifier model and features
-    with open('svmclassifier_new.pkl', 'rb') as infile:
+    with open('svmclassifier_new_0416.pkl', 'rb') as infile:
         model = pickle.load(infile)
 
     with open('features.pkl', 'rb') as f:
@@ -100,9 +91,13 @@ def analyze():
 
         print "Predicted top5: " + ", ".join(top_five_predictions)
 
+    out ={}
+    top_five_predictions =["1","2","3","4","5"]
+    out["predicted"] = top_five_predictions
+    out["employer"] = ["deloitte","salesforce","yahoo"]
+    out["title"] = ["UX Designer","Software engineer","Consultant"]
 
-
-    return json.dumps(response)
+    return json.dumps(out)
  
     
 
