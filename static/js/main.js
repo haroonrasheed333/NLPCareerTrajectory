@@ -7,7 +7,13 @@ $(document).ready(function () {
         singleFileUploads: true,
         forceIframeTransport: true,
         url: '/analyze',
-        add: function (e, data) {
+        add: function (e, data) {;
+            $content = $('#predictions').html();
+            if ($content=='')
+                {
+                    document.getElementById("#predictions").innerHTML = "";
+                };
+
             added_files = []
             added_files.push(data);
             console.log(added_files);
@@ -37,6 +43,7 @@ $(document).ready(function () {
             console.log(data);
         },
         success: function(data){
+
                 console.log("logging data");
                 console.log(data);
                 var employer =[];
@@ -59,6 +66,11 @@ $(document).ready(function () {
                 console.log(table);
                 var i =0;
                 console.log(predicted.length);
+                  var thead = document.createElement('thead');
+
+                        table.appendChild(thead);
+                        thead.appendChild(document.createElement("th")).appendChild(document.createTextNode("Your top 5 Job predictions"));
+
                 while(i<predicted.length){
                     console.log('here');
                     var row = table.insertRow(i+1);
@@ -68,33 +80,32 @@ $(document).ready(function () {
                     cell.appendChild(newText);
                     console.log(cell);
                     cell.title = predicted[i];
-                    cell.href = link1.concat(predicted[i].concat(link3))
-                    
-                    // cell.innerHTML = link1.concat(predicted[i][0].concat(link3));
-
-                   
+                    cell.href = link1.concat(predicted[i].concat(link3))   
                     i++;
-                    // cell="hi:"predicted[rows];
+                    
                 }
+
+
 
                     if (table != null) {
                         for (var i = 0; i < table.rows.length; i++) {
-                            for (var j = 0; j < table.rows[i].cells.length; j++)
+                            for (var j = 0; j < table.rows[i].cells.length; j++){
+                                table.rows[i].cells[j].onMouseover = function () { onhover(this); };
                                 table.rows[i].cells[j].onclick = function () { onclick(this); };
+                                
+                            }
+                                
+
                         }
                     }
              
                     function onclick(cel) {
                         window.open(cel.href);
                     }
-                $('#predictions tr td').click(function(){
-                    console.log($(this));
-                })
-               
-                // cell.onclick=function(){
-                //         window.open(link1.concat(predicted[i][0].concat(link3)),'_blank');
-                //         console.log(link1.concat(predicted[i][0].concat(link3)));
-                //     }
+                    function onhover(cel){
+                        console.log("eeeeee");
+                        this.bgColor='#33CCFF';
+                    }
 
 
 
@@ -102,6 +113,11 @@ $(document).ready(function () {
                 console.log(table1);
                 var i =0;
                 console.log(employer.length+title.length);
+                var thead1 = document.createElement('thead');
+
+                table1.appendChild(thead1);
+                thead1.appendChild(document.createElement("th")).appendChild(document.createTextNode("Top Employers and Job titles for your specialization"));
+
                 while(i<(employer.length+title.length)){
                     if (i<employer.length){
 

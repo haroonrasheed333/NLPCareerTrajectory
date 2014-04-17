@@ -4,10 +4,25 @@
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/static/css/jquery.fileupload-ui.css" rel="stylesheet">
+    
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
     <link rel="stylesheet" type="text/css" href="../static/css/demo.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
 
 </head>
+
+<script>
+  $(window).scroll(function() {
+    $('#left').each(function(){
+    var imagePos = $(this).offset().top;
+
+    var topOfWindow = $(window).scrollTop();
+      if (imagePos < topOfWindow+4000) {
+        $(this).addClass("slideUp");
+      }
+    });
+  });
+</script>
 <body>
 <!-- title bar -->
 <div id="all">
@@ -37,13 +52,8 @@
 </div>
 </br>
 <div id="bottom">
-  <div id="left">
+  <div id="left" class="slideUp">
         <table id="predictions">
-    <thead>
-        <tr>
-            <th>Your top 5  job predictions are</th>
-        </tr>
-    </thead>
     <tbody>
         <tr>
         </tr>
@@ -54,11 +64,6 @@
 
   <div id="right">
             <table id="network">
-    <thead>
-        <tr>
-            <th>Top cpmpanies and job titles for your specialization</th>
-        </tr>
-    </thead>
     <tbody>
         <tr>
         </tr>

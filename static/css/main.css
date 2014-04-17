@@ -49,20 +49,23 @@ Version:        1
   /*padding : 20px; margin: 20px; border: 1px solid black;*/
   width: 40%;
   height:80%;
-  margin-left: 10px;
+  margin-left: 5px;
   float:left;
+  visibility: hidden;
 }
 #right{
   /*padding : 20px; margin: 20px; border: 1px solid black;*/
     width: 40%;
   height:80%;
-  margin-right: 10px;
+  margin-right: 5px;
   float:right;
 
 }
-.predictions tr:hover {
-    cursor: pointer;
+#predictions tr:hover {
+    cursor: hand;
+    webkit-animation-direction: alternate;
 }
+
 
 #getinput{
   margin-left: auto;
