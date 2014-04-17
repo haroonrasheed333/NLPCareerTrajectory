@@ -53,7 +53,50 @@ $(document).ready(function () {
                 data.predicted.forEach(function(aa){
                     predicted.push(aa)
                 });
+                var table = document.getElementById("predictions");
+                console.log(table);
+                var i =0;
+                console.log(predicted.length);
+                while(i<predicted.length){
+                    console.log('here');
+                    var row = table.insertRow(i+1);
+                    var cell = row.insertCell(0);
+                    var newText  = document.createTextNode(predicted[i])
+                    cell.appendChild(newText);
+                    console.log(cell);
+                    i++;
+                    // cell="hi:"predicted[rows];
+                }
+                
 
+                var table1 = document.getElementById("network");
+                console.log(table1);
+                var i =0;
+                console.log(employer.length+title.length);
+                while(i<(employer.length+title.length)){
+                    if (i<employer.length){
+
+                    
+                    console.log('here');
+                    var row = table1.insertRow(i+1);
+                    var cell = row.insertCell(0);
+                    var newText  = document.createTextNode(employer[i])
+                    cell.appendChild(newText);
+                    console.log(cell);
+                    i++;
+                }
+                else
+                {
+                   console.log('here');
+                    var row = table1.insertRow(i+1);
+                    var cell = row.insertCell(0);
+                    var newText  = document.createTextNode(title[i-(employer.length)])
+                    cell.appendChild(newText);
+                    console.log(cell);
+                    i++; 
+                }
+                    // cell="hi:"predicted[rows];
+                }
         
 }
 
