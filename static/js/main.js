@@ -36,15 +36,28 @@ $(document).ready(function () {
         send: function (e, data) {
             console.log(data);
         },
-        success: function(data1){   
-            // console.log(document.getElementById(fileupload).val());
+        success: function(data){
+                console.log("logging data");
+                console.log(data);
+                var employer =[];
+                var title = [];
+                var predicted=[];
+                data.employer.forEach(function(aa){
+                    employer.push(aa)
+                });
+                console.log(employer);
+                data.title.forEach(function(aa){
+                    title.push(aa)
+                });
+
+                data.predicted.forEach(function(aa){
+                    predicted.push(aa)
+                });
+
+        
+}
 
 
-            console.log("yay");
-
-
-
-        }
 
 
 })

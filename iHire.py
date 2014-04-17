@@ -11,6 +11,7 @@ import string
 import csv
 import codecs
 import pickle
+from collections import OrderedDict
 
 
 
@@ -58,46 +59,48 @@ def analyze():
             raw = f.read()
             raw = unicode(raw, errors='ignore')
 
-    # Get the pickled classifier model and features
-    with open('svmclassifier_new_0416.pkl', 'rb') as infile:
-        model = pickle.load(infile)
+    # # Get the pickled classifier model and features
+    # with open('svmclassifier_new_0416.pkl', 'rb') as infile:
+    #     model = pickle.load(infile)
 
-    with open('features.pkl', 'rb') as f:
-        features = pickle.load(f)
+    # with open('features.pkl', 'rb') as f:
+    #     features = pickle.load(f)
 
-    with open('label_names.pkl', 'rb') as lab_names:
-        labels_names = pickle.load(lab_names)
+    # with open('label_names.pkl', 'rb') as lab_names:
+    #     labels_names = pickle.load(lab_names)
 
-    top_unigrams = features['top_unigrams']
-    top_bigrams = features['top_bigrams']
+    # top_unigrams = features['top_unigrams']
+    # top_bigrams = features['top_bigrams']
 
-    resume_text = raw
+    # resume_text = raw
 
-    # Create a featureset for the heldout data
-    resume_featureset = feature_consolidation(resume_text, top_unigrams, top_bigrams)
+    # # Create a featureset for the heldout data
+    # resume_featureset = feature_consolidation(resume_text, top_unigrams, top_bigrams)
 
-    predicted_score = model.predict(resume_featureset)
-    predicted_decision = model.decision_function(resume_featureset)
+    # predicted_score = model.predict(resume_featureset)
+    # predicted_decision = model.decision_function(resume_featureset)
 
-    predicted = []
+    # predicted = []
 
-    for i in range(1):
-        predicted_dec_dup = predicted_decision[i]
-        predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
-        top_five_predictions = []
-        predicted.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[0])])
-        for j in range(5):
-            top_five_predictions.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])])
+    # for i in range(1):
+    #     predicted_dec_dup = predicted_decision[i]
+    #     predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
+    #     top_five_predictions = []
+    #     predicted.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[0])])
+    #     for j in range(5):
+    #         top_five_predictions.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])])
 
-        print "Predicted top5: " + ", ".join(top_five_predictions)
+    #     print "Predicted top5: " + ", ".join(top_five_predictions)
 
-    out ={}
-    top_five_predictions =["1","2","3","4","5"]
+
+# hard coding responses for now
+    out = {}
+    top_five_predictions =["VP","Director","Senior Manager","Senior Consultant","CEO"]
     out["predicted"] = top_five_predictions
     out["employer"] = ["deloitte","salesforce","yahoo"]
     out["title"] = ["UX Designer","Software engineer","Consultant"]
 
-    return json.dumps(out)
+    return json.dumps(OrderedDict(out))
  
     
 
