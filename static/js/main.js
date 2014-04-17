@@ -53,6 +53,8 @@ $(document).ready(function () {
                 data.predicted.forEach(function(aa){
                     predicted.push(aa)
                 });
+                var link1="http://www.simplyhired.com/k-";
+                var link3="-jobs.html";
                 var table = document.getElementById("predictions");
                 console.log(table);
                 var i =0;
@@ -61,13 +63,40 @@ $(document).ready(function () {
                     console.log('here');
                     var row = table.insertRow(i+1);
                     var cell = row.insertCell(0);
+                    var predictnew = predicted[i].replace(" ","-" );
                     var newText  = document.createTextNode(predicted[i])
                     cell.appendChild(newText);
                     console.log(cell);
+                    cell.title = predicted[i];
+                    cell.href = link1.concat(predicted[i].concat(link3))
+                    
+                    // cell.innerHTML = link1.concat(predicted[i][0].concat(link3));
+
+                   
                     i++;
                     // cell="hi:"predicted[rows];
                 }
-                
+
+                    if (table != null) {
+                        for (var i = 0; i < table.rows.length; i++) {
+                            for (var j = 0; j < table.rows[i].cells.length; j++)
+                                table.rows[i].cells[j].onclick = function () { onclick(this); };
+                        }
+                    }
+             
+                    function onclick(cel) {
+                        window.open(cel.href);
+                    }
+                $('#predictions tr td').click(function(){
+                    console.log($(this));
+                })
+               
+                // cell.onclick=function(){
+                //         window.open(link1.concat(predicted[i][0].concat(link3)),'_blank');
+                //         console.log(link1.concat(predicted[i][0].concat(link3)));
+                //     }
+
+
 
                 var table1 = document.getElementById("network");
                 console.log(table1);

@@ -60,6 +60,9 @@ Version:        1
   float:right;
 
 }
+.predictions tr:hover {
+    cursor: pointer;
+}
 
 #getinput{
   margin-left: auto;
