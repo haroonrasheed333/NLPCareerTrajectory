@@ -21,14 +21,15 @@ Version:        1
     height:30%;
 }
 #logo{
-  float:middle;
   margin-left: auto;
   margin-right: auto;
-  margin-top:10px;
-  width:30%;
+  width:60%;
   height:100%;
+  margin-top:10px;
   text-align: center;
+
 }
+
 #middle{
     width:100%;
     height:20%;
@@ -53,13 +54,13 @@ Version:        1
   margin-left: 5px;
   float:left;
   visibility: hidden;
+  display: inline-block;
 }
 #right{
   /*padding : 20px; margin: 20px; border: 1px solid black;*/
     width: 40%;
   height:80%;
-  margin-right: 5px;
-  float:right;
+    display: inline-block;
 
 }
 #predictions tr:hover {

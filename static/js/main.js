@@ -140,7 +140,7 @@ $(document).ready(function () {
                     console.log(cell);
                     i++; 
                 }
-                    // cell="hi:"predicted[rows];
+                    
                 }
         
 }
