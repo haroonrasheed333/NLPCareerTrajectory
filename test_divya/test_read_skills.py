@@ -24,12 +24,12 @@ def test_skills_dict_value_must_be_from_skils_file_for_title():
     training_data = \
         [
             ("Responsible for developing and implementing a high level security feature in the homepage",
-             "sales manager",
-             "67255_plaintext.txt")
+             "senior software engineer",
+             "494346_plaintext.txt")
         ]
-    expected_value = "salesforcecom"
+    expected_value = "java"
     skills_dict = read_skills_from_json_file(training_data)
-    if expected_value in skills_dict["sales manager"]:
+    if expected_value in skills_dict["senior software engineer"]:
         skill_added = 1
         eq_(1,skill_added)
 
