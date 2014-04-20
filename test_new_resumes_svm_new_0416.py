@@ -46,7 +46,7 @@ def main():
     top_unigrams = features['top_unigrams']
     top_bigrams = features['top_bigrams']
 
-    resume_text = open('Ruchita.txt').read()
+    resume_text = open('Grap.txt').read()
 
     # Create a featureset for the heldout data
     resume_featureset = feature_consolidation(resume_text, top_unigrams, top_bigrams)

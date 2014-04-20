@@ -5,29 +5,29 @@ aS'accountant'
 p2
 aS'accounting manager'
 p3
-aS'analyst'
+aS'administrative assistant'
 p4
 aS'assistant manager'
 p5
 aS'assistant vice president'
 p6
-aS'business consultant'
+aS'business analyst'
 p7
-aS'business development director'
+aS'business consultant'
 p8
-aS'business development manager'
+aS'business development director'
 p9
-aS'business manager'
+aS'business development manager'
 p10
-aS'chief executive officer'
+aS'business manager'
 p11
-aS'chief financial officer'
+aS'chief executive officer'
 p12
-aS'chief information officer'
+aS'chief financial officer'
 p13
-aS'chief operating officer'
+aS'chief information officer'
 p14
-aS'computer technician'
+aS'chief operating officer'
 p15
 aS'consultant'
 p16
@@ -35,19 +35,19 @@ aS'customer service associate'
 p17
 aS'customer service manager'
 p18
-aS'designer'
+aS'customer service representative'
 p19
-aS'director'
+aS'data analyst'
 p20
-aS'director of sales'
+aS'designer'
 p21
-aS'executive assistant'
+aS'director'
 p22
-aS'executive director'
+aS'executive assistant'
 p23
-aS'financial analyst'
+aS'executive director'
 p24
-aS'general manager'
+aS'financial analyst'
 p25
 aS'graphic designer'
 p26
@@ -65,86 +65,64 @@ aS'information technology manager'
 p32
 aS'management consultant'
 p33
-aS'manager'
-p34
 aS'managing director'
-p35
+p34
 aS'marketing consultant'
-p36
+p35
 aS'marketing director'
-p37
+p36
 aS'marketing manager'
-p38
+p37
 aS'office assistant'
-p39
-aS'office manager'
-p40
+p38
 aS'operations manager'
-p41
-aS'owner'
-p42
+p39
 aS'president'
-p43
-aS'principal'
-p44
+p40
 aS'product manager'
-p45
+p41
+aS'program manager'
+p42
 aS'project manager'
-p46
+p43
 aS'quality assurance analyst'
-p47
+p44
 aS'recruiter'
-p48
-aS'regional sales manager'
-p49
-aS'sales associate'
-p50
-aS'sales consultant'
-p51
-aS'sales manager'
-p52
-aS'sales representative'
-p53
-aS'secretary'
-p54
+p45
 aS'senior accountant'
-p55
+p46
 aS'senior business analyst'
-p56
+p47
 aS'senior consultant'
-p57
+p48
 aS'senior director'
-p58
+p49
 aS'senior financial analyst'
-p59
+p50
 aS'senior manager'
-p60
+p51
 aS'senior program manager'
-p61
+p52
 aS'senior project manager'
-p62
+p53
 aS'senior software engineer'
-p63
+p54
 aS'senior vice president'
-p64
-aS'server'
-p65
+p55
 aS'software engineer'
-p66
+p56
 aS'staff accountant'
-p67
+p57
 aS'system engineer'
-p68
+p58
 aS'systems administrator'
-p69
+p59
 aS'systems analyst'
-p70
-aS'team leader'
-p71
+p60
 aS'vice president'
-p72
+p61
 aS'web designer'
-p73
+p62
 aS'web developer'
-p74
+p63
 a.

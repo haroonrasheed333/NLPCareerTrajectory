@@ -69,7 +69,7 @@ def extract_top_skills(training_data):
     for skill in skills_dict:
         skill_list = skills_dict[skill]
         skill_count = Counter(skill_list)
-        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:100]
+        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:300]
         skill_features += top_job_skills
 
     top_job_skills = list(set(skill_features))
@@ -195,6 +195,7 @@ if __name__ == '__main__':
     # Extract the top skills from the training data
     print "Extract top skills"
     top_skills = extract_top_skills(train_resumes)
+    print len(top_skills)
 
     # Extract the top unigrams and bigrams from the training data
     words = []
@@ -213,9 +214,9 @@ if __name__ == '__main__':
     print len(words)
     print len(bigrams_list)
 
-    top_unigrams = fd.keys()[:500]
+    top_unigrams = fd.keys()[:5000]
     top_unigrams = list(set(top_unigrams + top_skills))
-    top_bigrams = fd_bi.keys()[:500]
+    top_bigrams = fd_bi.keys()[:1000]
 
     print len(top_unigrams)
     print len(top_bigrams)

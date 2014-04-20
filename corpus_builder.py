@@ -27,21 +27,21 @@ user_name = os.environ.get('USER')
 
 top_jobs = \
     [
-        'director', 'consultant', 'manager', 'administrative assistant', 'project manager', 'vice president',
-        'president', 'graphic designer', 'customer service representative', 'executive assistant', 'office manager',
-        'software engineer', 'assistant manager', 'senior manager', 'general manager', 'accounting manager',
+        'director', 'consultant', 'administrative assistant', 'project manager', 'vice president',
+        'president', 'graphic designer', 'customer service representative', 'executive assistant',
+        'software engineer', 'assistant manager', 'senior manager', 'accounting manager',
         'accountant', 'business analyst', 'program manager', 'office assistant', 'web developer',
         'senior software engineer', 'marketing manager', 'senior project manager', 'executive director',
         'account executive', 'operations manager', 'business development manager', 'senior consultant',
         'staff accountant', 'chief executive officer', 'customer service manager', 'marketing director', 'designer',
-        'senior accountant', 'analyst', 'product manager', 'marketing consultant', 'managing director',
-        'senior director', 'human resources manager', 'financial analyst', 'developer', 'customer service associate',
+        'senior accountant', 'product manager', 'marketing consultant', 'managing director',
+        'senior director', 'human resources manager', 'financial analyst', 'customer service associate',
         'recruiter', 'senior business analyst', 'web designer', 'business manager', 'senior financial analyst',
         'chief operating officer', 'business development director', 'system engineer', 'management consultant',
         'senior vice president', 'information technology consultant', 'quality assurance analyst',
         'human resources director', 'business consultant', 'systems administrator', 'data analyst', 'systems analyst',
         'assistant vice president', 'chief information officer', 'senior program manager', 'chief financial officer',
-        'information technology manager', 'computer technician', 'human resources coordinator',
+        'information technology manager', 'human resources coordinator',
         'human resources assistant'
     ]
 
@@ -107,48 +107,48 @@ def clean_data_and_extract_job_titles(fname, paths, names, job_titles, labels_li
         if name not in names:
             names.append(name)
 
-            # Remove the candidate contact information from the resume.
-            if contact:
-                    contact[0].getparent().remove(contact[0])
+        # Remove the candidate contact information from the resume.
+        if contact:
+                contact[0].getparent().remove(contact[0])
 
-            # Remove the current job section from the resume as we will be using current job title as lable and
-            # use our algorithm to predict it.
-            if current_job:
-                if len(current_job) > 1:
-                    i = 0
-                    while i < len(current_job):
-                        current_job[i].getparent().remove(current_job[i])
-                        i += 1
-                else:
-                    current_job[0].getparent().remove(current_job[0])
-
-                # Convert xml to string.
-                xml = etree.tostring(xml, pretty_print=True)
-
-                # Strip the xml tags from the resume.
-                text_data = stripxml(xml)
+        # Remove the current job section from the resume as we will be using current job title as lable and
+        # use our algorithm to predict it.
+        if current_job:
+            if len(current_job) > 1:
                 i = 0
-                flag = 0
+                while i < len(current_job):
+                    current_job[i].getparent().remove(current_job[i])
+                    i += 1
+            else:
+                current_job[0].getparent().remove(current_job[0])
 
-                # From the resume text remove all the words matching the current job title as we do not want any
-                # information about the current job in the resume text.
-                if current_job_title:
-                    text_data = text_data.replace(current_job_title[0].strip(), '')
-                    job_titles.append(current_job_title[0].strip())
-                    if current_job_title[0].strip() in top_jobs:
-                        flag = 1
-                        job_count[current_job_title[0].strip()] += 1
+            # Convert xml to string.
+            xml = etree.tostring(xml, pretty_print=True)
 
-            # Only save the resumes whose current job title is present in the top 100 jobs
-            if flag == 1 and job_count[current_job_title[0].strip()] < 250:
+            # Strip the xml tags from the resume.
+            text_data = stripxml(xml)
+            i = 0
+            flag = 0
 
-                if current_job_title:
-                    directory = paths['main_source_directory'] + '/' + paths['plaintext_data_directory'] + '/'
-                    f = open(directory + '%s' % fname[:-4] + '_plaintext.txt', 'w')
-                    f.write(text_data)
-                    f.close()
+            # From the resume text remove all the words matching the current job title as we do not want any
+            # information about the current job in the resume text.
+            if current_job_title:
+                text_data = text_data.replace(current_job_title[0].strip(), '')
+                job_titles.append(current_job_title[0].strip())
+                if current_job_title[0].strip() in top_jobs:
+                    flag = 1
+                    job_count[current_job_title[0].strip()] += 1
 
-                    labels_list.append((fname[:-4] + '_plaintext.txt', current_job_title[0].strip().replace('\n', '')))
+        # Only save the resumes whose current job title is present in the top 100 jobs
+        if flag == 1 and job_count[current_job_title[0].strip()] < 250:
+
+            if current_job_title:
+                directory = paths['main_source_directory'] + '/' + paths['plaintext_data_directory'] + '/'
+                f = open(directory + '%s' % fname[:-4] + '_plaintext.txt', 'w')
+                f.write(text_data)
+                f.close()
+
+                labels_list.append((fname[:-4] + '_plaintext.txt', current_job_title[0].strip().replace('\n', '')))
 
         return names, job_titles, labels_list
     except:

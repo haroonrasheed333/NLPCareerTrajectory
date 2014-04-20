@@ -61,16 +61,16 @@ def analyze():
             raw = unicode(raw, errors='ignore')
 
     # Get the pickled classifier model and features
-    with open('svmclassifier_new_0416.pkl', 'rb') as infile:
+    with open('svmclassifier_new_0418_h_new.pkl', 'rb') as infile:
         model = pickle.load(infile)
 
-    with open('features_0416.pkl', 'rb') as f:
+    with open('features_0418_h_new.pkl', 'rb') as f:
         features = pickle.load(f)
 
-    with open('label_names_0416.pkl', 'rb') as lab_names:
+    with open('label_names_0418_h_new.pkl', 'rb') as lab_names:
         labels_names = pickle.load(lab_names)
 
-    with open('count_vect_0416.pkl', 'rb') as count_v:
+    with open('count_vect_0418_h_new.pkl', 'rb') as count_v:
         count_vect = pickle.load(count_v)
 
     top_unigrams = features['top_unigrams']
@@ -102,6 +102,7 @@ def analyze():
 # hard coding responses for now
     out = {}
     # top_five_predictions =["VP","Director","Senior Manager","Senior Consultant","CEO"]
+    top_five_predictions = [string.capwords(tfp) for tfp in top_five_predictions]
     out["predicted"] = top_five_predictions
     out["employer"] = ["deloitte","salesforce","yahoo"]
     out["title"] = ["UX Designer","Software engineer","Consultant"]
