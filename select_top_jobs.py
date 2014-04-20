@@ -1,6 +1,6 @@
 import os
 import re
-import progressbar
+# import progressbar
 from lxml import etree
 from collections import Counter
 from JobTitleNormalization import normalize_job_titles
@@ -38,8 +38,8 @@ def extract_top_jobs(source_dir):
     names = []
     job_titles = []
 
-    j, bar = 0, pbar(len(files))
-    bar.start()
+    # j, bar = 0, pbar(len(files))
+    # bar.start()
     labels_list = []
 
     # From each xml file extract the information and store in plaintext files.
@@ -70,9 +70,9 @@ def extract_top_jobs(source_dir):
         except:
             pass
 
-        j += 1
-        bar.update(j)
-    bar.finish()
+    #     j += 1
+    #     bar.update(j)
+    # bar.finish()
 
     print job_titles[:10]
     print len(job_titles)
@@ -91,18 +91,18 @@ def extract_top_jobs(source_dir):
     return top_normalized_jobs
 
 
-def pbar(size):
-    """
-    Function to display the progress of a long running operation.
-
-    """
-    bar = progressbar.ProgressBar(maxval=size,
-                                  widgets=[progressbar.Bar('=', '[', ']'),
-                                           ' ', progressbar.Percentage(),
-                                           ' ', progressbar.ETA(),
-                                           ' ', progressbar.Counter(),
-                                           '/%s' % size])
-    return bar
+# def pbar(size):
+#     """
+#     Function to display the progress of a long running operation.
+#
+#     """
+#     bar = progressbar.ProgressBar(maxval=size,
+#                                   widgets=[progressbar.Bar('=', '[', ']'),
+#                                            ' ', progressbar.Percentage(),
+#                                            ' ', progressbar.ETA(),
+#                                            ' ', progressbar.Counter(),
+#                                            '/%s' % size])
+#     return bar
 
 
 if __name__ == "__main__":

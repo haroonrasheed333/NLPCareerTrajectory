@@ -87,7 +87,7 @@ def split_data(labels_list, paths):
     labels_heldout.close()
 
 
-def clean_data_and_extract_job_titles(fname, paths, names, labels_list):
+def clean_data_and_extract_job_titles(fname, paths, names, job_titles, labels_list):
     source_dir = paths['main_source_directory'] + '/' + paths['xml_data_directory']
     xml = etree.parse(source_dir + '/' + fname)
 
@@ -134,6 +134,7 @@ def clean_data_and_extract_job_titles(fname, paths, names, labels_list):
                 # information about the current job in the resume text.
                 if current_job_title:
                     text_data = text_data.replace(current_job_title[0].strip(), '')
+                    job_titles.append(current_job_title[0].strip())
                     if current_job_title[0].strip() in top_jobs:
                         flag = 1
                         job_count[current_job_title[0].strip()] += 1
@@ -149,9 +150,9 @@ def clean_data_and_extract_job_titles(fname, paths, names, labels_list):
 
                     labels_list.append((fname[:-4] + '_plaintext.txt', current_job_title[0].strip().replace('\n', '')))
 
-        return names, labels_list
+        return names, job_titles, labels_list
     except:
-        return names, labels_list
+        return names, job_titles, labels_list
 
 
    
@@ -169,12 +170,13 @@ def prepare_data(paths):
     files = [f for (dirpath, dirnames, filenames) in os.walk(source_dir) for f in filenames if f[-4:] == '.txt']
 
     names = []
+    job_titles = []
     labels = []
 
     # From each xml file extract the information and store in plaintext files.
     for f in files:
         # Create an xml parser object
-        (names, labels_list) = clean_data_and_extract_job_titles(f, paths, names, labels)
+        (names, job_titles, labels_list) = clean_data_and_extract_job_titles(f, paths, names, job_titles, labels)
 
     # Split the saved resumes (resumes belonging to top 100 job titles) into training and heldout datasets.
     split_data(labels, paths)
