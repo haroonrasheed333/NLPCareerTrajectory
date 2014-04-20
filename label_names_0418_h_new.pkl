@@ -1,0 +1,150 @@
+(lp0
+S'account executive'
+p1
+aS'accountant'
+p2
+aS'accounting manager'
+p3
+aS'analyst'
+p4
+aS'assistant manager'
+p5
+aS'assistant vice president'
+p6
+aS'business consultant'
+p7
+aS'business development director'
+p8
+aS'business development manager'
+p9
+aS'business manager'
+p10
+aS'chief executive officer'
+p11
+aS'chief financial officer'
+p12
+aS'chief information officer'
+p13
+aS'chief operating officer'
+p14
+aS'computer technician'
+p15
+aS'consultant'
+p16
+aS'customer service associate'
+p17
+aS'customer service manager'
+p18
+aS'designer'
+p19
+aS'director'
+p20
+aS'director of sales'
+p21
+aS'executive assistant'
+p22
+aS'executive director'
+p23
+aS'financial analyst'
+p24
+aS'general manager'
+p25
+aS'graphic designer'
+p26
+aS'human resources assistant'
+p27
+aS'human resources coordinator'
+p28
+aS'human resources director'
+p29
+aS'human resources manager'
+p30
+aS'information technology consultant'
+p31
+aS'information technology manager'
+p32
+aS'management consultant'
+p33
+aS'manager'
+p34
+aS'managing director'
+p35
+aS'marketing consultant'
+p36
+aS'marketing director'
+p37
+aS'marketing manager'
+p38
+aS'office assistant'
+p39
+aS'office manager'
+p40
+aS'operations manager'
+p41
+aS'owner'
+p42
+aS'president'
+p43
+aS'principal'
+p44
+aS'product manager'
+p45
+aS'project manager'
+p46
+aS'quality assurance analyst'
+p47
+aS'recruiter'
+p48
+aS'regional sales manager'
+p49
+aS'sales associate'
+p50
+aS'sales consultant'
+p51
+aS'sales manager'
+p52
+aS'sales representative'
+p53
+aS'secretary'
+p54
+aS'senior accountant'
+p55
+aS'senior business analyst'
+p56
+aS'senior consultant'
+p57
+aS'senior director'
+p58
+aS'senior financial analyst'
+p59
+aS'senior manager'
+p60
+aS'senior program manager'
+p61
+aS'senior project manager'
+p62
+aS'senior software engineer'
+p63
+aS'senior vice president'
+p64
+aS'server'
+p65
+aS'software engineer'
+p66
+aS'staff accountant'
+p67
+aS'system engineer'
+p68
+aS'systems administrator'
+p69
+aS'systems analyst'
+p70
+aS'team leader'
+p71
+aS'vice president'
+p72
+aS'web designer'
+p73
+aS'web developer'
+p74
+a.
