@@ -28,7 +28,7 @@ class ResumeCorpus():
         
         self.source_dir = source_dir
         if not labels_file:
-            self.labels_file = self.source_dir + '/labels_0408.txt'
+            self.labels_file = self.source_dir + '/labels_0418.txt'
         else:
             self.labels_file = labels_file
         self.resumes = self.read_files()
@@ -50,7 +50,7 @@ class ResumeCorpus():
                 filename_tag = line.split('\t')
                 filename = filename_tag[0]
                 resume_tag = filename_tag[1].rstrip()
-                resumes.append((open(self.source_dir + '/training_0408/' + filename).read(), resume_tag, filename))
+                resumes.append((open(self.source_dir + '/training_0418/' + filename).read(), resume_tag, filename))
             except IOError, (ErrorNumber, ErrorMessage):
                 if ErrorNumber == 2:
                     pass
@@ -71,7 +71,7 @@ def read_skills_from_json_file(training_data):
     """
 
     skills_dict = dict()
-    temp_dict = json.loads(open("skills.json").read())
+    temp_dict = json.loads(open("skills_0418.json").read())
     training_files = [fname for (resume, resume_label, fname) in training_data]
 
     for title in temp_dict:
@@ -105,7 +105,7 @@ def extract_top_skills(training_data):
     for skill in skills_dict:
         skill_list = skills_dict[skill]
         skill_count = Counter(skill_list)
-        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:3]
+        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:50]
         skill_features += top_job_skills
 
     top_job_skills = list(set(skill_features))
@@ -317,7 +317,7 @@ def create_skills_json(data, xml_directory, save_json=False):
 
     if save_json:
         j = json.dumps(skills_dict, indent=4)
-        f = open('skills.json', 'w')
+        f = open('skills_0418.json', 'w')
         print >> f, j
         f.close()
     else:
@@ -342,5 +342,5 @@ def stripxml(data):
 if __name__ == '__main__':
     user_name = os.environ.get('USER')
     traintest_corpus = ResumeCorpus('/Users/' + user_name + '/Documents/Data')
-    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0408'
+    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0418'
     create_skills_json(traintest_corpus.resumes, xml_directory, True)

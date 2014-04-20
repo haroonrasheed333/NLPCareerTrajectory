@@ -2,62 +2,21 @@ from __future__ import division
 import os
 import random
 import pickle
+import numpy as np
 from nltk import bigrams
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
-from career_trajectory_svm import tfidftransform
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.svm import LinearSVC, libsvm
+from util import ResumeCorpus
 from sklearn.metrics import precision_score, recall_score, classification_report
 from collections import defaultdict
 
 st = PorterStemmer()
 stopwords = stopwords.words('english')
 data_dict = defaultdict(list)
-
-
-class ResumeCorpus():
-    """
-    Class to read the source files from source directory and create a list of tuples with resume_text, tag and filename
-    for each resume.
-
-    Args:
-        source_dir -- string. The path of the source directory.
-        labels_file -- string. The path of the labels file (default: None)
-    """
-    def __init__(self, source_dir, labels_file=None):
-
-        self.source_dir = source_dir
-        if not labels_file:
-            self.labels_file = self.source_dir + '/labels_heldout_0418.txt'
-        else:
-            self.labels_file = labels_file
-        self.resumes = self.read_files()
-
-    def read_files(self):
-        """
-        Method to return a list of tuples with resume_text, tag and filename for the training data
-
-        Args:
-            No Argument
-
-        Returns:
-            resumes -- list of tuples with resume_text, tag and filename for the training data
-        """
-        resumes = []
-
-        for line in open(self.labels_file).readlines():
-            try:
-                filename_tag = line.split('\t')
-                filename = filename_tag[0]
-                resume_tag = filename_tag[1].rstrip()
-                resumes.append((open(self.source_dir + '/heldout_0418/' + filename).read(), resume_tag, filename))
-            except IOError, (ErrorNumber, ErrorMessage):
-                if ErrorNumber == 2:
-                    pass
-
-        return resumes
 
 
 def pre_processing(resume):
@@ -98,30 +57,67 @@ def prepare_data():
             pass
 
 
-def main():
-    """
-    Test the heldout dataset using the trained classifier and features
-    """
+def vectorize(count_vect, data):
+    x_counts = count_vect.fit_transform(data)
+    return x_counts
+
+
+def tfidftransform(counts):
+    tfidf_transformer = TfidfTransformer()
+    x_tfidf = tfidf_transformer.fit_transform(counts)
+    return x_tfidf
+
+
+def trainnb(tfidf, train_label):
+    clf = MultinomialNB().fit(tfidf, train_label)
+    return clf
+
+
+def trainsvm(tfidf, train_label):
+    clf = LinearSVC().fit(tfidf, train_label)
+    return clf
+
+
+
+if __name__ == '__main__':
+    # Prepare data
     prepare_data()
 
-    # Get the pickled classifier model and features
-    with open('svmclassifier_new_0418_h.pkl', 'rb') as infile:
-        model = pickle.load(infile)
+    labels = []
 
-    with open('label_names_0418_h.pkl', 'rb') as lab_names:
-        labels_names = pickle.load(lab_names)
+    num_resumes = len(data_dict['label'])
 
-    with open('count_vect_0418_h.pkl', 'rb') as count_v:
-        count_vect = pickle.load(count_v)
+    # Split the data training and test datasets
+    train_resumes = data_dict['data'][0:int(num_resumes*0.9)]
+    train_labels = data_dict['label'][0:int(num_resumes*0.9)]
 
-    test_resumes = data_dict['data'][:]
-    test_labels = data_dict['label'][:]
+    labels_names = sorted(list(set(train_labels)))
+
+    with open('label_names_0418_h.pkl', 'wb') as lab_names:
+        pickle.dump(labels_names, lab_names)
+
+    count_vect = CountVectorizer()
+    train_counts = vectorize(count_vect, train_resumes)
+    tfidf_train = tfidftransform(train_counts)
+    clf = trainsvm(tfidf_train, train_labels)
+
+    test_resumes = data_dict['data'][int(num_resumes*0.9) + 1:]
+    test_labels = data_dict['label'][int(num_resumes*0.9) + 1:]
 
     test_counts = count_vect.transform(test_resumes)
     tfidf_test = tfidftransform(test_counts)
-    predicted_score = model.predict(tfidf_test)
-    predicted_decision = model.decision_function(tfidf_test)
+    predicted = clf.predict(tfidf_test)
+    predicted_decision = clf.decision_function(tfidf_test)
 
+    #accuracy = np.mean(predicted == test_labels)
+    #p = precision_score(test_labels, predicted, average='macro')
+    #r = recall_score(test_labels, predicted, average='macro')
+    #
+    #print accuracy
+    #print p
+    #print r
+    #
+    #print classification_report([t for t in test_labels], [p for p in predicted])
     predicted = []
 
     actual_vs_predicted = []
@@ -162,6 +158,9 @@ def main():
 
     print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
 
+    # Pickle the classifier and training features to test it on the heldout dataset.
+    with open('svmclassifier_new_0418_h.pkl', 'wb') as outfile:
+        pickle.dump(clf, outfile)
 
-if __name__ == '__main__':
-    main()
+    with open('count_vect_0418_h.pkl', 'wb') as count_v:
+        pickle.dump(count_vect, count_v)

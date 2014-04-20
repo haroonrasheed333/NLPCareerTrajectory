@@ -35,7 +35,7 @@ def read_skills_from_json_file(training_data):
     """
 
     skills_dict = dict()
-    temp_dict = json.loads(open("skills.json").read())
+    temp_dict = json.loads(open("skills_0418.json").read())
     training_files = [fname for (resume, resume_label, fname) in training_data]
 
     for title in temp_dict:
@@ -217,6 +217,9 @@ if __name__ == '__main__':
     top_unigrams = list(set(top_unigrams + top_skills))
     top_bigrams = fd_bi.keys()[:500]
 
+    print len(top_unigrams)
+    print len(top_bigrams)
+
     # Create a training featureset from the top unigrams, skills and bigrams.
     print "Create training featureset"
     train_featureset = feature_consolidation(train_resumes, top_unigrams, top_bigrams, True)
@@ -291,18 +294,18 @@ if __name__ == '__main__':
     print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
 
     # Pickle the classifier and training features to test it on the heldout dataset.
-    with open('svmclassifier_new_0416.pkl', 'wb') as outfile:
+    with open('svmclassifier_new_0418_h_new.pkl', 'wb') as outfile:
         pickle.dump(clf, outfile)
 
     features = dict()
     features['top_unigrams'] = top_unigrams
     features['top_bigrams'] = top_bigrams
 
-    with open('features_0416.pkl', 'wb') as f:
+    with open('features_0418_h_new.pkl', 'wb') as f:
         pickle.dump(features, f)
 
-    with open('label_names_0416.pkl', 'wb') as lab_names:
+    with open('label_names_0418_h_new.pkl', 'wb') as lab_names:
         pickle.dump(labels_names, lab_names)
 
-    with open('count_vect_0416.pkl', 'wb') as count_v:
+    with open('count_vect_0418_h_new.pkl', 'wb') as count_v:
         pickle.dump(count_vect, count_v)

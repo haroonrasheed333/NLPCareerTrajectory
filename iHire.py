@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect, url_for
 from flask.templating import render_template
 from flask import url_for
-from util import unigram_features, bigram_features
+# from util import unigram_features, bigram_features
 import nltk
 import re
 import json
@@ -12,6 +12,7 @@ import csv
 import codecs
 import pickle
 from collections import OrderedDict
+from career_trajectory_svm_new_0416 import unigram_features, bigram_features, tfidftransform
 
 
 
@@ -31,8 +32,8 @@ def feature_consolidation(resume_text, top_unigram_list, top_bigram_list):
     Returns:
         consolidated_features -- list of consolidated features
     """
-    uni_feats = [unigram_features(resume_text, top_unigram_list)]
-    bi_feats = [bigram_features(resume_text, top_bigram_list)]
+    uni_feats = [" ".join(unigram_features(resume_text, top_unigram_list))]
+    bi_feats = [" ".join(bigram_features(resume_text, top_bigram_list))]
     consolidated_features = []
     ind = 0
     while ind < len(uni_feats):
@@ -59,43 +60,48 @@ def analyze():
             raw = f.read()
             raw = unicode(raw, errors='ignore')
 
-    # # Get the pickled classifier model and features
-    # with open('svmclassifier_new_0416.pkl', 'rb') as infile:
-    #     model = pickle.load(infile)
+    # Get the pickled classifier model and features
+    with open('svmclassifier_new_0416.pkl', 'rb') as infile:
+        model = pickle.load(infile)
 
-    # with open('features.pkl', 'rb') as f:
-    #     features = pickle.load(f)
+    with open('features_0416.pkl', 'rb') as f:
+        features = pickle.load(f)
 
-    # with open('label_names.pkl', 'rb') as lab_names:
-    #     labels_names = pickle.load(lab_names)
+    with open('label_names_0416.pkl', 'rb') as lab_names:
+        labels_names = pickle.load(lab_names)
 
-    # top_unigrams = features['top_unigrams']
-    # top_bigrams = features['top_bigrams']
+    with open('count_vect_0416.pkl', 'rb') as count_v:
+        count_vect = pickle.load(count_v)
 
-    # resume_text = raw
+    top_unigrams = features['top_unigrams']
+    top_bigrams = features['top_bigrams']
 
-    # # Create a featureset for the heldout data
-    # resume_featureset = feature_consolidation(resume_text, top_unigrams, top_bigrams)
+    resume_text = raw
 
-    # predicted_score = model.predict(resume_featureset)
-    # predicted_decision = model.decision_function(resume_featureset)
+    # Create a featureset for the heldout data
+    resume_featureset = feature_consolidation(resume_text, top_unigrams, top_bigrams)
 
-    # predicted = []
+    resume_counts = count_vect.transform(resume_featureset)
+    tfidf_test = tfidftransform(resume_counts)
+    predicted_score = model.predict(tfidf_test)
+    predicted_decision = model.decision_function(tfidf_test)
 
-    # for i in range(1):
-    #     predicted_dec_dup = predicted_decision[i]
-    #     predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
-    #     top_five_predictions = []
-    #     predicted.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[0])])
-    #     for j in range(5):
-    #         top_five_predictions.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])])
+    predicted = []
 
-    #     print "Predicted top5: " + ", ".join(top_five_predictions)
+    for i in range(1):
+        predicted_dec_dup = predicted_decision[i]
+        predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
+        top_five_predictions = []
+        predicted.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[0])])
+        for j in range(5):
+            top_five_predictions.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])])
+
+        print "Predicted top5: " + ", ".join(top_five_predictions)
 
 
 # hard coding responses for now
     out = {}
-    top_five_predictions =["VP","Director","Senior Manager","Senior Consultant","CEO"]
+    # top_five_predictions =["VP","Director","Senior Manager","Senior Consultant","CEO"]
     out["predicted"] = top_five_predictions
     out["employer"] = ["deloitte","salesforce","yahoo"]
     out["title"] = ["UX Designer","Software engineer","Consultant"]
