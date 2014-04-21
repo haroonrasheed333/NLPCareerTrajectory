@@ -30,7 +30,7 @@ class ResumeCorpus():
 
         self.source_dir = source_dir
         if not labels_file:
-            self.labels_file = self.source_dir + '/labels_heldout_0408.txt'
+            self.labels_file = self.source_dir + '/labels_heldout_0418.txt'
         else:
             self.labels_file = labels_file
         self.resumes = self.read_files()
@@ -52,7 +52,7 @@ class ResumeCorpus():
                 filename_tag = line.split('\t')
                 filename = filename_tag[0]
                 resume_tag = filename_tag[1].rstrip()
-                resumes.append((open(self.source_dir + '/heldout_0408/' + filename).read(), resume_tag, filename))
+                resumes.append((open(self.source_dir + '/heldout_0418/' + filename).read(), resume_tag, filename))
             except IOError, (ErrorNumber, ErrorMessage):
                 if ErrorNumber == 2:
                     pass
@@ -105,13 +105,13 @@ def main():
     prepare_data()
 
     # Get the pickled classifier model and features
-    with open('svmclassifier.pkl', 'rb') as infile:
+    with open('svmclassifier_new_0418_h.pkl', 'rb') as infile:
         model = pickle.load(infile)
 
-    with open('label_names.pkl', 'rb') as lab_names:
+    with open('label_names_0418_h.pkl', 'rb') as lab_names:
         labels_names = pickle.load(lab_names)
 
-    with open('count_vect.pkl', 'rb') as count_v:
+    with open('count_vect_0418_h.pkl', 'rb') as count_v:
         count_vect = pickle.load(count_v)
 
     test_resumes = data_dict['data'][:]

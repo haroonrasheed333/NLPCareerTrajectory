@@ -2,6 +2,7 @@ import os
 import nltk
 import json
 import re
+import string
 from lxml import etree
 from nltk import bigrams
 from nltk.corpus import stopwords
@@ -28,7 +29,7 @@ class ResumeCorpus():
         
         self.source_dir = source_dir
         if not labels_file:
-            self.labels_file = self.source_dir + '/labels_0408.txt'
+            self.labels_file = self.source_dir + '/labels_0418.txt'
         else:
             self.labels_file = labels_file
         self.resumes = self.read_files()
@@ -50,7 +51,7 @@ class ResumeCorpus():
                 filename_tag = line.split('\t')
                 filename = filename_tag[0]
                 resume_tag = filename_tag[1].rstrip()
-                resumes.append((open(self.source_dir + '/training_0408/' + filename).read(), resume_tag, filename))
+                resumes.append((open(self.source_dir + '/training_0418/' + filename).read(), resume_tag, filename))
             except IOError, (ErrorNumber, ErrorMessage):
                 if ErrorNumber == 2:
                     pass
@@ -71,7 +72,7 @@ def read_skills_from_json_file(training_data):
     """
 
     skills_dict = dict()
-    temp_dict = json.loads(open("skills.json").read())
+    temp_dict = json.loads(open("skills_0418.json").read())
     training_files = [fname for (resume, resume_label, fname) in training_data]
 
     for title in temp_dict:
@@ -105,7 +106,7 @@ def extract_top_skills(training_data):
     for skill in skills_dict:
         skill_list = skills_dict[skill]
         skill_count = Counter(skill_list)
-        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:3]
+        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:50]
         skill_features += top_job_skills
 
     top_job_skills = list(set(skill_features))
@@ -285,6 +286,14 @@ def create_skills_json(data, xml_directory, save_json=False):
         xml = etree.parse(xml_directory + '/' + xml_file)
         skill_list = xml.xpath('//skills/text()')
 
+        skills_ignore = \
+            [
+                'Skills', 'Years', 'Languages', 'Proficient', 'Tools', 'Expert', 'System', 'Business', 'Systems', 'Ms',
+                'Computer', 'Software', 'Suite', 'Development', 'Human', 'Month', 'Level', 'Studio', 'Applications',
+                'Application', 'Proficiency', 'Certifications', 'Applications', 'Implementation', 'Architecture',
+                'Experience', 'Services', 'Administration', 'Provider', 'Functions', 'Concur', 'Knowledge'
+            ]
+
         if skill_list:
             slist = []
             for skill in skill_list:
@@ -299,7 +308,7 @@ def create_skills_json(data, xml_directory, save_json=False):
 
                 skill_words_nouns = [
                     st.stem(w) for (w, t) in nltk.pos_tag(skill_words) if t.startswith('NN')
-                    and w not in stopwords
+                    and w not in stopwords and string.capwords(w) not in skills_ignore
                 ]
 
                 skill_words_nouns = list(set(skill_words_nouns))
@@ -316,8 +325,8 @@ def create_skills_json(data, xml_directory, save_json=False):
                 skills_dict[tag_name.lower()].append(temp_dict)
 
     if save_json:
-        j = json.dumps(skills_dict, indent=4)
-        f = open('skills.json', 'w')
+        j = json.dumps(skills_dict, indent=4, separators=(',', ': '))
+        f = open('skills_0418.json', 'w')
         print >> f, j
         f.close()
     else:
@@ -339,8 +348,74 @@ def stripxml(data):
     return text
 
 
+def create_skills_map(data, xml_directory):
+    """
+    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
+    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
+    stored as a json file.
+
+    Args:
+        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    """
+    skills_map = dict()
+
+    # Get the skills for each resume from its corresponding xml file.
+    for (resume_text, tag_name, filename) in data:
+        xml_file = filename.split('_')[0] + '.txt'
+        xml = etree.parse(xml_directory + '/' + xml_file)
+        skill_list = xml.xpath('//skills/text()')
+
+        skills_ignore = \
+            [
+                'Skills', 'Years', 'Languages', 'Proficient', 'Tools', 'Expert', 'System', 'Business', 'Systems', 'Ms',
+                'Computer', 'Software', 'Suite', 'Development', 'Human', 'Month', 'Level', 'Studio', 'Applications',
+                'Application', 'Proficiency', 'Certifications', 'Applications', 'Implementation', 'Architecture',
+                'Experience', 'Services', 'Administration', 'Provider', 'Functions', 'Concur', 'Knowledge'
+            ]
+
+        if skill_list:
+            slist = []
+            for skill in skill_list:
+                try:
+                    skill = str(skill).encode('utf-8')
+                except:
+                    skill = skill.encode('utf-8')
+                skill = skill.translate(None, ',:();-')
+                skill = skill.replace('/', ' ')
+                skill = skill.replace('.', '')
+                skill_words = nltk.word_tokenize(skill.lower())
+
+                skill_words_nouns = [
+                    string.capwords(w) for (w, t) in nltk.pos_tag(skill_words) if t.startswith('NN')
+                    and w not in stopwords and string.capwords(w) not in skills_ignore
+                ]
+
+                slist += skill_words_nouns
+
+            value = skills_map.get(tag_name.lower(), None)
+            if value is not None:
+                skills_map[tag_name.lower()] += slist
+            else:
+                skills_map[tag_name.lower()] = []
+                skills_map[tag_name.lower()] += slist
+
+    for sk in skills_map:
+        temp_skills_list = skills_map[sk]
+        top_ten_skills = Counter(temp_skills_list).most_common(20)
+        skills_map[sk] = []
+        for top_ten in top_ten_skills:
+            skills_map[sk].append(top_ten[0])
+
+    j = json.dumps(skills_map, indent=4, separators=(',', ': '))
+    f = open('skills_map.json', 'w')
+    print >> f, j
+    f.close()
+
+
 if __name__ == '__main__':
     user_name = os.environ.get('USER')
     traintest_corpus = ResumeCorpus('/Users/' + user_name + '/Documents/Data')
-    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0408'
+    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0418'
     create_skills_json(traintest_corpus.resumes, xml_directory, True)
+    # create_skills_map(traintest_corpus.resumes, xml_directory)

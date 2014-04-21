@@ -6,21 +6,46 @@ import shutil
 # import progressbar
 from lxml import etree
 from util import stripxml
+from collections import defaultdict
 from JobTitleNormalization import normalize_job_titles
 
 user_name = os.environ.get('USER')
 
+# top_jobs = \
+#     [
+#         'director', 'consultant', 'project manager', 'vice president', 'administrative assistant',
+#         'president', 'graphic designer', 'software engineer', 'senior manager', 'customer service representative',
+#         'accountant', 'general manager', 'program manager', 'assistant manager', 'business analyst',
+#         'web developer', 'sales representative', 'senior software engineer', 'executive director',
+#         'senior project manager', 'marketing manager', 'senior consultant', 'sales manager', 'office assistant',
+#         'sales associate', 'chief executive officer', 'marketing director', 'senior accountant', 'managing director',
+#         'senior director', 'marketing consultant', 'product manager', 'human resources manager',
+#         'senior business analyst', 'sales consultant', 'financial analyst', 'developer', 'web designer',
+#         'senior vice president', 'sales director', 'management consultant', 'senior financial analyst',
+#         'chief information officer', 'chief operating officer', 'senior program manager'
+#     ]
+
 top_jobs = \
-    ['consultant', 'director', 'project manager', 'vice president', 'software engineer', 'graphic designer',
-     'administrative assistant', 'president', 'senior software engineer', 'accountant', 'web developer',
-     'executive assistant', 'senior manager', 'business analyst', 'senior project manager',
-     'research assistant', 'program manager', 'accounting manager', 'senior consultant', 'marketing manager',
-     'customer service representative', 'staff accountant', 'business development manager', 'general manager',
-     'assistant manager', 'office assistant', 'sales representative', 'account executive', 'office manager',
-     'senior accountant', 'chief executive officer', 'sales associate', 'marketing director',
-     'senior business analyst', 'senior director', 'product manager', 'designer', 'marketing consultant',
-     'operations manager', 'analyst'
+    [
+        'director', 'consultant', 'administrative assistant', 'project manager', 'vice president',
+        'president', 'graphic designer', 'customer service representative', 'executive assistant',
+        'software engineer', 'assistant manager', 'senior manager', 'accounting manager',
+        'accountant', 'business analyst', 'program manager', 'office assistant', 'web developer',
+        'senior software engineer', 'marketing manager', 'senior project manager', 'executive director',
+        'account executive', 'operations manager', 'business development manager', 'senior consultant',
+        'staff accountant', 'chief executive officer', 'customer service manager', 'marketing director', 'designer',
+        'senior accountant', 'product manager', 'marketing consultant', 'managing director',
+        'senior director', 'human resources manager', 'financial analyst', 'customer service associate',
+        'recruiter', 'senior business analyst', 'web designer', 'business manager', 'senior financial analyst',
+        'chief operating officer', 'business development director', 'system engineer', 'management consultant',
+        'senior vice president', 'information technology consultant', 'quality assurance analyst',
+        'human resources director', 'business consultant', 'systems administrator', 'data analyst', 'systems analyst',
+        'assistant vice president', 'chief information officer', 'senior program manager', 'chief financial officer',
+        'information technology manager', 'human resources coordinator',
+        'human resources assistant'
     ]
+
+job_count = defaultdict(int)
 
 
 def split_data(labels_list, paths):
@@ -82,58 +107,48 @@ def clean_data_and_extract_job_titles(fname, paths, names, job_titles, labels_li
         if name not in names:
             names.append(name)
 
-            # Remove the candidate contact information from the resume.
-            if contact:
-                    contact[0].getparent().remove(contact[0])
+        # Remove the candidate contact information from the resume.
+        if contact:
+                contact[0].getparent().remove(contact[0])
 
-            # Remove the current job section from the resume as we will be using current job title as lable and
-            # use our algorithm to predict it.
-            if current_job:
-                if len(current_job) > 1:
-                    i = 0
-                    while i < len(current_job):
-                        current_job[i].getparent().remove(current_job[i])
-                        i += 1
-                else:
-                    current_job[0].getparent().remove(current_job[0])
-
-                # Convert xml to string.
-                xml = etree.tostring(xml, pretty_print=True)
-
-                # Strip the xml tags from the resume.
-                text_data = stripxml(xml)
+        # Remove the current job section from the resume as we will be using current job title as lable and
+        # use our algorithm to predict it.
+        if current_job:
+            if len(current_job) > 1:
                 i = 0
-                flag = 0
+                while i < len(current_job):
+                    current_job[i].getparent().remove(current_job[i])
+                    i += 1
+            else:
+                current_job[0].getparent().remove(current_job[0])
 
-                # From the resume text remove all the words matching the current job title as we do not want any
-                # information about the current job in the resume text.
-                if current_job_title:
-                    i = 0
-                    if len(current_job_title) > 1:
-                        while i < len(current_job_title):
-                            text_data = text_data.replace(current_job_title[i].strip(), '')
-                            job_titles.append(current_job_title[i].strip())
-                            i += 1
+            # Convert xml to string.
+            xml = etree.tostring(xml, pretty_print=True)
 
-                            # Set flag to 1 if the current job title is present in top 50 jobs.
-                            if current_job_title[i] in top_jobs:
-                                flag = 1
-                    else:
-                        text_data = text_data.replace(current_job_title[0].strip(), '')
-                        job_titles.append(current_job_title[0].strip())
-                        if current_job_title[i] in top_jobs:
-                            flag = 1
+            # Strip the xml tags from the resume.
+            text_data = stripxml(xml)
+            i = 0
+            flag = 0
 
-            # Only save the resumes whose current job title is present in the top 50 jobs
-            if flag == 1:
+            # From the resume text remove all the words matching the current job title as we do not want any
+            # information about the current job in the resume text.
+            if current_job_title:
+                text_data = text_data.replace(current_job_title[0].strip(), '')
+                job_titles.append(current_job_title[0].strip())
+                if current_job_title[0].strip() in top_jobs:
+                    flag = 1
+                    job_count[current_job_title[0].strip()] += 1
 
-                if current_job_title:
-                    directory = paths['main_source_directory'] + '/' + paths['plaintext_data_directory'] + '/'
-                    f = open(directory + '%s' % fname[:-4] + '_plaintext.txt', 'w')
-                    f.write(text_data)
-                    f.close()
+        # Only save the resumes whose current job title is present in the top 100 jobs
+        if flag == 1 and job_count[current_job_title[0].strip()] < 250:
 
-                    labels_list.append((fname[:-4] + '_plaintext.txt', current_job_title[0].replace('\n', '')))
+            if current_job_title:
+                directory = paths['main_source_directory'] + '/' + paths['plaintext_data_directory'] + '/'
+                f = open(directory + '%s' % fname[:-4] + '_plaintext.txt', 'w')
+                f.write(text_data)
+                f.close()
+
+                labels_list.append((fname[:-4] + '_plaintext.txt', current_job_title[0].strip().replace('\n', '')))
 
         return names, job_titles, labels_list
     except:
@@ -163,7 +178,7 @@ def prepare_data(paths):
         # Create an xml parser object
         (names, job_titles, labels_list) = clean_data_and_extract_job_titles(f, paths, names, job_titles, labels)
 
-    # Split the saved resumes (resumes belonging to top 50 job titles) into training and heldout datasets.
+    # Split the saved resumes (resumes belonging to top 100 job titles) into training and heldout datasets.
     split_data(labels, paths)
 
     return
@@ -185,12 +200,12 @@ def prepare_data(paths):
 if __name__ == "__main__":
     paths = dict()
     paths['main_source_directory'] = '/Users/' + user_name + '/Documents/Data/'
-    paths['xml_data_directory'] = 'samples_0408'
-    paths['plaintext_data_directory'] = 'samples_0408_text'
-    paths['training_directory'] = 'training_0408'
-    paths['heldout_directory'] = 'heldout_0408'
-    paths['labels_file_path'] = 'labels_0408.txt'
-    paths['labels_heldout_file_path'] = 'labels_heldout_0408.txt'
+    paths['xml_data_directory'] = 'samples_0418'
+    paths['plaintext_data_directory'] = 'samples_0418_text'
+    paths['training_directory'] = 'training_0418'
+    paths['heldout_directory'] = 'heldout_0418'
+    paths['labels_file_path'] = 'labels_0418.txt'
+    paths['labels_heldout_file_path'] = 'labels_heldout_0418.txt'
 
     prepare_data(paths)
 

@@ -31,22 +31,22 @@ def main():
     """
 
     # Get the pickled classifier model and features
-    with open('svmclassifier_new_0416.pkl', 'rb') as infile:
+    with open('svmclassifier_new_0418_h_new.pkl', 'rb') as infile:
         model = pickle.load(infile)
 
-    with open('features_0416.pkl', 'rb') as f:
+    with open('features_0418_h_new.pkl', 'rb') as f:
         features = pickle.load(f)
 
-    with open('label_names_0416.pkl', 'rb') as lab_names:
+    with open('label_names_0418_h_new.pkl', 'rb') as lab_names:
         labels_names = pickle.load(lab_names)
 
-    with open('count_vect_0416.pkl', 'rb') as count_v:
+    with open('count_vect_0418_h_new.pkl', 'rb') as count_v:
         count_vect = pickle.load(count_v)
 
     top_unigrams = features['top_unigrams']
     top_bigrams = features['top_bigrams']
 
-    resume_text = open('Div.txt').read()
+    resume_text = open('Grap.txt').read()
 
     # Create a featureset for the heldout data
     resume_featureset = feature_consolidation(resume_text, top_unigrams, top_bigrams)
