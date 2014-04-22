@@ -256,10 +256,10 @@ if __name__ == '__main__':
     # predicted_decision = clf.decision_function(test_counts)
 
     # TfidfVectorizer (unigrams + bigrams)
-    hash_uni_vect = HashingVectorizer(stop_words='english', ngram_range=(1, 1), n_features=10000)
-    # hash_bi_vect = HashingVectorizer(stop_words='english', ngram_range=(2, 2), n_features=3000)
+    hash_uni_vect = HashingVectorizer(stop_words='english', ngram_range=(1, 1), n_features=4000)
+    hash_bi_vect = HashingVectorizer(stop_words='english', ngram_range=(2, 2), n_features=3000)
 
-    vectorizer = FeatureUnion([('uni', hash_uni_vect)])
+    vectorizer = FeatureUnion([('uni', hash_uni_vect), ('bi', hash_bi_vect)])
 
     print "Create training resume hash"
     train_hash = vectorizer.transform(train_resume_text)

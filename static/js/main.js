@@ -42,113 +42,131 @@ $(document).ready(function () {
         send: function (e, data) {
             console.log(data);
         },
-        success: function(data){
+        success: function(data) {
 
-                console.log("logging data");
-                console.log(data);
-                var employer =[];
-                var title = [];
-                var predicted=[];
-                data.employer.forEach(function(aa){
-                    employer.push(aa)
-                });
-                console.log(employer);
-                data.title.forEach(function(aa){
-                    title.push(aa)
-                });
+            console.log("logging data");
+            console.log(data);
+            var employer =[];
+            var title = [];
+            var predicted=[];
+            var skills_map = [];
+            data.employer.forEach(function(aa){
+                employer.push(aa);
+            });
+            console.log(employer);
+            data.title.forEach(function(aa){
+                title.push(aa);
+            });
 
-                data.predicted.forEach(function(aa){
-                    predicted.push(aa)
-                });
-                var link1="http://www.simplyhired.com/k-";
-                var link3="-jobs.html";
-                var table = document.getElementById("predictions");
-                console.log(table);
-                var i =0;
-                console.log(predicted.length);
-                  var thead = document.createElement('thead');
+            data.predicted.forEach(function(aa){
+                predicted.push(aa);
+            });
 
-                        table.appendChild(thead);
-                        thead.appendChild(document.createElement("th")).appendChild(document.createTextNode("Your top 5 Job predictions"));
+            data.skills_map.forEach(function(aa){
+                skills_map.push(aa);
+            });
 
-                while(i<predicted.length){
-                    console.log('here');
-                    var row = table.insertRow(i+1);
-                    var cell = row.insertCell(0);
-                    var predictnew = predicted[i].replace(" ","-" );
-                    var newText  = document.createTextNode(predicted[i])
-                    cell.appendChild(newText);
-                    console.log(cell);
-                    cell.title = predicted[i];
-                    cell.href = link1.concat(predicted[i].concat(link3))   
-                    i++;
-                    
+            console.log("hr");
+            console.log(skills_map);
+
+            var link1="http://www.simplyhired.com/k-";
+            var link3="-jobs.html";
+            var table = document.getElementById("predictions");
+            console.log(table);
+            var i =0;
+            console.log(predicted.length);
+
+            var thead = document.createElement('thead');
+            table.appendChild(thead);
+            thead.appendChild(document.createElement("th")).appendChild(document.createTextNode("Your top 5 Job predictions"));
+
+            while(i<predicted.length) {
+                console.log('here');
+                var row = table.insertRow(i+1);
+                var cell = row.insertCell(0);
+                var predictnew = predicted[i].replace(" ","-" );
+                var newText  = document.createTextNode(predicted[i]);
+                cell.appendChild(newText);
+                console.log(cell);
+                cell.title = predicted[i];
+                cell.href = link1.concat(predicted[i].concat(link3));
+                i++;
+            }
+
+            if (table != null) {
+                for (var i = 0; i < table.rows.length; i++) {
+                    for (var j = 0; j < table.rows[i].cells.length; j++){
+                        table.rows[i].cells[j].onMouseover = function () { onhover(this); };
+                        table.rows[i].cells[j].onclick = function () { onclick(this); };
+                    }
                 }
+            }
+            function onclick(cel) {
+                window.open(cel.href);
+            }
+            function onhover(cel){
+                console.log("eeeeee");
+                this.bgColor='#33CCFF';
+            }
 
+            var sel1 = $('<select id="skill-map">');
+            sel1.append($("<option>").attr('value', '0').text("Select a Title"));
+            for (var i = 0; i < predicted.length; i++) {
+                sel1.append($("<option>").attr('value', predicted[i]).text(predicted[i]));
+            }
+            $("#skills-div").append($('<h4>Top Skills</h4>'));
+            $("#skills-div").append(sel1);
 
-
-                    if (table != null) {
-                        for (var i = 0; i < table.rows.length; i++) {
-                            for (var j = 0; j < table.rows[i].cells.length; j++){
-                                table.rows[i].cells[j].onMouseover = function () { onhover(this); };
-                                table.rows[i].cells[j].onclick = function () { onclick(this); };
-                                
+            // Dynamically create input options.
+            $( "#skill-map" ).change(function() {
+                $( "#skills-table" ).remove();
+                var title = $(this).val();
+                if (title != '0') {
+                    var skill_table = $('<table id="skills-table"></table>');
+                    for (var j = 0; j < skills_map.length; j++) {
+                        var skills = [];
+                        if (title in skills_map[j]) {
+                            skills = skills_map[j][title];
+                            for (var k = 0; k < 10; k++) {
+                                skill_table.append($('<tr><td>' + skills[k] + '</td></tr>'));
                             }
-                                
-
                         }
                     }
-             
-                    function onclick(cel) {
-                        window.open(cel.href);
-                    }
-                    function onhover(cel){
-                        console.log("eeeeee");
-                        this.bgColor='#33CCFF';
-                    }
-
-
-
-                var table1 = document.getElementById("network");
-                console.log(table1);
-                var i =0;
-                console.log(employer.length+title.length);
-                var thead1 = document.createElement('thead');
-
-                table1.appendChild(thead1);
-                thead1.appendChild(document.createElement("th")).appendChild(document.createTextNode("Top Employers and Job titles for your specialization"));
-
-                while(i<(employer.length+title.length)){
-                    if (i<employer.length){
-
-                    
-                    console.log('here');
-                    var row = table1.insertRow(i+1);
-                    var cell = row.insertCell(0);
-                    var newText  = document.createTextNode(employer[i])
-                    cell.appendChild(newText);
-                    console.log(cell);
-                    i++;
+                    $("#skills-div").append(skill_table);
                 }
-                else
-                {
-                   console.log('here');
-                    var row = table1.insertRow(i+1);
-                    var cell = row.insertCell(0);
-                    var newText  = document.createTextNode(title[i-(employer.length)])
-                    cell.appendChild(newText);
-                    console.log(cell);
-                    i++; 
-                }
-                    
-                }
-        
-}
+            });
 
+            var table1 = document.getElementById("network");
+            console.log(table1);
+            var i =0;
+            console.log(employer.length+title.length);
+            var thead1 = document.createElement('thead');
 
+            table1.appendChild(thead1);
+            thead1.appendChild(document.createElement("th")).appendChild(document.createTextNode("Top Employers and Job titles for your specialization"));
 
+            while(i<(employer.length+title.length)){
+                if (i<employer.length){
 
-})
-
-
-})
+                console.log('here');
+                var row = table1.insertRow(i+1);
+                var cell = row.insertCell(0);
+                var newText  = document.createTextNode(employer[i])
+                cell.appendChild(newText);
+                console.log(cell);
+                i++;
+            }
+            else
+            {
+               console.log('here');
+                var row = table1.insertRow(i+1);
+                var cell = row.insertCell(0);
+                var newText  = document.createTextNode(title[i-(employer.length)])
+                cell.appendChild(newText);
+                console.log(cell);
+                i++;
+            }
+        }
+    }
+});
+});

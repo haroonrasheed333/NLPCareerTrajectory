@@ -56,35 +56,24 @@ def analyze():
             filename = file.filename
             print filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            f = codecs.open(filename)
-            raw = f.read()
-            raw = unicode(raw, errors='ignore')
+            # f = codecs.open(filename)
+            # raw = f.read()
+            # raw = unicode(raw, errors='ignore')
+            resume_text = [open(filename).read()]
 
     # Get the pickled classifier model and features
-    with open('svmclassifier_new_0418_h_new.pkl', 'rb') as infile:
+    with open('svmclassifier_new_0420_hash.pkl', 'rb') as infile:
         model = pickle.load(infile)
 
-    with open('features_0418_h_new.pkl', 'rb') as f:
-        features = pickle.load(f)
-
-    with open('label_names_0418_h_new.pkl', 'rb') as lab_names:
+    with open('label_names_0420_hash.pkl', 'rb') as lab_names:
         labels_names = pickle.load(lab_names)
 
-    with open('count_vect_0418_h_new.pkl', 'rb') as count_v:
-        count_vect = pickle.load(count_v)
+    with open('hash_vect_0420_hash.pkl', 'rb') as hash_v:
+        hash_vect = pickle.load(hash_v)
 
-    top_unigrams = features['top_unigrams']
-    top_bigrams = features['top_bigrams']
-
-    resume_text = raw
-
-    # Create a featureset for the heldout data
-    resume_featureset = feature_consolidation(resume_text, top_unigrams, top_bigrams)
-
-    resume_counts = count_vect.transform(resume_featureset)
-    tfidf_test = tfidftransform(resume_counts)
-    predicted_score = model.predict(tfidf_test)
-    predicted_decision = model.decision_function(tfidf_test)
+    resume_hash = hash_vect.transform(resume_text)
+    predicted_score = model.predict(resume_hash)
+    predicted_decision = model.decision_function(resume_hash)
 
     predicted = []
 
@@ -102,10 +91,21 @@ def analyze():
 # hard coding responses for now
     out = {}
     # top_five_predictions =["VP","Director","Senior Manager","Senior Consultant","CEO"]
-    top_five_predictions = [string.capwords(tfp) for tfp in top_five_predictions]
-    out["predicted"] = top_five_predictions
+    top_five_predictions_caps = [string.capwords(tfp) for tfp in top_five_predictions]
+    out["predicted"] = top_five_predictions_caps
     out["employer"] = ["deloitte","salesforce","yahoo"]
     out["title"] = ["UX Designer","Software engineer","Consultant"]
+
+    skill_map = json.loads(open("skills_map.json").read())
+    skill_map_list = []
+    for pred in top_five_predictions:
+        temp_skill_map = dict()
+        temp_skill_map[string.capwords(pred)] = skill_map[pred]
+        skill_map_list.append(temp_skill_map)
+
+    out["skills_map"] = skill_map_list
+
+    print skill_map_list
 
     return json.dumps(OrderedDict(out))
  
