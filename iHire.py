@@ -13,6 +13,8 @@ import codecs
 import pickle
 from collections import OrderedDict
 from career_trajectory_svm_new_0416 import unigram_features, bigram_features, tfidftransform
+global flag
+flag = 1
 
 
 
@@ -43,13 +45,18 @@ def feature_consolidation(resume_text, top_unigram_list, top_bigram_list):
 
 @app.route('/')
 def hello_world():
+    global flag
     print"main page"
-    return render_template('index.html')
+    print flag
+    return render_template('index_result.html', flag = flag)
+
 
 
 @app.route("/analyze", methods=['POST','GET'])
 def analyze():
+    global flag
     if request.method:
+        flag =1
         # Get and save file from browser upload
         file = request.files['file']
         if file :

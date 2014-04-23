@@ -8,12 +8,6 @@ $(document).ready(function () {
         forceIframeTransport: true,
         url: '/analyze',
         add: function (e, data) {;
-            $content = $('#predictions').html();
-            if ($content=='')
-                {
-                    document.getElementById("#predictions").innerHTML = "";
-                };
-
             added_files = []
             added_files.push(data);
             console.log(added_files);
@@ -38,10 +32,12 @@ $(document).ready(function () {
         },
         done: function (e, data) {
             console.log(data);
+
         },
         send: function (e, data) {
             console.log(data);
         },
+
         success: function(data) {
 
             console.log("logging data");
@@ -71,6 +67,11 @@ $(document).ready(function () {
 
             var link1="http://www.simplyhired.com/k-";
             var link3="-jobs.html";
+            // window.location.href = "/";
+            $("#predictions").remove();
+            console.log()
+            // $("#predictions-div").append($('<h4>Your top 5 Job predictions</h4>'));
+            $("#predictions-div").append($('<table id="predictions"></table>'));
             var table = document.getElementById("predictions");
             console.log(table);
             var i =0;
@@ -82,7 +83,7 @@ $(document).ready(function () {
 
             while(i<predicted.length) {
                 console.log('here');
-                var row = table.insertRow(i+1);
+                var row = table.insertRow(i);
                 var cell = row.insertCell(0);
                 var predictnew = predicted[i].replace(" ","-" );
                 var newText  = document.createTextNode(predicted[i]);
@@ -92,6 +93,7 @@ $(document).ready(function () {
                 cell.href = link1.concat(predicted[i].concat(link3));
                 i++;
             }
+            $("#predictions-div").append(table)
 
             if (table != null) {
                 for (var i = 0; i < table.rows.length; i++) {
@@ -108,6 +110,11 @@ $(document).ready(function () {
                 console.log("eeeeee");
                 this.bgColor='#33CCFF';
             }
+            $("#skills-div").empty();
+            // $("#skills-table").remove();
+            // $("div.skills-div").text()="";
+
+
 
             var sel1 = $('<select id="skill-map">');
             sel1.append($("<option>").attr('value', '0').text("Select a Title"));
@@ -139,6 +146,10 @@ $(document).ready(function () {
                 }
             });
 
+            $( "#network" ).remove();
+            // $("#predictions-div").append($('<h4>Your top 5 Job predictions</h4>'));
+            $("#network-div").append($('<table id="network"></table>'));
+
             var table1 = document.getElementById("network");
             console.log(table1);
             var i =0;
@@ -152,7 +163,7 @@ $(document).ready(function () {
                 if (i<employer.length){
 
                 console.log('here');
-                var row = table1.insertRow(i+1);
+                var row = table1.insertRow(i);
                 var cell = row.insertCell(0);
                 var newText  = document.createTextNode(employer[i])
                 cell.appendChild(newText);
@@ -162,7 +173,7 @@ $(document).ready(function () {
             else
             {
                console.log('here');
-                var row = table1.insertRow(i+1);
+                var row = table1.insertRow(i);
                 var cell = row.insertCell(0);
                 var newText  = document.createTextNode(title[i-(employer.length)])
                 cell.appendChild(newText);
