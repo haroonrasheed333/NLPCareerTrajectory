@@ -30,7 +30,7 @@ Rp13
 (dp14
 S'decode_error'
 p15
-Vstrict
+S'ignore'
 p16
 sS'lowercase'
 p17

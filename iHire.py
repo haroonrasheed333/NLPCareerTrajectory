@@ -1,26 +1,29 @@
-from flask import Flask, request, redirect, url_for
-from flask.templating import render_template
-from flask import url_for
 # from util import unigram_features, bigram_features
-import nltk
+import os
 import re
+import csv
+import nltk
 import json
 import random
-import os 
 import string
-import csv
 import codecs
 import pickle
+from cStringIO import StringIO
 from collections import OrderedDict
+from flask.templating import render_template
+from flask import Flask, request, redirect, url_for
+from pdfminer.layout import LAParams
+from pdfminer.pdfpage import PDFPage
+from pdfminer.converter import TextConverter
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from career_trajectory_svm_new_0416 import unigram_features, bigram_features, tfidftransform
+
 global flag
 flag = 1
 
-
-
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = ""
-app.debug="true"
+iHire = Flask(__name__)
+iHire.config['UPLOAD_FOLDER'] = ""
+iHire.debug="true"
 
 
 def feature_consolidation(resume_text, top_unigram_list, top_bigram_list):
@@ -43,7 +46,7 @@ def feature_consolidation(resume_text, top_unigram_list, top_bigram_list):
         ind += 1
     return consolidated_features
 
-@app.route('/')
+@iHire.route('/')
 def hello_world():
     global flag
     print"main page"
@@ -51,21 +54,45 @@ def hello_world():
     return render_template('index_result.html', flag = flag)
 
 
-
-@app.route("/analyze", methods=['POST','GET'])
+@iHire.route("/analyze", methods=['POST','GET'])
 def analyze():
     global flag
     if request.method:
         flag =1
         # Get and save file from browser upload
-        file = request.files['file']
-        if file :
-            filename = file.filename
+        files = request.files['file']
+        if files:
+            filename = str(files.filename)
             print filename
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            extension = filename.rsplit('.', 1)[1]
+            filename_without_extension = filename.rsplit('.', 1)[0]
+            files.save(os.path.join(iHire.config['UPLOAD_FOLDER'], filename))
             # f = codecs.open(filename)
             # raw = f.read()
             # raw = unicode(raw, errors='ignore')
+
+            if extension == 'pdf':
+                print "new text extractor"
+                # os.system("pdftotext -layout " + filename)
+                resource_manager = PDFResourceManager()
+                return_string = StringIO()
+                la_params = LAParams()
+                device = TextConverter(resource_manager, return_string, codec='utf-8', laparams=la_params)
+                fp = file(filename, 'rb')
+                interpreter = PDFPageInterpreter(resource_manager, device)
+                page_nos=set()
+                for page in PDFPage.get_pages(fp, page_nos):
+                    interpreter.process_page(page)
+                fp.close()
+                device.close()
+                text = return_string.getvalue()
+                return_string.close()
+                with open(filename_without_extension + '.txt', 'wb') as write_file:
+                    write_file.write(text)
+
+                filename = filename_without_extension + '.txt'
+
+            print filename
             resume_text = [open(filename).read()]
 
     # Get the pickled classifier model and features
@@ -113,13 +140,9 @@ def analyze():
     out["skills_map"] = skills_map_with_percent_list
 
     return json.dumps(OrderedDict(out))
- 
-    
-
-
     
 if __name__ == '__main__':
-    app.run()
+    iHire.run()
     # url_for('static', filename='*.txt')
     # url_for('static', filename='*.png')
 
