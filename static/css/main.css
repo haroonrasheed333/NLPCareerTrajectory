@@ -82,9 +82,10 @@ Version:        1
     background-color: #D0D0D0 ;
 
 }
-#predictions th{
-  font-variant: small-caps;
-
+table th{
+  font-variant: normal;
+  text-transform: capitalize;
+  font-size: 18px;
 }
 
 

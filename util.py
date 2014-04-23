@@ -3,6 +3,7 @@ import nltk
 import json
 import re
 import string
+import operator
 from lxml import etree
 from nltk import bigrams
 from nltk.corpus import stopwords
@@ -413,9 +414,84 @@ def create_skills_map(data, xml_directory):
     f.close()
 
 
+def create_skills_map_with_percentage(data, xml_directory):
+    """
+    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
+    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
+    stored as a json file.
+
+    Args:
+        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    """
+    skills_in_files = dict()
+
+    # Get the skills for each resume from its corresponding xml file.
+    for (resume_text, tag_name, filename) in data:
+        xml_file = filename.split('_')[0] + '.txt'
+        xml = etree.parse(xml_directory + '/' + xml_file)
+        skill_list = xml.xpath('//skills/text()')
+
+        skills_ignore = open('skills_exclude_list').read().splitlines()
+
+        if skill_list:
+            slist = []
+            for skill in skill_list:
+                try:
+                    skill = str(skill).encode('utf-8')
+                except:
+                    skill = skill.encode('utf-8')
+                skill = skill.translate(None, ',:();-')
+                skill = skill.replace('/', ' ')
+                skill = skill.replace('.', '')
+                skill_words = nltk.word_tokenize(skill.lower())
+
+                skill_words_nouns = [
+                    string.capwords(w) for (w, t) in nltk.pos_tag(skill_words) if t.startswith('NN')
+                    and w not in stopwords and string.capwords(w) not in skills_ignore
+                ]
+
+                slist += skill_words_nouns
+
+            value = skills_in_files.get(tag_name.lower(), None)
+            if value is not None:
+                skills_in_files[tag_name.lower()].append(list(set(slist)))
+            else:
+                skills_in_files[tag_name.lower()] = []
+                skills_in_files[tag_name.lower()].append(list(set(slist)))
+
+    skills_map_with_percent = dict()
+    for sk in skills_in_files:
+        total_skills_for_title = list(set(sum(skills_in_files[sk], [])))
+        skills_map_with_percent[sk] = dict()
+        skills_map_with_percent[sk]['skills'] = []
+        skills_map_with_percent[sk]['percent'] = []
+        files_count = len(skills_in_files[sk])
+        temp_skill_percent_map = dict()
+        for skill in total_skills_for_title:
+            skill_count = 0
+            for file_skills in skills_in_files[sk]:
+                if skill in file_skills:
+                    skill_count += 1
+            skill_percent = int(skill_count * 100 / files_count)
+            temp_skill_percent_map[skill] = skill_percent
+
+        sorted_percents = sorted(temp_skill_percent_map.iteritems(), key=operator.itemgetter(1), reverse=True)
+        for sp in sorted_percents:
+            skills_map_with_percent[sk]['skills'].append(sp[0])
+            skills_map_with_percent[sk]['percent'].append(sp[1])
+
+
+    j = json.dumps(skills_map_with_percent, indent=4, separators=(',', ': '))
+    f = open('skills_map_with_percent.json', 'w')
+    print >> f, j
+    f.close()
+
+
 if __name__ == '__main__':
     user_name = os.environ.get('USER')
     traintest_corpus = ResumeCorpus('/Users/' + user_name + '/Documents/Data')
     xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0418'
-    create_skills_json(traintest_corpus.resumes, xml_directory, True)
+    # create_skills_json(traintest_corpus.resumes, xml_directory, True)
     # create_skills_map(traintest_corpus.resumes, xml_directory)
+    create_skills_map_with_percentage(traintest_corpus.resumes, xml_directory)

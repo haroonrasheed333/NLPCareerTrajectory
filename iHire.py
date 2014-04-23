@@ -96,16 +96,14 @@ def analyze():
     out["employer"] = ["deloitte","salesforce","yahoo"]
     out["title"] = ["UX Designer","Software engineer","Consultant"]
 
-    skill_map = json.loads(open("skills_map.json").read())
-    skill_map_list = []
+    skills_map_with_percent = json.loads(open("skills_map_with_percent.json").read())
+    skills_map_with_percent_list = []
     for pred in top_five_predictions:
         temp_skill_map = dict()
-        temp_skill_map[string.capwords(pred)] = skill_map[pred]
-        skill_map_list.append(temp_skill_map)
+        temp_skill_map[string.capwords(pred)] = skills_map_with_percent[pred]
+        skills_map_with_percent_list.append(temp_skill_map)
 
-    out["skills_map"] = skill_map_list
-
-    print skill_map_list
+    out["skills_map"] = skills_map_with_percent_list
 
     return json.dumps(OrderedDict(out))
  

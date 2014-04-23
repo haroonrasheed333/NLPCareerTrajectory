@@ -123,12 +123,15 @@ $(document).ready(function () {
                 var title = $(this).val();
                 if (title != '0') {
                     var skill_table = $('<table id="skills-table"></table>');
+                    skill_table.append($('<tr><th>Skill</th><th>Percent</th></tr>'))
                     for (var j = 0; j < skills_map.length; j++) {
                         var skills = [];
+                        var percents = [];
                         if (title in skills_map[j]) {
-                            skills = skills_map[j][title];
+                            skills = skills_map[j][title]['skills'];
+                            percents = skills_map[j][title]['percent'];
                             for (var k = 0; k < 10; k++) {
-                                skill_table.append($('<tr><td>' + skills[k] + '</td></tr>'));
+                                skill_table.append($('<tr><td>' + skills[k] + '</td><td>' + percents[k] + '</td></tr>'));
                             }
                         }
                     }
