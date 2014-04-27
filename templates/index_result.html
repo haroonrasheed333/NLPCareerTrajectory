@@ -4,7 +4,6 @@
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/static/css/jquery.fileupload-ui.css" rel="stylesheet">
-    
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
     <link rel="stylesheet" type="text/css" href="../static/css/demo.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
@@ -13,8 +12,8 @@
 <body>
   <!-- title bar -->
   {% if flag == 0 %}
-    <div id="all">
-    <div id="about">
+  <div class="row-class">
+    <div class="row-class">
       <a href="http://127.0.0.1:5000/about">
         <h5>About Us</h5>
       </a>
@@ -52,23 +51,25 @@
     </div>
   </div>
   {% else %}
-  <div id="all">
-    <div id="about">
-      <a href="http://127.0.0.1:5000/about">
-        <h5>About us</h5>
-      </a>
-      <h5>
+  <div class="row-class">
+    <!-- <div class="row-class">
+      <div id="about" class="column-10 column">
         <a href="http://127.0.0.1:5000/about">
+          <h5>About us</h5>
         </a>
-      </h5>
-    </div>
+        <h5>
+          <a href="http://127.0.0.1:5000/about">
+          </a>
+        </h5>
+      </div>
+    </div> -->
 
-    <div id="top">
-      <div id="logo">
+    <div class="row-class">
+      <div id="logo" class="column-25 column">
         <img src="{{ url_for('static', filename='images/logo_new.jpg') }}"></img>
       </div>
-      <div id="getinput">
-        <div class="upload">
+      <div id="getinput" class="column-66 column">
+        <div class="upload column-66 column">
           <form style="margin: 0px;" id="file-upload" enctype="multipart/form-data">
             <div class="row-fluid">
               <span class="btn btn-info btn-sm fileinput-button">
@@ -83,23 +84,23 @@
           </form>
         </div>
       </div>
-    <div id="main">
-      <div id="predictions-div">
+     </div>
+     <div class="row-class">
+       <div class="column-25 column">
+         <div id="skills-div" class="padding-5">
+         </div>
+       </div>
+       <div class="column-50 column">
+         <div id="predictions-div" class="padding-5">
+         </div>
+       </div>
+       <div class="column-25 column">
+         <div id="network" class="padding-5">
+         </div>
+        </div>
       </div>
     </div>
-    <div id="left">
-      <div id="skills-div">
-      </div>
-    </div>
-        
-    <div id="right">
-      <div id="network">
-
-      </div>
-    </div>
-  </div>
- </div>
-  {% endif %}
+    {% endif %}
 
   <!-- JS -->
 

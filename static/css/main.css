@@ -8,18 +8,84 @@ Template:       oxygen
 Version:        1
 */
 
-@import url("./stylefinal.css");
+body {
+  font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+  color: #333;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 300;
+}
+
+h3 {
+  font-size: 21px;
+}
+
+.row-class {
+    width: 100%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
+    overflow: hidden;
+}
+
+.row-class:after {
+  clear: both;
+}
+
+.column-10 {
+    width: 10%;
+}
+
+.column-20 {
+    width: 20%;
+}
+
+.column-25 {
+    width: 25%;
+}
+
+.column-33 {
+    width: 33%;
+}
+
+.column-50 {
+    width: 50%;
+}
+
+.column-66 {
+  width: 66%;
+}
+
+.column-75 {
+    width: 75%;
+}
+
+.column-100 {
+  width: 100%;
+}
+
+.column {
+  float: left;
+  position: relative;
+}
+
+.column-padding {
+  padding: 5px;
+}
+
+.padding-5 {
+  padding: 5px;
+}
 
 #all{
-    width:90%;
     height:100%;
     padding: 50px;
 }
 
 #about{
   float:right;
-  width:10%;
-  top-margin:5px;
 }
 
 #top{
@@ -60,79 +126,102 @@ Version:        1
 
 
 #logo{
-  height:30%;
   display: inline-block;
 
 
 }
 
 #getinput{
-  width:40%;
-  height:30%;
-  margin-left: 50px;
-  display: inline-block;
-}
-
-
-#main{
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
-  width:40%;
-  height:70%;
-  display: inline-block;
-
-}
-
-#left{
-  /*padding : 20px; margin: 20px; border: 1px solid black;*/
-  width:25%;
-  float: left;
-  text-align: left;
   display: inline-block;
 }
 
 #skill-div {
-  display: ;
 }
+
 #predictions-div{
-  display:;
 }
+
 #network-div{
-  display:;
 }
 
-#right{
+
+/*#main{*/
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+  /*margin-top: 10px;*/
+  /*width:40%;*/
+  /*height:70%;*/
+  /*display: inline-block;*/
+
+/*}*/
+
+/*#left{*/
   /*padding : 20px; margin: 20px; border: 1px solid black;*/
-  width: 20%;
-  text-align: right;
-  float: right;
-  display: inline-block;
+  /*width:25%;*/
+  /*float: left;*/
+  /*text-align: left;*/
+  /*display: inline-block;*/
+/*}*/
 
+/*#right{*/
+  /*padding : 20px; margin: 20px; border: 1px solid black;*/
+  /*width: 20%;*/
+  /*text-align: right;*/
+  /*float: right;*/
+  /*display: inline-block;*/
+
+/*}*/
+
+#predictions {
+  width: 100%;
 }
+
 #predictions tr:hover {
     cursor: hand;
     webkit-animation-direction: alternate;
     background-color: #D0D0D0 ;
 
 }
-table th{
+
+#predictions th {
+  display: inline;
+  font-weight: 300;
+  font-size: 21px;
+}
+
+#predictions {
+  margin: 15px 0;
+}
+
+#predictions thead:before {
+    line-height: 0.5em;
+    content: "-";
+    color: white;
+    display: block;
+}
+
+#predictions tbody:before {
+    line-height: 2em;
+    content: "-";
+    color: white;
+    display: block;
+}
+
+table th {
   font-variant: normal;
   text-transform: capitalize;
-  font-size: 18px;
 }
 
 
-#predictions td{
-  font-family: verdana,arial,sans-serif;
+#predictions td {
   font-size:16px;
   color:#428bca;
   text-decoration: underline;
-
+  line-height: 40px;
+  width: 100%;
 }
 
 #skills-table td {
-  font-family: verdana,arial,sans-serif;
   font-size:16px;
   border-bottom: none;
   padding: 5px;
@@ -153,3 +242,5 @@ path {
   fill: none;
 }
 
+
+@import url("./stylefinal.css");
