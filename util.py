@@ -30,7 +30,7 @@ class ResumeCorpus():
         
         self.source_dir = source_dir
         if not labels_file:
-            self.labels_file = self.source_dir + '/labels_0418.txt'
+            self.labels_file = self.source_dir + '/labels_0426.txt'
         else:
             self.labels_file = labels_file
         self.resumes = self.read_files()
@@ -52,7 +52,7 @@ class ResumeCorpus():
                 filename_tag = line.split('\t')
                 filename = filename_tag[0]
                 resume_tag = filename_tag[1].rstrip()
-                resumes.append((open(self.source_dir + '/training_0418/' + filename).read(), resume_tag, filename))
+                resumes.append((open(self.source_dir + '/training_0426/' + filename).read(), resume_tag, filename))
             except IOError, (ErrorNumber, ErrorMessage):
                 if ErrorNumber == 2:
                     pass
@@ -287,13 +287,7 @@ def create_skills_json(data, xml_directory, save_json=False):
         xml = etree.parse(xml_directory + '/' + xml_file)
         skill_list = xml.xpath('//skills/text()')
 
-        skills_ignore = \
-            [
-                'Skills', 'Years', 'Languages', 'Proficient', 'Tools', 'Expert', 'System', 'Business', 'Systems', 'Ms',
-                'Computer', 'Software', 'Suite', 'Development', 'Human', 'Month', 'Level', 'Studio', 'Applications',
-                'Application', 'Proficiency', 'Certifications', 'Applications', 'Implementation', 'Architecture',
-                'Experience', 'Services', 'Administration', 'Provider', 'Functions', 'Concur', 'Knowledge'
-            ]
+        skills_ignore = open('skills_exclude_list').read().splitlines()
 
         if skill_list:
             slist = []
@@ -327,11 +321,125 @@ def create_skills_json(data, xml_directory, save_json=False):
 
     if save_json:
         j = json.dumps(skills_dict, indent=4, separators=(',', ': '))
-        f = open('skills_0418.json', 'w')
+        f = open('skills_0426.json', 'w')
         print >> f, j
         f.close()
     else:
         return skills_dict
+
+
+def create_skills_json_no_stemming(data, xml_directory, save_json=False):
+    """
+    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
+    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
+    stored as a json file.
+
+    Args:
+        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    """
+
+    skills_dict = dict()
+
+    # Get the skills for each resume from its corresponding xml file.
+    for (resume_text, tag_name, filename) in data:
+        xml_file = filename.split('_')[0] + '.txt'
+        xml = etree.parse(xml_directory + '/' + xml_file)
+        skill_list = xml.xpath('//skills/text()')
+
+        skills_ignore = open('skills_exclude_list').read().splitlines()
+
+        if skill_list:
+            slist = []
+            for skill in skill_list:
+                try:
+                    skill = str(skill).encode('utf-8')
+                except:
+                    skill = skill.encode('utf-8')
+                skill = skill.translate(None, ',:();-')
+                skill = skill.replace('/', ' ')
+                skill = skill.replace('.', '')
+                skill_words = nltk.word_tokenize(skill.lower())
+
+                skill_words_nouns = [
+                    w for (w, t) in nltk.pos_tag(skill_words) if t.startswith('NN')
+                    and w not in stopwords and string.capwords(w) not in skills_ignore
+                ]
+
+                skill_words_nouns = list(set(skill_words_nouns))
+                slist += skill_words_nouns
+
+            temp_dict = dict()
+            temp_dict[filename] = slist
+
+            value = skills_dict.get(tag_name.lower(), None)
+            if value is not None:
+                skills_dict[tag_name.lower()].append(temp_dict)
+            else:
+                skills_dict[tag_name.lower()] = []
+                skills_dict[tag_name.lower()].append(temp_dict)
+
+    if save_json:
+        j = json.dumps(skills_dict, indent=4, separators=(',', ': '))
+        f = open('skills_0418_no_stemming.json', 'w')
+        print >> f, j
+        f.close()
+    else:
+        return skills_dict
+
+
+def create_skills_json_no_stemming_full_ds():
+    """
+    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
+    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
+    stored as a json file.
+
+    Args:
+        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    """
+
+    user_name = os.environ.get('USER')
+    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0418'
+
+    skills_dict = dict()
+
+    skills_ignore = open('skills_exclude_list').read().splitlines()
+
+    for root, dirs, files in os.walk(xml_directory, topdown=False):
+        for f in files:
+            try:
+                xml = etree.parse(xml_directory + '/' + f)
+                skill_list = xml.xpath('//skills/text()')
+            except:
+                continue
+
+            if skill_list:
+                slist = []
+                for skill in skill_list:
+                    try:
+                        skill = str(skill).encode('utf-8')
+                    except:
+                        skill = skill.encode('utf-8')
+                    skill = skill.translate(None, ',:();-')
+                    skill = skill.replace('/', ' ')
+                    skill = skill.replace('.', '')
+                    skill_words = nltk.word_tokenize(skill.lower())
+
+                    skill_words_nouns = [
+                        w for (w, t) in nltk.pos_tag(skill_words) if t.startswith('NN')
+                        and w not in stopwords and string.capwords(w) not in skills_ignore
+                    ]
+
+                    slist += skill_words_nouns
+
+                skills_dict[f] = []
+                skills_dict[f] = list(set(slist))
+
+        j = json.dumps(skills_dict, indent=4, separators=(',', ': '))
+        f = open('skills_0424_no_stemming_full_ds.json', 'w')
+        print >> f, j
+        f.close()
 
 
 def stripxml(data):
@@ -491,7 +599,9 @@ def create_skills_map_with_percentage(data, xml_directory):
 if __name__ == '__main__':
     user_name = os.environ.get('USER')
     traintest_corpus = ResumeCorpus('/Users/' + user_name + '/Documents/Data')
-    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0418'
+    xml_directory = '/Users/' + user_name + '/Documents/Data/samples_0426'
+    # create_skills_json_no_stemming(traintest_corpus.resumes, xml_directory, True)
     # create_skills_json(traintest_corpus.resumes, xml_directory, True)
     # create_skills_map(traintest_corpus.resumes, xml_directory)
     create_skills_map_with_percentage(traintest_corpus.resumes, xml_directory)
+    # create_skills_json_no_stemming_full_ds()

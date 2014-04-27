@@ -15,7 +15,7 @@ def main():
     """
     Test the heldout dataset using the trained classifier and features
     """
-    resume_text = [open('181918_plaintext.txt').read()]
+    resume_text = [open('Div.txt').read()]
 
     # Get the pickled classifier model and features
     with open('svmclassifier_new_0420_hash.pkl', 'rb') as infile:

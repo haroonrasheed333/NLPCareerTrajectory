@@ -36,7 +36,7 @@ def read_skills_from_json_file(training_data):
     """
 
     skills_dict = dict()
-    temp_dict = json.loads(open("skills_0418.json").read())
+    temp_dict = json.loads(open("skills_0418_no_stemming.json").read())
     training_files = [fname for (resume, resume_label, fname) in training_data]
 
     for title in temp_dict:
@@ -70,7 +70,7 @@ def extract_top_skills(training_data):
     for skill in skills_dict:
         skill_list = skills_dict[skill]
         skill_count = Counter(skill_list)
-        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:300]
+        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:]
         skill_features += top_job_skills
 
     top_job_skills = list(set(skill_features))
@@ -197,6 +197,8 @@ if __name__ == '__main__':
 
     labels_names = sorted(list(set(train_labels)))
 
+    top_skills = extract_top_skills(train_resumes)
+
     # CountVectorizer + TfidfTransformer
     # count_vect = CountVectorizer(stop_words='english')
     # print "Create training resume counts"
@@ -211,19 +213,19 @@ if __name__ == '__main__':
     # tfidf_test = tfidftransform(test_counts)
 
     # TfidfVectorizer
-    # tfidf_vect = TfidfVectorizer(stop_words='english')
-    # print "Create training resume tfidf"
-    # train_tfidf = tfidf_vect.fit_transform(train_resume_text)
-    # clf = trainsvm(train_tfidf, train_labels)
-    #
-    # print "Create testing resume counts"
-    # test_tfidf = tfidf_vect.transform(test_resume_text)
-    #
-    # # predicted = clf.predict(test_featureset)
-    # print "Predict testing labels"
-    # predicted = clf.predict(test_tfidf)
-    # # predicted_decision = clf.decision_function(test_featureset)
-    # predicted_decision = clf.decision_function(test_tfidf)
+    tfidf_vect = TfidfVectorizer(stop_words='english')
+    print "Create training resume tfidf"
+    train_tfidf = tfidf_vect.fit_transform(train_resume_text)
+    clf = trainsvm(train_tfidf, train_labels)
+
+    print "Create testing resume counts"
+    test_tfidf = tfidf_vect.transform(test_resume_text)
+
+    # predicted = clf.predict(test_featureset)
+    print "Predict testing labels"
+    predicted = clf.predict(test_tfidf)
+    # predicted_decision = clf.decision_function(test_featureset)
+    predicted_decision = clf.decision_function(test_tfidf)
 
     # HashingVectorizer
     # hash_vect = HashingVectorizer(stop_words='english')
@@ -240,10 +242,12 @@ if __name__ == '__main__':
     # # predicted_decision = clf.decision_function(test_featureset)
     # predicted_decision = clf.decision_function(test_hash)
 
-    # CountVectorizer
-    # count_vect = CountVectorizer(stop_words='english')
+    # # CountVectorizer
+    # count_vect = CountVectorizer(stop_words='english', vocabulary=top_skills)
     # print "Create training resume counts"
     # train_counts = count_vect.fit_transform(train_resume_text)
+    # feats = count_vect.get_feature_names()
+    # train_counts_array = train_counts.toarray()[0].tolist()
     # clf = trainsvm(train_counts, train_labels)
     #
     # print "Create testing resume counts"
@@ -255,22 +259,22 @@ if __name__ == '__main__':
     # # predicted_decision = clf.decision_function(test_featureset)
     # predicted_decision = clf.decision_function(test_counts)
 
-    # TfidfVectorizer (unigrams + bigrams)
-    hash_uni_vect = HashingVectorizer(stop_words='english', ngram_range=(1, 1), n_features=4000, decode_error='ignore')
-    hash_bi_vect = HashingVectorizer(stop_words='english', ngram_range=(2, 2), n_features=3000, decode_error='ignore')
-
-    vectorizer = FeatureUnion([('uni', hash_uni_vect), ('bi', hash_bi_vect)])
-
-    print "Create training resume hash"
-    train_hash = vectorizer.transform(train_resume_text)
-    clf = trainsvm(train_hash, train_labels)
-
-    print "Create testing resume hash"
-    test_hash = vectorizer.transform(test_resume_text)
-
-    print "Predict testing labels"
-    predicted_score = clf.predict(test_hash)
-    predicted_decision = clf.decision_function(test_hash)
+    # # TfidfVectorizer (unigrams + bigrams)
+    # hash_uni_vect = HashingVectorizer(stop_words='english', ngram_range=(1, 1), n_features=20000, decode_error='ignore')
+    # # hash_bi_vect = HashingVectorizer(stop_words='english', ngram_range=(2, 2), n_features=3000, decode_error='ignore')
+    #
+    # vectorizer = FeatureUnion([('uni', hash_uni_vect)])
+    #
+    # print "Create training resume hash"
+    # train_hash = vectorizer.transform(train_resume_text)
+    # clf = trainsvm(train_hash, train_labels)
+    #
+    # print "Create testing resume hash"
+    # test_hash = vectorizer.transform(test_resume_text)
+    #
+    # print "Predict testing labels"
+    # predicted_score = clf.predict(test_hash)
+    # predicted_decision = clf.decision_function(test_hash)
 
     #accuracy = np.mean(predicted == test_labels)
     #p = precision_score(test_labels, predicted, average='macro')
@@ -323,11 +327,11 @@ if __name__ == '__main__':
     print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
 
     # Pickle the classifier and training features to test it on the heldout dataset.
-    with open('svmclassifier_new_0420_hash.pkl', 'wb') as outfile:
-        pickle.dump(clf, outfile)
-
-    with open('label_names_0420_hash.pkl', 'wb') as lab_names:
-        pickle.dump(labels_names, lab_names)
-
-    with open('hash_vect_0420_hash.pkl', 'wb') as hash_v:
-        pickle.dump(vectorizer, hash_v)
+    # with open('svmclassifier_new_0420_hash.pkl', 'wb') as outfile:
+    #     pickle.dump(clf, outfile)
+    #
+    # with open('label_names_0420_hash.pkl', 'wb') as lab_names:
+    #     pickle.dump(labels_names, lab_names)
+    #
+    # with open('hash_vect_0420_hash.pkl', 'wb') as hash_v:
+    #     pickle.dump(vectorizer, hash_v)

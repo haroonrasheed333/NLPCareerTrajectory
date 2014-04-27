@@ -47,6 +47,29 @@ def feature_consolidation(resume_text, top_unigram_list, top_bigram_list):
         ind += 1
     return consolidated_features
 
+
+def extract_text_from_pdf(pdf_filename):
+    # os.system("pdftotext -layout " + filename)
+
+    resource_manager = PDFResourceManager()
+    return_string = StringIO()
+    la_params = LAParams()
+    device = TextConverter(resource_manager, return_string, codec='utf-8', laparams=la_params)
+    fp = file(pdf_filename, 'rb')
+    interpreter = PDFPageInterpreter(resource_manager, device)
+    page_nos = set()
+
+    for page in PDFPage.get_pages(fp, page_nos):
+        interpreter.process_page(page)
+    fp.close()
+
+    device.close()
+    extracted_text = return_string.getvalue()
+    return_string.close()
+
+    return extracted_text
+
+
 @iHire.route('/')
 def hello_world():
     global flag
@@ -71,64 +94,70 @@ def analyze():
             extension = filename.rsplit('.', 1)[1]
             filename_without_extension = filename.rsplit('.', 1)[0]
             files.save(os.path.join(iHire.config['UPLOAD_FOLDER'], filename))
-            # f = codecs.open(filename)
-            # raw = f.read()
-            # raw = unicode(raw, errors='ignore')
 
             if extension == 'pdf':
-                print "new text extractor"
-                # os.system("pdftotext -layout " + filename)
-                resource_manager = PDFResourceManager()
-                return_string = StringIO()
-                la_params = LAParams()
-                device = TextConverter(resource_manager, return_string, codec='utf-8', laparams=la_params)
-                fp = file(filename, 'rb')
-                interpreter = PDFPageInterpreter(resource_manager, device)
-                page_nos=set()
-                for page in PDFPage.get_pages(fp, page_nos):
-                    interpreter.process_page(page)
-                fp.close()
-                device.close()
-                text = return_string.getvalue()
-                return_string.close()
+                text_from_pdf = extract_text_from_pdf(filename)
                 with open(filename_without_extension + '.txt', 'wb') as write_file:
-                    write_file.write(text)
+                    write_file.write(text_from_pdf)
 
-                filename = filename_without_extension + '.txt'
+                textfile_name = filename_without_extension + '.txt'
+            else:
+                textfile_name = filename
 
+<<<<<<< HEAD
             print filename
             resume_text = [open(filename).read()]
             university = extract_univ(resume_text[0])
             print university
 
+=======
+            resume_text = [open(textfile_name).read()]
 
-    # Get the pickled classifier model and features
-    with open('svmclassifier_new_0420_hash.pkl', 'rb') as infile:
-        model = pickle.load(infile)
+            # Get the pickled classifier model and features
+            with open('svmclassifier_new_0420_marisa.pkl', 'rb') as infile:
+                model = pickle.load(infile)
+>>>>>>> 6586551... Finilize classifier code, marisa vectorizer, skill map etc
 
-    with open('label_names_0420_hash.pkl', 'rb') as lab_names:
-        labels_names = pickle.load(lab_names)
+            with open('label_names_0420_marisa.pkl', 'rb') as lab_names:
+                labels_names = pickle.load(lab_names)
 
-    with open('hash_vect_0420_hash.pkl', 'rb') as hash_v:
-        hash_vect = pickle.load(hash_v)
+            with open('hash_vect_0420_marisa.pkl', 'rb') as hash_v:
+                hash_vect = pickle.load(hash_v)
 
-    resume_hash = hash_vect.transform(resume_text)
-    predicted_score = model.predict(resume_hash)
-    predicted_decision = model.decision_function(resume_hash)
+            resume_hash = hash_vect.transform(resume_text)
+            predicted_score = model.predict(resume_hash)
+            predicted_decision = model.decision_function(resume_hash)
 
-    predicted = []
+            predicted = []
 
-    for i in range(1):
-        predicted_dec_dup = predicted_decision[i]
-        predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
-        top_five_predictions = []
-        predicted.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[0])])
-        for j in range(5):
-            top_five_predictions.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])])
+            for i in range(1):
+                predicted_dec_dup = predicted_decision[i]
+                predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
+                top_five_predictions = []
+                predicted.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[0])])
+                for j in range(5):
+                    top_five_predictions.append(
+                        labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])]
+                    )
 
-        print "Predicted top5: " + ", ".join(top_five_predictions)
+                print "Predicted top5: " + ", ".join(top_five_predictions)
 
+            # hard coding responses for now
+            out = dict()
+            title_title_map = json.loads(open("title_title_map.json").read())
+            top_five_predictions_caps = [title_title_map[tfp] for tfp in top_five_predictions]
+            out["predicted"] = top_five_predictions_caps
+            out["employer"] = ["Deloitte","Sales Force","Yahoo"]
+            out["title"] = ["UX Designer", "Software engineer", "Consultant"]
 
+            skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
+            skills_map_with_percent_list = []
+            for pred in top_five_predictions:
+                temp_skill_map = dict()
+                temp_skill_map[title_title_map[pred]] = skills_map_with_percent[title_title_map[pred]]
+                skills_map_with_percent_list.append(temp_skill_map)
+
+<<<<<<< HEAD
 # hard coding responses for now
     out = {}
     # top_five_predictions =["VP","Director","Senior Manager","Senior Consultant","CEO"]
@@ -137,22 +166,20 @@ def analyze():
     out["employer"] = ["deloitte","salesforce","yahoo"]
     out["title"] = ["UX Designer","Software engineer","Consultant"]
     out["university"] = university
+=======
+            out["skills_map"] = skills_map_with_percent_list
+>>>>>>> 6586551... Finilize classifier code, marisa vectorizer, skill map etc
 
-    skills_map_with_percent = json.loads(open("skills_map_with_percent.json").read())
-    skills_map_with_percent_list = []
-    for pred in top_five_predictions:
-        temp_skill_map = dict()
-        temp_skill_map[string.capwords(pred)] = skills_map_with_percent[pred]
-        skills_map_with_percent_list.append(temp_skill_map)
+            if os.path.isfile(textfile_name):
+                    os.remove(textfile_name)
 
-    out["skills_map"] = skills_map_with_percent_list
+            if os.path.isfile(filename):
+                    os.remove(filename)
 
-    return json.dumps(OrderedDict(out))
+            return json.dumps(OrderedDict(out))
     
 if __name__ == '__main__':
     iHire.run()
-    # url_for('static', filename='*.txt')
-    # url_for('static', filename='*.png')
 
 
 

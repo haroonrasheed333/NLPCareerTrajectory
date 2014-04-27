@@ -62,6 +62,7 @@ def normalize_job_titles(original_titles):
     titles_dict = {}
 
     for original_title in original_titles:
+
         temp_title = original_title.splitlines()[0].rstrip()
         if temp_title.find('\\') > -1:
             temp_title = temp_title.split('\\')[1]
@@ -87,6 +88,14 @@ def normalize_job_titles(original_titles):
         if flag == 0:
             title = title_perms[0]
             titles_dict[title] = title_expand
+
+        if "ui/ux designer" in original_title.lower():
+            normalized_titles.append("ui/ux designer / developer")
+            continue
+
+        if "ui/ux developer" in original_title.lower():
+            normalized_titles.append("ui/ux designer / developer")
+            continue
 
         normalized_titles.append(titles_dict[title])
 

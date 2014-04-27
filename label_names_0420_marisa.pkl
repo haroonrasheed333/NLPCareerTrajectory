@@ -1,0 +1,166 @@
+(lp0
+S'account executive'
+p1
+aS'accountant'
+p2
+aS'accounting assistant'
+p3
+aS'accounting manager'
+p4
+aS'administrative assistant'
+p5
+aS'assistant director'
+p6
+aS'assistant manager'
+p7
+aS'assistant vice president'
+p8
+aS'associate director'
+p9
+aS'attorney'
+p10
+aS'business analyst'
+p11
+aS'business consultant'
+p12
+aS'business development director'
+p13
+aS'business development manager'
+p14
+aS'chief executive officer'
+p15
+aS'chief financial officer'
+p16
+aS'chief information officer'
+p17
+aS'chief operating officer'
+p18
+aS'computer technician'
+p19
+aS'consultant'
+p20
+aS'customer service associate'
+p21
+aS'customer service manager'
+p22
+aS'customer service representative'
+p23
+aS'data analyst'
+p24
+aS'data researcher'
+p25
+aS'designer'
+p26
+aS'developer'
+p27
+aS'executive administrative assistant'
+p28
+aS'executive assistant'
+p29
+aS'executive director'
+p30
+aS'financial analyst'
+p31
+aS'general manager'
+p32
+aS'graphic designer'
+p33
+aS'human resources assistant'
+p34
+aS'human resources coordinator'
+p35
+aS'human resources director'
+p36
+aS'human resources generalist'
+p37
+aS'human resources manager'
+p38
+aS'information technology consultant'
+p39
+aS'information technology manager'
+p40
+aS'legal assistant'
+p41
+aS'legal secretary'
+p42
+aS'management consultant'
+p43
+aS'managing director'
+p44
+aS'marketing assistant'
+p45
+aS'marketing consultant'
+p46
+aS'marketing coordinator'
+p47
+aS'marketing director'
+p48
+aS'marketing manager'
+p49
+aS'marketing specialist'
+p50
+aS'president'
+p51
+aS'product manager'
+p52
+aS'program manager'
+p53
+aS'project manager'
+p54
+aS'quality assurance analyst'
+p55
+aS'recruiter'
+p56
+aS'sales associate'
+p57
+aS'sales consultant'
+p58
+aS'sales manager'
+p59
+aS'sales representative'
+p60
+aS'senior account executive'
+p61
+aS'senior account manager'
+p62
+aS'senior accountant'
+p63
+aS'senior associate'
+p64
+aS'senior business analyst'
+p65
+aS'senior consultant'
+p66
+aS'senior director'
+p67
+aS'senior financial analyst'
+p68
+aS'senior program manager'
+p69
+aS'senior project manager'
+p70
+aS'senior software engineer'
+p71
+aS'senior vice president'
+p72
+aS'software engineer'
+p73
+aS'system engineer'
+p74
+aS'systems administrator'
+p75
+aS'systems analyst'
+p76
+aS'technical writer'
+p77
+aS'ui/ux designer / developer'
+p78
+aS'ux researcher'
+p79
+aS'vice president'
+p80
+aS'web designer'
+p81
+aS'web developer'
+p82
+a.

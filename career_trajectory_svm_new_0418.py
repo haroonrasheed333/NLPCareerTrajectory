@@ -158,9 +158,9 @@ if __name__ == '__main__':
 
     print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
 
-    # Pickle the classifier and training features to test it on the heldout dataset.
-    with open('svmclassifier_new_0418_h.pkl', 'wb') as outfile:
-        pickle.dump(clf, outfile)
-
-    with open('count_vect_0418_h.pkl', 'wb') as count_v:
-        pickle.dump(count_vect, count_v)
+    # # Pickle the classifier and training features to test it on the heldout dataset.
+    # with open('svmclassifier_new_0418_h.pkl', 'wb') as outfile:
+    #     pickle.dump(clf, outfile)
+    #
+    # with open('count_vect_0418_h.pkl', 'wb') as count_v:
+    #     pickle.dump(count_vect, count_v)
