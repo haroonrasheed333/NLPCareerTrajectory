@@ -522,7 +522,7 @@ def create_skills_map(data, xml_directory):
     f.close()
 
 
-def create_skills_map_with_percentage(data, xml_directory):
+def create_skills_map_with_percentage(data, xml_directory, save_json):
     """
     This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
     keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
@@ -540,7 +540,9 @@ def create_skills_map_with_percentage(data, xml_directory):
         xml = etree.parse(xml_directory + '/' + xml_file)
         skill_list = xml.xpath('//skills/text()')
 
-        skills_ignore = open('skills_exclude_list').read().splitlines()
+        current_file_directory = os.path.dirname(os.path.realpath(__file__))
+
+        skills_ignore = open(current_file_directory + '/skills_exclude_list').read().splitlines()
 
         if skill_list:
             slist = []
@@ -589,11 +591,13 @@ def create_skills_map_with_percentage(data, xml_directory):
             skills_map_with_percent[sk]['skills'].append(sp[0])
             skills_map_with_percent[sk]['percent'].append(sp[1])
 
-
-    j = json.dumps(skills_map_with_percent, indent=4, separators=(',', ': '))
-    f = open('skills_map_with_percent.json', 'w')
-    print >> f, j
-    f.close()
+    if save_json:
+        j = json.dumps(skills_map_with_percent, indent=4, separators=(',', ': '))
+        f = open('skills_map_with_percent.json', 'w')
+        print >> f, j
+        f.close()
+    else:
+        return skills_map_with_percent
 
 
 if __name__ == '__main__':
@@ -603,5 +607,5 @@ if __name__ == '__main__':
     # create_skills_json_no_stemming(traintest_corpus.resumes, xml_directory, True)
     # create_skills_json(traintest_corpus.resumes, xml_directory, True)
     # create_skills_map(traintest_corpus.resumes, xml_directory)
-    create_skills_map_with_percentage(traintest_corpus.resumes, xml_directory)
+    create_skills_map_with_percentage(traintest_corpus.resumes, xml_directory, True)
     # create_skills_json_no_stemming_full_ds()
