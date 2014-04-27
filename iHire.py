@@ -166,7 +166,7 @@ def analyze():
             return json.dumps(OrderedDict(out))
     
 if __name__ == '__main__':
-    iHire.run()
+    iHire.run(host='0.0.0.0')
 
 
 
