@@ -73,6 +73,13 @@ def ngram_similarity(univ_name):
                 return out
     return out
 
+def generate_ngrams(res):
+    tokens = str(res).split()
+    out = {}
+    result = []
+    for n in range(2,6):
+        out[n] = zip(*[tokens[i:] for i in range(n)])
+    return out
 
 if __name__ == '__main__':
     extract_univ("Berekeley")
