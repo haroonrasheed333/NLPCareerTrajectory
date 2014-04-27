@@ -6,6 +6,8 @@ import re
 import time
 import csv
 import json
+import ngram
+from ngram import NGram
 
 
 def extract_univ(data):
@@ -56,6 +58,21 @@ def extract_from_resume(data):
                     return out
                     break
     return out
+
+def ngram_similarity(univ_name):
+    out = {}
+    with open("static/UniqueFBUnivNames.csv", 'rb') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            row = re.sub('[^A-Za-z0-9 ]+', ' ', str(row))
+            row = re.sub('  ', ' ', str(row))
+            out['score'] = NGram.compare(str(row).lower(), univ_name, N=1)
+            if NGram.compare(str(row).lower(), str(univ_name).lower()) > 0.5:
+                out['score_used'] = NGram.compare(str(row).lower(), univ_name)
+                out['univ'] = str(row)
+                return out
+    return out
+
 
 if __name__ == '__main__':
     extract_univ("Berekeley")

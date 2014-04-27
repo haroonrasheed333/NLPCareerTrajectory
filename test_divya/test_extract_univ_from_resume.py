@@ -1,5 +1,5 @@
 """
-Test to verify if all individual features extracted are combined coherently
+Test to verify if university name is extracetd form test resume
 """
 
 from nose.tools import eq_
