@@ -121,7 +121,7 @@ $(document).ready(function () {
             for (var i = 0; i < predicted.length; i++) {
                 sel1.append($("<option>").attr('value', predicted[i]).text(predicted[i]));
             }
-            $("#skills-div").append($('<h4>Top Skills</h4>'));
+            $("#skills-div").append($('<h3>Top Skills</h3>'));
             $("#skills-div").append(sel1);
 
             // Dynamically create input options.
@@ -130,7 +130,6 @@ $(document).ready(function () {
                 var title = $(this).val();
                 if (title != '0') {
                     var skill_table = $('<table id="skills-table"></table>');
-                    skill_table.append($('<tr><th>Skill</th><th>Percent</th></tr>'))
                     for (var j = 0; j < skills_map.length; j++) {
                         var skills = [];
                         var percents = [];

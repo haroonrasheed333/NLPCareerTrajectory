@@ -11,10 +11,10 @@ import json
 def extract_univ(data):
     data = stripxml(str(data))
     data = data.lower()
-    print data
+    # print data
     data = re.sub ('[^A-Za-z0-9 ]+',' ',str(data))
     data = re.sub ('  ',' ',str(data))
-    print data
+    # print data
     if 'education' in data:
         parted = data.split('education')[1]
         second = parted[:150]
