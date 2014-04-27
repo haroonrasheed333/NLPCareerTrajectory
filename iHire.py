@@ -17,6 +17,7 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from career_trajectory_svm_new_0416 import unigram_features, bigram_features, tfidftransform
+from univ_lookup import extract_univ
 
 global flag
 flag = 1
@@ -53,6 +54,9 @@ def hello_world():
     print flag
     return render_template('index_result.html', flag = flag)
 
+@iHire.route('/network')
+def network():
+    return render_template('network.html')
 
 @iHire.route("/analyze", methods=['POST','GET'])
 def analyze():
@@ -94,6 +98,9 @@ def analyze():
 
             print filename
             resume_text = [open(filename).read()]
+            university = extract_univ(resume_text[0])
+            print university
+
 
     # Get the pickled classifier model and features
     with open('svmclassifier_new_0420_hash.pkl', 'rb') as infile:
@@ -129,6 +136,7 @@ def analyze():
     out["predicted"] = top_five_predictions_caps
     out["employer"] = ["deloitte","salesforce","yahoo"]
     out["title"] = ["UX Designer","Software engineer","Consultant"]
+    out["university"] = university
 
     skills_map_with_percent = json.loads(open("skills_map_with_percent.json").read())
     skills_map_with_percent_list = []

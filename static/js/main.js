@@ -146,41 +146,42 @@ $(document).ready(function () {
                 }
             });
 
-            $( "#network" ).remove();
-            // $("#predictions-div").append($('<h4>Your top 5 Job predictions</h4>'));
-            $("#network-div").append($('<table id="network"></table>'));
+            $( "#network" ).append($('<a href="http://127.0.0.1:5000/network"><h5>What are my alumni doing</h5></a><h5><a href="http://127.0.0.1:5000/network"></a></h5>'));
 
-            var table1 = document.getElementById("network");
-            console.log(table1);
-            var i =0;
-            console.log(employer.length+title.length);
-            var thead1 = document.createElement('thead');
-
-            table1.appendChild(thead1);
-            thead1.appendChild(document.createElement("th")).appendChild(document.createTextNode("Top Employers and Job titles for your specialization"));
-
-            while(i<(employer.length+title.length)){
-                if (i<employer.length){
-
-                console.log('here');
-                var row = table1.insertRow(i);
-                var cell = row.insertCell(0);
-                var newText  = document.createTextNode(employer[i])
-                cell.appendChild(newText);
-                console.log(cell);
-                i++;
-            }
-            else
-            {
-               console.log('here');
-                var row = table1.insertRow(i);
-                var cell = row.insertCell(0);
-                var newText  = document.createTextNode(title[i-(employer.length)])
-                cell.appendChild(newText);
-                console.log(cell);
-                i++;
-            }
-        }
+//            // $("#predictions-div").append($('<h4>Your top 5 Job predictions</h4>'));
+//            $("#network-div").append($('<table id="network"></table>'));
+//
+//            var table1 = document.getElementById("network");
+//            console.log(table1);
+//            var i =0;
+//            console.log(employer.length+title.length);
+//            var thead1 = document.createElement('thead');
+//
+//            table1.appendChild(thead1);
+//            thead1.appendChild(document.createElement("th")).appendChild(document.createTextNode("Top Employers and Job titles for your specialization"));
+//
+//            while(i<(employer.length+title.length)){
+//                if (i<employer.length){
+//
+//                console.log('here');
+//                var row = table1.insertRow(i);
+//                var cell = row.insertCell(0);
+//                var newText  = document.createTextNode(employer[i])
+//                cell.appendChild(newText);
+//                console.log(cell);
+//                i++;
+//            }
+//            else
+//            {
+//               console.log('here');
+//                var row = table1.insertRow(i);
+//                var cell = row.insertCell(0);
+//                var newText  = document.createTextNode(title[i-(employer.length)])
+//                cell.appendChild(newText);
+//                console.log(cell);
+//                i++;
+//            }
+//        }
     }
 });
 });

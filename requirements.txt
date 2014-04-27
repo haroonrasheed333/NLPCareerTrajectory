@@ -1,3 +1,4 @@
+ngram
 Flask==0.10.1
 fuzzywuzzy==0.2
 lxml==3.2.3

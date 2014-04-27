@@ -12,11 +12,10 @@
 </head>
 <body>
   <!-- title bar -->
-  {% if flag == 0 %}
-    <div id="all">
+  <div id="all">
     <div id="about">
       <a href="http://127.0.0.1:5000/about">
-        <h5>About Us</h5>
+        <h5>About us</h5>
       </a>
       <h5>
         <a href="http://127.0.0.1:5000/about">
@@ -51,55 +50,9 @@
       </div>
     </div>
   </div>
-  {% else %}
-  <div id="all">
-    <div id="about">
-      <a href="http://127.0.0.1:5000/about">
-        <h5>About us</h5>
-      </a>
-      <h5>
-        <a href="http://127.0.0.1:5000/about">
-        </a>
-      </h5>
-    </div>
 
-    <div id="top">
-      <div id="logo">
-        <img src="{{ url_for('static', filename='images/logo_new.jpg') }}"></img>
-      </div>
-      <div id="getinput">
-        <div class="upload">
-          <form style="margin: 0px;" id="file-upload" enctype="multipart/form-data">
-            <div class="row-fluid">
-              <span class="btn btn-info btn-sm fileinput-button">
-                <i class="icon-plus icon-white"></i>
-                <span>Select resume...</span>
-                <input id="fileupload" type="file" name="file" value="fileupload" multiple>
-              </span>
-              <span class="files">
-              </span>
-              <input id="upload-button" class="btn btn-primary pull-right" type="button" value="Begin my career analysis" />
-            </div>
-          </form>
-        </div>
-      </div>
-    <div id="main">
-      <div id="predictions-div">
-      </div>
-    </div>
-    <div id="left">
-      <div id="skills-div">
-      </div>
-    </div>
-        
-    <div id="right">
-      <div id="network">
 
-      </div>
-    </div>
-  </div>
- </div>
-  {% endif %}
+
 
   <!-- JS -->
 
