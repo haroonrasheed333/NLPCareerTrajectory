@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<ResDoc>
+<resume canonversion='2' dateversion='2' present='734579' xml:space='preserve'>
+<contact><name><givenname>Haroon</givenname> <surname>Rasheed</surname></name>
+<phone>(123) 456-7890</phone>
+<email>example@example.com</email></contact>
+<education>Education
+<school id='7'>
+<institution>University of California</institution>, <address><city>Berkeley</city>, <state abbrev='CA'>CA</state></address>
+<degree level='16'>Master of Information Management and Systems</degree></school>
+</education>
+
+<skills>Skills
+C++, Python, Java</skills>
+</resume>
+
+</ResDoc>
+
