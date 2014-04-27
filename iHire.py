@@ -104,19 +104,16 @@ def analyze():
             else:
                 textfile_name = filename
 
-<<<<<<< HEAD
             print filename
             resume_text = [open(filename).read()]
             university = extract_univ(resume_text[0])
             print university
 
-=======
             resume_text = [open(textfile_name).read()]
 
             # Get the pickled classifier model and features
             with open('svmclassifier_new_0420_marisa.pkl', 'rb') as infile:
                 model = pickle.load(infile)
->>>>>>> 6586551... Finilize classifier code, marisa vectorizer, skill map etc
 
             with open('label_names_0420_marisa.pkl', 'rb') as lab_names:
                 labels_names = pickle.load(lab_names)
@@ -149,6 +146,7 @@ def analyze():
             out["predicted"] = top_five_predictions_caps
             out["employer"] = ["Deloitte","Sales Force","Yahoo"]
             out["title"] = ["UX Designer", "Software engineer", "Consultant"]
+            out["university"] = university
 
             skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
             skills_map_with_percent_list = []
@@ -157,18 +155,7 @@ def analyze():
                 temp_skill_map[title_title_map[pred]] = skills_map_with_percent[title_title_map[pred]]
                 skills_map_with_percent_list.append(temp_skill_map)
 
-<<<<<<< HEAD
-# hard coding responses for now
-    out = {}
-    # top_five_predictions =["VP","Director","Senior Manager","Senior Consultant","CEO"]
-    top_five_predictions_caps = [string.capwords(tfp) for tfp in top_five_predictions]
-    out["predicted"] = top_five_predictions_caps
-    out["employer"] = ["deloitte","salesforce","yahoo"]
-    out["title"] = ["UX Designer","Software engineer","Consultant"]
-    out["university"] = university
-=======
             out["skills_map"] = skills_map_with_percent_list
->>>>>>> 6586551... Finilize classifier code, marisa vectorizer, skill map etc
 
             if os.path.isfile(textfile_name):
                     os.remove(textfile_name)
