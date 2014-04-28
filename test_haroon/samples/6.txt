@@ -7,7 +7,7 @@
 <education>Education
 <school id='7'>
 <institution>University of California</institution>, <address><city>Berkeley</city>, <state abbrev='CA'>CA</state></address>
-<degree level='16'>Master of Information Management and Systems</degree></school>
+<degree level='18'>Master of Science</degree><major code='0404'>Information Management and Systems</major></school>
 </education>
 <experience end='present' start='729757'>Experience
 

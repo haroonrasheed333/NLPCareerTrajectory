@@ -1,7 +1,9 @@
 import os
+import re
+import csv
+import sys
 import nltk
 import json
-import re
 import string
 import operator
 from lxml import etree
@@ -598,6 +600,100 @@ def create_skills_map_with_percentage(data, xml_directory, save_json):
         f.close()
     else:
         return skills_map_with_percent
+
+
+def extract_features_for_network_map(xml_directory, save_csv):
+
+    if not os.path.exists(xml_directory):
+        return {}
+
+    school_job_details = []
+    for root, dirs, files in os.walk(xml_directory, topdown=False):
+        for f in files:
+            if os.path.isfile(xml_directory + '/' + f):
+                xml = etree.parse(xml_directory + '/' + f)
+                education = xml.xpath('//education')[0]
+                schools = education.xpath('//school')
+                school_details = []
+                resume_id = f.split('.')[0]
+                for school in schools:
+                    try:
+                        school_id = school.attrib['id']
+                    except ValueError:
+                        school_id = ''
+
+                    institution = school.xpath('institution/text()')[0]
+
+                    try:
+                        degree_level = school.xpath('degree/@level')[0]
+                    except IndexError:
+                        degree_level = ''
+
+                    degree = school.xpath('degree/text()')[0]
+
+                    major_code = school.xpath('major/@code')[0]
+                    major = school.xpath('major/text()')[0]
+                    school_details.append((school_id, institution, degree_level, degree, major_code, major))
+
+                job_details = []
+                try:
+                    experience = xml.xpath('//experience')[0]
+                    jobs = experience.xpath('//job')
+                    for job in jobs:
+                        employer = job.xpath('employer/text()')[0]
+
+                        try:
+                            job_location = job.xpath('address/city/text()')[0]
+                            job_state = job.xpath('address/state/text()')[0]
+                        except IndexError:
+                            job_location = ''
+                            job_state = ''
+
+                        title = job.xpath('title/text()')[0]
+                        job_details.append((employer, job_location, job_state, title))
+                except IndexError:
+                    job_details.append(('', '', '', ''))
+
+                for school_detail in school_details:
+                    for job_detail in job_details:
+                        school_job_details.append(
+                            (
+                                resume_id,
+                                school_detail[0],
+                                school_detail[1],
+                                school_detail[2],
+                                school_detail[3],
+                                school_detail[4],
+                                school_detail[5],
+                                job_detail[0],
+                                job_detail[1],
+                                job_detail[2],
+                                job_detail[3]
+                            )
+                        )
+
+            else:
+                school_job_details.append(['', '', '', '', '', '', '', '', '', ''])
+
+    if save_csv:
+        with open("institution_degree_job_map.csv", "wb") as csv_file:
+            writer = csv.writer(csv_file)
+            for school_job_detail in school_job_details:
+                try:
+                    writer.writerow(school_job_detail)
+                except:
+                    pass
+    else:
+        school_job_details_dict = dict()
+        for sjd in school_job_details:
+            value = school_job_details_dict.get(sjd[0], None)
+            if value:
+                school_job_details_dict[sjd[0]].append(sjd)
+            else:
+                school_job_details_dict[sjd[0]] = []
+                school_job_details_dict[sjd[0]].append(sjd)
+        return school_job_details_dict
+
 
 
 if __name__ == '__main__':
