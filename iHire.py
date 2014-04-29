@@ -106,7 +106,8 @@ def analyze():
 
             print filename
             resume_text = [open(filename).read()]
-            university = extract_univ(resume_text[0])
+
+            university = extract_univ(open(textfile_name).read())
             print university
 
             resume_text = [open(textfile_name).read()]
