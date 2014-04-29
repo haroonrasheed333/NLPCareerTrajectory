@@ -118,7 +118,7 @@ def analyze():
             with open('label_names_0420_marisa.pkl', 'rb') as lab_names:
                 labels_names = pickle.load(lab_names)
 
-            with open('hash_vect_0420_marisa.pkl', 'rb') as hash_v:
+            with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
                 hash_vect = pickle.load(hash_v)
 
             resume_hash = hash_vect.transform(resume_text)
