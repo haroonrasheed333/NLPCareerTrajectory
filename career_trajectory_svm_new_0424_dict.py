@@ -21,6 +21,7 @@ st = PorterStemmer()
 stopwords = stopwords.words('english')
 data_dict = defaultdict(list)
 
+
 class ResumeCorpus():
     """
     Class to read the source files from source directory and create a list of tuples with resume_text, tag and filename
@@ -67,7 +68,6 @@ class ResumeCorpus():
         return resumes
 
 
-
 def read_skills_from_json_file(training_data):
     """
     This function will read from the skills json file, extract the skills that are part of the training data and create
@@ -82,7 +82,7 @@ def read_skills_from_json_file(training_data):
 
     skills_dict = dict()
     temp_dict = json.loads(open("skills_0426.json").read())
-    training_files = [fname for (resume, resume_xml, resume_label, fname) in training_data]
+    training_files = [file_name for (resume, resume_xml, resume_label, file_name) in training_data]
 
     for title in temp_dict:
         for file_name in temp_dict[title]:
@@ -123,8 +123,8 @@ def extract_top_skills(training_data):
 
 
 def trainsvm(featureset, train_label):
-    clf = LinearSVC().fit(featureset, train_label)
-    return clf
+    clf_svm = LinearSVC().fit(featureset, train_label)
+    return clf_svm
 
 
 def vectorize(count_vect, data):
@@ -133,7 +133,7 @@ def vectorize(count_vect, data):
 
 
 def extract_features(res_text, xml_text):
-    xml = etree.fromstring(xml_text)
+    xml_tree = etree.fromstring(xml_text)
     words = [st.stem(w) for w in nltk.word_tokenize(res_text.lower()) if w not in stopwords and len(w) > 2]
     # features = Counter(words)
     features = {}
@@ -141,15 +141,15 @@ def extract_features(res_text, xml_text):
     for w in words_set:
         features[w] = 1
 
-    university = xml.xpath('//institution/text()')
+    university = xml_tree.xpath('//institution/text()')
     if university:
         features['university'] = university[0]
 
-    degree_level = xml.xpath('//degree/@level')
+    degree_level = xml_tree.xpath('//degree/@level')
     if degree_level:
         features['degree_level'] = max(degree_level)
 
-    major_code = xml.xpath('//major/@code')
+    major_code = xml_tree.xpath('//major/@code')
     if major_code:
         features['major_code'] = major_code[0]
 
@@ -232,7 +232,6 @@ if __name__ == '__main__':
     accuracy_list = []
     accuracy_list_top_5 = []
 
-
     for i in range(len(test_labels)):
         accuracy_list.append(0)
         accuracy_list_top_5.append(0)
@@ -246,7 +245,8 @@ if __name__ == '__main__':
 
     print "Actual Accuracy: " + str(sum(accuracy_list) / len(accuracy_list))
 
-    print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
+    print "New Accuracy (Label present in one of the 5 predictions): " + \
+          str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
 
     # Pickle the classifier and training features to test it on the heldout dataset.
     # with open('svmclassifier_new_0418_h_new.pkl', 'wb') as outfile:

@@ -8,6 +8,7 @@ import random
 import string
 import codecs
 import pickle
+import numpy as np
 from cStringIO import StringIO
 from collections import OrderedDict
 from flask.templating import render_template
@@ -18,6 +19,8 @@ from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from career_trajectory_svm_new_0416 import unigram_features, bigram_features, tfidftransform
 from univ_lookup import extract_univ
+from Marisa import get_degree_level_from_resume, get_degree
+
 
 global flag
 flag = 1
@@ -120,11 +123,17 @@ def analyze():
                 labels_names = pickle.load(lab_names)
 
             with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
-                hash_vect = pickle.load(hash_v)
+                tfidf_vect = pickle.load(hash_v)
 
-            resume_hash = hash_vect.transform(resume_text)
-            predicted_score = model.predict(resume_hash)
-            predicted_decision = model.decision_function(resume_hash)
+            resume_tfidf = tfidf_vect.transform(resume_text)
+            # resume_tfidf_array = resume_tfidf.toarray()
+            # resume_degree_level = np.array([get_degree_level_from_resume([(resume_text[0], '', '')])])
+            # print resume_degree_level
+            # resume_tfidf_array_degree_level = np.concatenate((resume_tfidf_array, resume_degree_level.T), axis=1)
+
+
+            predicted_score = model.predict(resume_tfidf)
+            predicted_decision = model.decision_function(resume_tfidf)
 
             predicted = []
 

@@ -1,16 +1,16 @@
 from __future__ import division
-import re
 import os
 import json
 import nltk
 import random
 import pickle
+import numpy as np
 from nltk import bigrams
 from nltk import FreqDist
 from util import ResumeCorpus
 from collections import Counter
 from nltk.corpus import stopwords
-from sklearn.svm import LinearSVC
+from sklearn.svm import LinearSVC, SVC
 from collections import defaultdict
 from nltk.stem.porter import PorterStemmer
 from sklearn.pipeline import FeatureUnion
@@ -36,7 +36,7 @@ def read_skills_from_json_file(training_data):
     """
 
     skills_dict = dict()
-    temp_dict = json.loads(open("skills_0418_no_stemming.json").read())
+    temp_dict = json.loads(open("skills_0418.json").read())
     training_files = [fname for (resume, resume_label, fname) in training_data]
 
     for title in temp_dict:
@@ -70,82 +70,11 @@ def extract_top_skills(training_data):
     for skill in skills_dict:
         skill_list = skills_dict[skill]
         skill_count = Counter(skill_list)
-        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:]
+        top_job_skills = sorted(skill_count, key=skill_count.get, reverse=True)[:50]
         skill_features += top_job_skills
 
     top_job_skills = list(set(skill_features))
     return top_job_skills
-
-
-def feature_consolidation(resumes, top_unigram_list, top_bigram_list,  add_true_score=False):
-    """
-    Function to consolidate all the featuresets for the training data
-
-    Args:
-        resumes -- list of tuples [(resume_text, tag, filename), (resume_text, tag, filename)...]
-        top_unigram_list -- list of top unigrams from the training dataset
-        top_bigram_list -- list of top bigrams from the training dataset
-        add_true_score -- boolean (default: False)
-
-    Returns:
-        consolidated_features -- list of consolidated features
-    """
-    uni_feats = [" ".join(unigram_features(resume_text, top_unigram_list)) for (resume_text, label, fname) in resumes]
-    bi_feats = [" ".join(bigram_features(resume_text, top_bigram_list)) for (resume_text, label, fname) in resumes]
-    consolidated_features = []
-    ind = 0
-    while ind < len(uni_feats):
-        consolidated_features.append(uni_feats[ind] + bi_feats[ind])
-        ind += 1
-    return consolidated_features
-
-
-def unigram_features(resume_text, top_unigram_list):
-    """
-    Function to create unigram features from the resume text
-
-    Args:
-        resume_text -- content of resume as string
-        top_unigram_list -- list of top unigrams
-
-    Returns:
-        uni_features -- list of unigram features
-    """
-    resume_text = re.sub('[^A-Za-z\' ]+', '', str(resume_text))
-    tokens = nltk.word_tokenize(resume_text.lower())
-    tokens = [st.stem(token) for token in tokens]
-    uni_features = []
-
-    for tok in tokens:
-        try:
-            if tok in top_unigram_list:
-                uni_features.append(tok)
-        except UnicodeEncodeError:
-            pass
-    return uni_features
-
-
-def bigram_features(resume_text, top_bigram_list):
-    """
-    Function to create bigram features from the resume text
-
-    Args:
-        resume_text -- content of resume as string
-        top_bigram_list -- list of top bigrams
-
-    Returns:
-        bi_features -- list of bigram features
-    """
-    tokens = [st.stem(word) for word in resume_text.lower().split() if word not in stopwords]
-    bigrs = bigrams(tokens)
-    bigram_list = []
-    bigram_list += [(bigrm[0], bigrm[1]) for bigrm in bigrs if (bigrm[0] not in stopwords and bigrm[1] not in stopwords)]
-    bi_features = []
-
-    for bi in bigram_list:
-        if bi in top_bigram_list:
-            bi_features.append(bi[0] + bi[1])
-    return bi_features
 
 
 def trainsvm(featureset, train_label):
@@ -162,6 +91,83 @@ def tfidftransform(counts):
     tfidf_transformer = TfidfTransformer()
     x_tfidf = tfidf_transformer.fit_transform(counts)
     return x_tfidf
+
+
+def get_degree(resume_text):
+    resume_text = resume_text.lower()
+
+    if 'education' in resume_text:
+        parted = resume_text.split('education')[1]
+        edu_text = parted[:150]
+    else:
+        edu_text = resume_text
+    degree_level = 0
+
+    for d in ["doctor ", "ph.d", "phd", "ph. d"]:
+        if d in edu_text:
+            return 0.021
+
+    masters = \
+        [
+            "master", "ms degree", "mpa ", "mhrm", "mfa ", "mba ", "m.sc", "m.s ", "m.h.a", "m.f.a", "m.b.a", "m. s",
+            "m.a", "m. tech", "m. ed", "m. a"
+        ]
+
+    for m in masters:
+        if m in edu_text:
+            return 0.018
+
+    bachelors = \
+        [
+            "bachelor", "bsc", "bsit", "bse", "bsba", "bs of", "bs degree", "bgs", "bfa", "bba", "bs ", "ba ", "b.sc",
+            "b.s.n", "b.s.", "b.s. ", "b.phil", "b.f.a", "b.e", "b.com", "b.b.a", "b.a.", "b.tech", "b. tech", "b. a",
+            "bs,"
+        ]
+
+    for b in bachelors:
+        if b in edu_text:
+            return 0.016
+
+    associate = ["associate", "as degree", "as ", "aas ", "a.s.", "a.s ", "a.a.s", "a.a. ", "a. a"]
+
+    for a in associate:
+        if a in edu_text:
+            return 0.014
+
+    if "diploma" in edu_text:
+        return 0.013
+
+    high_school = ["high school diploma", "hs dip", "h. s. ", "high school degree", "h.s "]
+
+    for h in high_school:
+        if h in edu_text:
+            return 0.012
+
+    return degree_level
+
+
+def get_degree_level_from_resume(resume_data):
+    degree_level = [get_degree(resume_text) for (resume_text, tag, fname) in resume_data]
+    return degree_level
+
+
+def get_skill_features(resume_text, top_skills):
+    skill_features = []
+    tokens = nltk.word_tokenize(resume_text.lower())
+    tokens = [st.stem(token) for token in tokens]
+
+    for skill in top_skills:
+        if skill in tokens:
+            skill_features.append(1)
+        else:
+            skill_features.append(0)
+
+    return skill_features
+
+
+def get_skill_features_from_resume(resume_data, top_skills):
+    skill_list = [get_skill_features(resume_text, top_skills) for (resume_text, tag, fname) in resume_data]
+    return skill_list
 
 
 if __name__ == '__main__':
@@ -197,7 +203,7 @@ if __name__ == '__main__':
 
     labels_names = sorted(list(set(train_labels)))
 
-    top_skills = extract_top_skills(train_resumes)
+    # top_skills = extract_top_skills(train_resumes)
 
     # CountVectorizer + TfidfTransformer
     # count_vect = CountVectorizer(stop_words='english')
@@ -212,20 +218,37 @@ if __name__ == '__main__':
     # print "Create tfidf vector for testing featureset"
     # tfidf_test = tfidftransform(test_counts)
 
+    train_degree_level_list = get_degree_level_from_resume(train_resumes)
+    test_degree_level_list = get_degree_level_from_resume(test_resumes)
+    print Counter(train_degree_level_list)
+    print Counter(test_degree_level_list)
+
+    train_degree_level = np.array([train_degree_level_list])
+    test_degree_level = np.array([test_degree_level_list])
+
+    # train_skill_set = np.array(get_skill_features_from_resume(train_resumes, top_skills))
+    # test_skill_set = np.array(get_skill_features_from_resume(test_resumes, top_skills))
+
     # TfidfVectorizer
     tfidf_vect = TfidfVectorizer(stop_words='english')
     print "Create training resume tfidf"
     train_tfidf = tfidf_vect.fit_transform(train_resume_text)
-    clf = trainsvm(train_tfidf, train_labels)
+    train_tfidf_array = train_tfidf.toarray()
+    train_tfidf_array_degree_level = np.concatenate((train_tfidf_array, train_degree_level.T), axis=1)
+    # train_tfidf_array_degree_level_skill = np.column_stack((train_tfidf_array_degree_level, train_skill_set))
+    clf = trainsvm(train_tfidf_array_degree_level, train_labels)
 
     print "Create testing resume counts"
     test_tfidf = tfidf_vect.transform(test_resume_text)
+    test_tfidf_array = test_tfidf.toarray()
+    test_tfidf_array_degree_level = np.concatenate((test_tfidf_array, test_degree_level.T), axis=1)
+    # test_tfidf_array_degree_level_skill = np.column_stack((test_tfidf_array_degree_level, test_skill_set))
 
     # predicted = clf.predict(test_featureset)
     print "Predict testing labels"
-    predicted = clf.predict(test_tfidf)
+    predicted_score = clf.predict(test_tfidf_array_degree_level)
     # predicted_decision = clf.decision_function(test_featureset)
-    predicted_decision = clf.decision_function(test_tfidf)
+    predicted_decision = clf.decision_function(test_tfidf_array_degree_level)
 
     # HashingVectorizer
     # hash_vect = HashingVectorizer(stop_words='english')
@@ -310,7 +333,6 @@ if __name__ == '__main__':
     accuracy_list = []
     accuracy_list_top_5 = []
 
-
     for i in range(len(test_labels)):
         accuracy_list.append(0)
         accuracy_list_top_5.append(0)
@@ -324,7 +346,8 @@ if __name__ == '__main__':
 
     print "Actual Accuracy: " + str(sum(accuracy_list) / len(accuracy_list))
 
-    print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
+    print "New Accuracy (Label present in one of the 5 predictions): " + \
+          str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
 
     # Pickle the classifier and training features to test it on the heldout dataset.
     # with open('svmclassifier_new_0420_hash.pkl', 'wb') as outfile:

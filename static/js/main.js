@@ -136,7 +136,7 @@ $(document).ready(function () {
                         if (title in skills_map[j]) {
                             skills = skills_map[j][title]['skills'];
                             percents = skills_map[j][title]['percent'];
-                            for (var k = 0; k < 10; k++) {
+                            for (var k = 0; k < 20; k++) {
                                 skill_table.append($('<tr><td>' + skills[k] + '</td><td>' + percents[k] + '</td></tr>'));
                             }
                         }
