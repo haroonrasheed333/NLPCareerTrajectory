@@ -23,6 +23,8 @@ from Marisa import get_degree_level_from_resume, get_degree
 
 
 global flag
+global university
+university = 'University of California Berkeley'
 flag = 1
 
 iHire = Flask(__name__)
@@ -82,7 +84,7 @@ def hello_world():
 
 @iHire.route('/network')
 def network():
-    return render_template('network.html')
+    return render_template('network.html', parameter = university)
 
 @iHire.route("/analyze", methods=['POST','GET'])
 def analyze():
@@ -110,8 +112,10 @@ def analyze():
             print filename
             resume_text = [open(filename).read()]
 
+            global university
             university = extract_univ(open(textfile_name).read())
             print university
+
 
             resume_text = [open(textfile_name).read()]
 

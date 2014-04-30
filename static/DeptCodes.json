@@ -1,9 +1,9 @@
 {   "majors":
         [
-        {"value": "Education-Other"},
-        {"value": "Anthropology"},
-        {"value": "Nuclear Physics"},
-        {"value": "Plant Sciences"},
-        {"value": "Archaeology"}
+        { "value": "Education-Other"},
+        { "value": "Anthropology"},
+        { "value": "Nuclear Physics"},
+        { "value": "Plant Sciences"},
+        { "value": "Archaeology"}
     ]
 }

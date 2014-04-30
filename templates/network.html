@@ -47,7 +47,7 @@ text {
   margin: 5px 0 0 0;
 }
 #searchfield form .biginput {
-  width: 600px;
+  width: 200px;
   height: 40px;
   padding: 0 10px 0 10px;
   background-color: #fff;
@@ -63,6 +63,8 @@ text {
 #searchfield form .biginput:focus {
   color: #858585;
 }
+
+
 </style>
 <body>
 <div id="searchfield">
@@ -72,6 +74,9 @@ text {
     <p id="outputcontent">Choose a currency and the results will display here.</p>
   </div>
 </div><!-- @end #content -->
+<input type="hidden"  id="university" value = "{{ parameter }}">
+{#{{ parameter }}#}
+
 <div id ="network-graph"></div>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="{{ url_for('static', filename='js/jquery-1.8.1.min.js') }}"></script>

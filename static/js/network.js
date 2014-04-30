@@ -2,10 +2,11 @@ $(document).ready(function () {
 // http://blog.thomsonreuters.com/index.php/mobile-patent-suits-graphic-of-the-day/
 create_network();
 lookup();
-var currencies;
+var currencies = [];
+console.log(document.getElementById('university').value)
 function lookup(){
 d3.json("../static/DeptCodes.json", function(error, json) {
-   currencies =json.majors;
+   currencies =json.majors[0];
 });
 };
 
@@ -15,7 +16,7 @@ d3.json("../static/DeptCodes.json", function(error, json) {
 $('#autocomplete').autocomplete({
   lookup: currencies,
   onSelect: function (suggestion) {
-
+    console.log(suggestion["value"])
     var thehtml = '<strong>Currency Name:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ';
     $('#outputcontent').html(thehtml);
   }
