@@ -23,6 +23,8 @@ from Marisa import get_degree_level_from_resume, get_degree
 
 
 global flag
+global university
+university = ''
 flag = 1
 
 iHire = Flask(__name__)
@@ -42,6 +44,8 @@ with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
 title_title_map = json.loads(open("title_title_map.json").read())
 
 skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
+
+univ_dict = json.loads(open("static/univs_list.json","rb").read())
 
 
 def feature_consolidation(resume_text, top_unigram_list, top_bigram_list):
@@ -96,7 +100,7 @@ def hello_world():
 
 @iHire.route('/network')
 def network():
-    return render_template('network.html')
+    return render_template('network.html', parameter = university)
 
 @iHire.route("/analyze", methods=['POST','GET'])
 def analyze():
@@ -123,8 +127,10 @@ def analyze():
 
             print filename
 
-            university = extract_univ(open(textfile_name).read())
+            global university
+            university = extract_univ(open(textfile_name).read(),univ_dict)
             print university
+
 
             resume_text = [open(textfile_name).read()]
 

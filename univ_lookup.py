@@ -26,11 +26,11 @@ def ngrams(text, n):
         for i in range(len(words)-(n-1)):
             yield(' '.join(words[i:i+n]))
 
-def extract_univ(data):
+def extract_univ(data,univ_dict):
     data = stripxml(str(data))
     data = data.lower()
     data=data.replace('\xc2\xa0', ' ')
-    # print data
+    #print data
     data = re.sub ('[^A-Za-z0-9 ]+',' ',str(data))
     data = re.sub ('  ',' ',str(data))
     if 'education' in data:
@@ -38,7 +38,6 @@ def extract_univ(data):
         second = parted[:150]
     else:
         second = data
-    univ_dict = json.loads(open("static/univs_list.json","rb").read())
     n=10
     while (n>1):
         for ngram in ngrams(str(second).lower(), n):
