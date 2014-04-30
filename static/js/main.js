@@ -10,7 +10,6 @@ $(document).ready(function () {
         add: function (e, data) {;
             added_files = []
             added_files.push(data);
-            console.log(added_files);
             $('#upload-button').unbind('click');
             $('#upload-button').on('click', function(e) {
                 e.preventDefault();
@@ -23,33 +22,27 @@ $(document).ready(function () {
                     new_data['paramName'] = jQuery.merge(new_data['paramName'], file.paramName);
                     });
                 new_data = jQuery.extend({}, original_data, new_data);
-                console.log(new_data);
                 new_data.submit();
             });
         },
         submit: function (e, data) {
-            console.log(data);
         },
         done: function (e, data) {
-            console.log(data);
 
         },
         send: function (e, data) {
-            console.log(data);
         },
 
         success: function(data) {
 
-            console.log("logging data");
-            console.log(data);
             var employer =[];
             var title = [];
             var predicted=[];
             var skills_map = [];
+            var all_titles = [];
             data.employer.forEach(function(aa){
                 employer.push(aa);
             });
-            console.log(employer);
             data.title.forEach(function(aa){
                 title.push(aa);
             });
@@ -62,67 +55,79 @@ $(document).ready(function () {
                 skills_map.push(aa);
             });
 
-            console.log("hr");
-            console.log(skills_map);
+            data.titles.forEach(function(aa){
+                all_titles.push(aa);
+            });
+
 
             var link1="http://www.simplyhired.com/k-";
             var link3="-jobs.html";
-            // window.location.href = "/";
-            $("#predictions").remove();
-            console.log()
-            // $("#predictions-div").append($('<h4>Your top 5 Job predictions</h4>'));
-            $("#predictions-div").append($('<table id="predictions"></table>'));
-            var table = document.getElementById("predictions");
-            console.log(table);
-            var i =0;
-            console.log(predicted.length);
+            var i = 0;
 
-            var thead = document.createElement('thead');
-            table.appendChild(thead);
-            thead.appendChild(document.createElement("th")).appendChild(document.createTextNode("Your top 5 Job predictions"));
+            $("#predictions-div").empty();
 
-            while(i<predicted.length) {
-                console.log('here');
-                var row = table.insertRow(i);
-                var cell = row.insertCell(0);
-                var predictnew = predicted[i].replace(" ","-" );
-                var newText  = document.createTextNode(predicted[i]);
-                cell.appendChild(newText);
-                console.log(cell);
-                cell.title = predicted[i];
-                cell.href = link1.concat(predicted[i].concat(link3));
-                i++;
-            }
-            $("#predictions-div").append(table)
+            $("#predictions-div").append($('<h3 class="center-text">Your Top 5 Job Predictions</h3>'))
 
-            if (table != null) {
-                for (var i = 0; i < table.rows.length; i++) {
-                    for (var j = 0; j < table.rows[i].cells.length; j++){
-                        table.rows[i].cells[j].onMouseover = function () { onhover(this); };
-                        table.rows[i].cells[j].onclick = function () { onclick(this); };
-                    }
+            $("#predicted-titles-list" ).remove();
+            var predicted_titles_list = $('<ul id="predicted-titles-list"></ul>');
+
+            for (var i = 0; i < predicted.length; i++) {
+                var li;
+
+                if (i % 2 == 0) {
+                    li = $('<li class="even-row"></li>');
+                } else {
+                    li = $('<li></li>');
                 }
+
+                var href = link1.concat(predicted[i].concat(link3));
+                cand_skill_list = data.candidate_skills[predicted[i]];
+                li.append($('<div title="' + predicted[i] + '"><a target="_blank" href="' + href + '">' + predicted[i] + '</a></div>'));
+
+                var skill_div = $('<div class="skills-list-div"></div>');
+                var skill_ul = $('<ul class="skills-list"></ul>');
+
+                skill_div.append(skill_ul);
+
+                for (var k = 0; k < cand_skill_list.length; k++) {
+                    skill_ul.append($('<li>· ' + cand_skill_list[k] + '</li>'));
+                }
+
+                li.append(skill_div);
+
+                predicted_titles_list.append(li);
             }
-            function onclick(cel) {
-                window.open(cel.href);
-            }
-            function onhover(cel){
-                console.log("eeeeee");
-                this.bgColor='#33CCFF';
-            }
+
+            $("#predictions-div").append(predicted_titles_list);
+
             $("#skills-div").empty();
-            // $("#skills-table").remove();
-            // $("div.skills-div").text()="";
-
-
 
             var sel1 = $('<select id="skill-map">');
             sel1.append($("<option>").attr('value', '0').text("Select a Title"));
-            for (var i = 0; i < predicted.length; i++) {
-                sel1.append($("<option>").attr('value', predicted[i]).text(predicted[i]));
+            for (var i = 0; i < all_titles.length; i++) {
+                sel1.append($("<option>").attr('value', all_titles[i]).text(all_titles[i]));
             }
             $("#skills-div").append($('<h3>Top Skills</h3>'));
             $("#skills-div").append(sel1);
+
+            $('#skill-map').val(predicted[0]);
+            $( "#skills-table" ).remove();
+            var title = predicted[0]
+            if (title != '0') {
+                var skill_table = $('<table id="skills-table"></table>');
+                for (var j = 0; j < skills_map.length; j++) {
+                    var skills = [];
+                    var percents = [];
+                    if (title in skills_map[j]) {
+                        skills = skills_map[j][title]['skills'];
+                        percents = skills_map[j][title]['percent'];
+                        for (var k = 0; k < 20; k++) {
+                            skill_table.append($('<tr><td>' + skills[k] + '</td><td>' + percents[k] + '</td></tr>'));
+                        }
+                    }
+                }
+                $("#skills-div").append(skill_table);
+            }
 
             // Dynamically create input options.
             $( "#skill-map" ).change(function() {

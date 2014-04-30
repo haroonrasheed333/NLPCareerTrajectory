@@ -124,6 +124,14 @@ h3 {
   text-align: center;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 
 #logo{
   display: inline-block;
@@ -172,53 +180,54 @@ h3 {
 
 /*}*/
 
-#predictions {
+#predicted-titles-list {
   width: 100%;
 }
 
-#predictions tr:hover {
+#predicted-titles-list > li:hover {
     cursor: hand;
     webkit-animation-direction: alternate;
     background-color: #D0D0D0 ;
 
 }
 
-#predictions th {
-  display: inline;
-  font-weight: 300;
-  font-size: 21px;
-}
-
-#predictions {
+#predicted-titles-list {
   margin: 15px 0;
 }
 
-#predictions thead:before {
-    line-height: 0.5em;
-    content: "-";
-    color: white;
-    display: block;
-}
-
-#predictions tbody:before {
-    line-height: 2em;
-    content: "-";
-    color: white;
-    display: block;
-}
-
-table th {
-  font-variant: normal;
-  text-transform: capitalize;
-}
-
-
-#predictions td {
-  font-size:16px;
-  color:#428bca;
-  text-decoration: underline;
+#predicted-titles-list > li {
+  font-size: 18px;
+  color: #666;
   line-height: 40px;
   width: 100%;
+  padding: 10px 15px;
+  border-bottom: 1px solid #e3e3e3;
+  list-style-type: none;
+}
+
+#predicted-titles-list > li > div > ul {
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+  list-style-type: circle;
+  width: 80%;
+}
+
+#predicted-titles-list > li > div > ul > li {
+  display: inline;
+  padding: 0px 6px 0px 0px;
+  border-bottom: none;
+  list-style-type: circle;
+  font-size: 13px;
+  color: #888;
+}
+
+/*.even-row {
+  background: #e3e3e3;
+}*/
+
+#skills-table {
+  width: 80%;
 }
 
 #skills-table td {
@@ -226,7 +235,6 @@ table th {
   border-bottom: none;
   padding: 5px;
 }
-
 
 
 .upload {
@@ -240,6 +248,10 @@ table th {
 }
 path {
   fill: none;
+}
+
+.center-text {
+  text-align: center;
 }
 
 

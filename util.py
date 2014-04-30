@@ -743,6 +743,9 @@ def create_skills_map_with_percentage_new(data, xml_directory, save_json):
             skills_map_with_percent[sk]['skills'].append(sp[0])
             skills_map_with_percent[sk]['percent'].append(sp[1])
 
+        skills_map_with_percent[sk]['skills'] = skills_map_with_percent[sk]['skills'][:50]
+        skills_map_with_percent[sk]['percent'] = skills_map_with_percent[sk]['percent'][:50]
+
     if save_json:
         j = json.dumps(skills_map_with_percent, indent=4, separators=(',', ': '))
         f = open('skills_map_with_percent_new_0429.json', 'w')

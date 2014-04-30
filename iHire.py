@@ -41,7 +41,7 @@ with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
 
 title_title_map = json.loads(open("title_title_map.json").read())
 
-skills_map_with_percent = json.loads(open("skills_map_with_percent_new_0429_upper.json").read())
+skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
 
 
 def feature_consolidation(resume_text, top_unigram_list, top_bigram_list):
@@ -122,7 +122,6 @@ def analyze():
                 textfile_name = filename
 
             print filename
-            resume_text = [open(filename).read()]
 
             university = extract_univ(open(textfile_name).read())
             print university
@@ -162,12 +161,27 @@ def analyze():
             out["university"] = university
 
             skills_map_with_percent_list = []
-            for pred in top_five_predictions:
+            titles = sorted(skills_map_with_percent.keys())
+            for title in titles:
                 temp_skill_map = dict()
-                temp_skill_map[title_title_map[pred]] = skills_map_with_percent[title_title_map[pred]]
+                temp_skill_map[title] = skills_map_with_percent[title]
                 skills_map_with_percent_list.append(temp_skill_map)
 
             out["skills_map"] = skills_map_with_percent_list
+            out["titles"] = titles
+
+            out["candidate_skills"] = dict()
+
+            try:
+                tokens = nltk.word_tokenize(resume_text[0].lower())
+            except UnicodeDecodeError:
+                tokens = nltk.word_tokenize(resume_text[0].decode('utf-8').lower())
+
+            for pred in top_five_predictions:
+                top15 = skills_map_with_percent[title_title_map[pred]]["skills"][:15]
+                temp_skill_list = [t for t in top15 if len(t) > 1 and t.lower() in tokens]
+
+                out["candidate_skills"][title_title_map[pred]] = temp_skill_list
 
             if os.path.isfile(textfile_name):
                     os.remove(textfile_name)
