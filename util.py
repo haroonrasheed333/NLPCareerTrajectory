@@ -695,6 +695,63 @@ def extract_features_for_network_map(xml_directory, save_csv):
         return school_job_details_dict
 
 
+def create_skills_map_with_percentage_new(data, xml_directory, save_json):
+    """
+    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
+    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
+    stored as a json file.
+
+    Args:
+        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    """
+    skills_in_files = dict()
+
+    # Get the skills for each resume from its corresponding xml file.
+    for (resume_text, tag_name, filename) in data:
+        xml_file = filename.split('_')[0] + '.txt'
+        xml = etree.parse(xml_directory + '/' + xml_file)
+        skill_list = xml.xpath('//variant/text()')
+
+        if skill_list:
+            skill_list = [string.capwords(s) for s in skill_list]
+            value = skills_in_files.get(tag_name.lower(), None)
+            if value is not None:
+                skills_in_files[tag_name.lower()].append(list(set(skill_list)))
+            else:
+                skills_in_files[tag_name.lower()] = []
+                skills_in_files[tag_name.lower()].append(list(set(skill_list)))
+
+    skills_map_with_percent = dict()
+    for sk in skills_in_files:
+        total_skills_for_title = list(set(sum(skills_in_files[sk], [])))
+        skills_map_with_percent[sk] = dict()
+        skills_map_with_percent[sk]['skills'] = []
+        skills_map_with_percent[sk]['percent'] = []
+        files_count = len(skills_in_files[sk])
+        temp_skill_percent_map = dict()
+        for skill in total_skills_for_title:
+            skill_count = 0
+            for file_skills in skills_in_files[sk]:
+                if skill in file_skills:
+                    skill_count += 1
+            skill_percent = int(skill_count * 100 / files_count)
+            temp_skill_percent_map[skill] = skill_percent
+
+        sorted_percents = sorted(temp_skill_percent_map.iteritems(), key=operator.itemgetter(1), reverse=True)
+        for sp in sorted_percents:
+            skills_map_with_percent[sk]['skills'].append(sp[0])
+            skills_map_with_percent[sk]['percent'].append(sp[1])
+
+    if save_json:
+        j = json.dumps(skills_map_with_percent, indent=4, separators=(',', ': '))
+        f = open('skills_map_with_percent_new_0429.json', 'w')
+        print >> f, j
+        f.close()
+    else:
+        return skills_map_with_percent
+
+
 
 if __name__ == '__main__':
     user_name = os.environ.get('USER')
@@ -703,5 +760,6 @@ if __name__ == '__main__':
     # create_skills_json_no_stemming(traintest_corpus.resumes, xml_directory, True)
     # create_skills_json(traintest_corpus.resumes, xml_directory, True)
     # create_skills_map(traintest_corpus.resumes, xml_directory)
-    create_skills_map_with_percentage(traintest_corpus.resumes, xml_directory, True)
+    # create_skills_map_with_percentage(traintest_corpus.resumes, xml_directory, True)
+    create_skills_map_with_percentage_new(traintest_corpus.resumes, xml_directory, True)
     # create_skills_json_no_stemming_full_ds()

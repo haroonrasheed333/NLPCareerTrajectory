@@ -31,6 +31,20 @@ iHire = Flask(__name__)
 iHire.config['UPLOAD_FOLDER'] = ""
 iHire.debug="true"
 
+# Get the pickled classifier model and features
+with open('svmclassifier_new_0420_marisa.pkl', 'rb') as infile:
+    model = pickle.load(infile)
+
+with open('label_names_0420_marisa.pkl', 'rb') as lab_names:
+    labels_names = pickle.load(lab_names)
+
+with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
+    tfidf_vect = pickle.load(hash_v)
+
+title_title_map = json.loads(open("title_title_map.json").read())
+
+skills_map_with_percent = json.loads(open("skills_map_with_percent_new_0429_upper.json").read())
+
 
 def feature_consolidation(resume_text, top_unigram_list, top_bigram_list):
     """
@@ -119,16 +133,6 @@ def analyze():
 
             resume_text = [open(textfile_name).read()]
 
-            # Get the pickled classifier model and features
-            with open('svmclassifier_new_0420_marisa.pkl', 'rb') as infile:
-                model = pickle.load(infile)
-
-            with open('label_names_0420_marisa.pkl', 'rb') as lab_names:
-                labels_names = pickle.load(lab_names)
-
-            with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
-                tfidf_vect = pickle.load(hash_v)
-
             resume_tfidf = tfidf_vect.transform(resume_text)
             # resume_tfidf_array = resume_tfidf.toarray()
             # resume_degree_level = np.array([get_degree_level_from_resume([(resume_text[0], '', '')])])
@@ -155,14 +159,12 @@ def analyze():
 
             # hard coding responses for now
             out = dict()
-            title_title_map = json.loads(open("title_title_map.json").read())
             top_five_predictions_caps = [title_title_map[tfp] for tfp in top_five_predictions]
             out["predicted"] = top_five_predictions_caps
             out["employer"] = ["Deloitte","Sales Force","Yahoo"]
             out["title"] = ["UX Designer", "Software engineer", "Consultant"]
             out["university"] = university
 
-            skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
             skills_map_with_percent_list = []
             for pred in top_five_predictions:
                 temp_skill_map = dict()
