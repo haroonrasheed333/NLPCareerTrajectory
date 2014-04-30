@@ -1,26 +1,56 @@
+//var countriesArray = $.map(countries, function (value, key) { return { value: value, data: key }; });
+
 $(document).ready(function () {
-// http://blog.thomsonreuters.com/index.php/mobile-patent-suits-graphic-of-the-day/
+
 create_network();
-lookup();
-var currencies = [];
-console.log(document.getElementById('university').value)
-function lookup(){
-d3.json("../static/DeptCodes.json", function(error, json) {
-   currencies =json.majors[0];
+var majorsArray = [{ "value": "Education-Other"},
+        { "value": "Anthropology"},
+        { "value": "Nuclear Physics"},
+        { "value": "Plant Sciences"},
+        { "value": "Archaeology"}];
+
+// Setup jQuery ajax mock:
+$.mockjax({
+    url: '*',
+    responseTime: 2000,
+    response: function (settings) {
+        var query = settings.data.query,
+            queryLowerCase = query.toLowerCase(),
+            re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi'),
+            suggestions = $.grep(countriesArray, function (country) {
+                 // return country.value.toLowerCase().indexOf(queryLowerCase) === 0;
+                return re.test(country.value);
+            }),
+            response = {
+                query: query,
+                suggestions: suggestions
+            };
+
+        this.responseText = JSON.stringify(response);
+    }
 });
-};
 
-
-
-// setup autocomplete function pulling from currencies[] array
-$('#autocomplete').autocomplete({
-  lookup: currencies,
-  onSelect: function (suggestion) {
-    console.log(suggestion["value"])
-    var thehtml = '<strong>Currency Name:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ';
-    $('#outputcontent').html(thehtml);
-  }
+// Initialize ajax autocomplete:
+$('#autocomplete-ajax').autocomplete({
+    // serviceUrl: '/autosuggest/service/url',
+    lookup: majorsArray,
+    lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+        var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+        return re.test(suggestion.value);
+    },
+    onSelect: function(suggestion) {
+        $('#selction-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
+    },
+    onHint: function (hint) {
+        $('#autocomplete-ajax-x').val(hint);
+    },
+    onInvalidateSelection: function() {
+        $('#selction-ajax').html('You selected: none');
+    }
 });
+
+
+
 function create_network(){
 d3.json("../static/miserables.json", function(error, json) {
 

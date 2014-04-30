@@ -24,7 +24,7 @@ from Marisa import get_degree_level_from_resume, get_degree
 
 global flag
 global university
-university = 'University of California Berkeley'
+university = ''
 flag = 1
 
 iHire = Flask(__name__)
@@ -44,6 +44,8 @@ with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
 title_title_map = json.loads(open("title_title_map.json").read())
 
 skills_map_with_percent = json.loads(open("skills_map_with_percent_new_0429_upper.json").read())
+
+univ_dict = json.loads(open("static/univs_list.json","rb").read())
 
 
 def feature_consolidation(resume_text, top_unigram_list, top_bigram_list):
@@ -127,7 +129,7 @@ def analyze():
             resume_text = [open(filename).read()]
 
             global university
-            university = extract_univ(open(textfile_name).read())
+            university = extract_univ(open(textfile_name).read(),univ_dict)
             print university
 
 
