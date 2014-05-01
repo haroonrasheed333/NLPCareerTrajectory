@@ -755,6 +755,36 @@ def create_skills_map_with_percentage_new(data, xml_directory, save_json):
         return skills_map_with_percent
 
 
+def get_top_five_predictions(predicted_decision, labels_names=[]):
+    if not predicted_decision:
+        return [], []
+
+    top_five_predictions = []
+    normalized_prediction_score = []
+    for i in range(1):
+        predicted_dec_dup = predicted_decision[i]
+        predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
+        max_s = max(predicted_dec_dup_sorted)
+        min_s = min(predicted_dec_dup_sorted)
+
+        normalized_prediction_score = \
+            [
+                int(float(val - min_s) * 100 / float(max_s - min_s)) for val in predicted_dec_dup_sorted[:5]
+            ]
+
+        if type(predicted_decision[i]) is list:
+            predicted_decision_temp = predicted_decision[i]
+        else:
+            predicted_decision_temp = predicted_decision[i].tolist()
+
+        for j in range(5):
+            top_five_predictions.append(
+                labels_names[predicted_decision_temp.index(predicted_dec_dup_sorted[j])]
+            )
+
+    return top_five_predictions, normalized_prediction_score
+
+
 
 if __name__ == '__main__':
     user_name = os.environ.get('USER')

@@ -176,6 +176,7 @@ def analyze():
 
             final_score_sorted = sorted(final_score, reverse=True)
 
+            print normalized_prediction_score
             print final_titles_list
             print final_score_sorted
 

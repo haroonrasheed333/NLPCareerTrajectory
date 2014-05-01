@@ -230,7 +230,7 @@ if __name__ == '__main__':
     # test_skill_set = np.array(get_skill_features_from_resume(test_resumes, top_skills))
 
     # TfidfVectorizer
-    tfidf_vect = TfidfVectorizer(stop_words='english')
+    tfidf_vect = TfidfVectorizer(stop_words='english', vocabulary=[])
     print "Create training resume tfidf"
     train_tfidf = tfidf_vect.fit_transform(train_resume_text)
     train_tfidf_array = train_tfidf.toarray()
