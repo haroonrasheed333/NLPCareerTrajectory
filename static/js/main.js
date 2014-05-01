@@ -150,7 +150,8 @@ $(document).ready(function () {
                 }
             });
 
-            $( "#network" ).append($('<a href="http://127.0.0.1:5000/network"><h5>What are my alumni doing</h5></a><h5><a href="http://127.0.0.1:5000/network"></a></h5>'));
+            $("#network").empty();
+            $("#network").append($('<a href="http://127.0.0.1:5000/network"><h5>What are my alumni doing</h5></a><h5><a href="http://127.0.0.1:5000/network"></a></h5>'));
 
 //            // $("#predictions-div").append($('<h4>Your top 5 Job predictions</h4>'));
 //            $("#network-div").append($('<table id="network"></table>'));

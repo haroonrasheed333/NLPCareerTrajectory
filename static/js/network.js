@@ -1,37 +1,28 @@
-//var countriesArray = $.map(countries, function (value, key) { return { value: value, data: key }; });
-
+var university = document.getElementById("university").value;
+console.log(countries);
+console.log("eeeee");
+console.log(document.getElementById("university").value);
 $(document).ready(function () {
+$("#inputs").empty;
+if (university.length > 2){
+    $("#inputs").append('<h3> Displaying alumni network for all majors from your university. Key in your major to filter the network</h3></br>');
+    $("#inputs").append('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="major" id="major-ajax-x" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/></div>');
+    $("#inputs").append('<div class="column-25 column"><input id="submit-button" class="btn btn-primary pull-right" type="button" value="Re-create network" /></div>');
+    create_network();
 
-create_network();
-var majorsArray = [{ "value": "Education-Other"},
-        { "value": "Anthropology"},
-        { "value": "Nuclear Physics"},
-        { "value": "Plant Sciences"},
-        { "value": "Archaeology"}];
+}
+else{
 
-// Setup jQuery ajax mock:
-$.mockjax({
-    url: '*',
-    responseTime: 2000,
-    response: function (settings) {
-        var query = settings.data.query,
-            queryLowerCase = query.toLowerCase(),
-            re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi'),
-            suggestions = $.grep(countriesArray, function (country) {
-                 // return country.value.toLowerCase().indexOf(queryLowerCase) === 0;
-                return re.test(country.value);
-            }),
-            response = {
-                query: query,
-                suggestions: suggestions
-            };
+    $("#inputs").append('<h3> Key in your university and major to generate your alumni network</h3></br>');
+    $("#inputs").append('<div class="column-33 column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="university" id="university-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>')
+    $("#inputs").append('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="country" id="major-ajax-x" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/></div>')
+    $("#inputs").append('<div class="column-25 column"><input id="submit-button" class="btn btn-primary pull-right" type="button" value="Create network" style="position: absolute;" /></div>');
+//    create_network();
 
-        this.responseText = JSON.stringify(response);
-    }
-});
+}
 
 // Initialize ajax autocomplete:
-$('#autocomplete-ajax').autocomplete({
+$('#major-ajax').autocomplete({
     // serviceUrl: '/autosuggest/service/url',
     lookup: majorsArray,
     lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
@@ -49,7 +40,24 @@ $('#autocomplete-ajax').autocomplete({
     }
 });
 
-
+// Initialize ajax autocomplete:
+$('#university-ajax').autocomplete({
+    // serviceUrl: '/autosuggest/service/url',
+    lookup: univsArray,
+    lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+        var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+        return re.test(suggestion.value);
+    },
+    onSelect: function(suggestion) {
+        $('#selction-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
+    },
+    onHint: function (hint) {
+        $('#autocomplete-ajax-x').val(hint);
+    },
+    onInvalidateSelection: function() {
+        $('#selction-ajax').html('You selected: none');
+    }
+});
 
 function create_network(){
 d3.json("../static/miserables.json", function(error, json) {
