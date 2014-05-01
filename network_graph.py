@@ -2,6 +2,7 @@ import os
 import csv
 import json
 from lxml import etree
+import re
 
 # resume_id, school_id, institution, degree_level, degree, major_code, major, employer, job_title
 
@@ -12,12 +13,15 @@ univ_major_list = []
 univ_major_emp_skill = dict()
 counter = 0
 names = []
+univ_normalize = json.loads(open("/Users/divyakarthikeyan/univ_map.json","rb").read())
+print univ_normalize["oakland city university main campus"]
 
 with open('skills_0424_no_stemming_full_ds.json') as skills_json_file:
     skills_json = json.loads(skills_json_file.read())
 
 for root, dirs, files in os.walk(xml_directory, topdown=False):
     for f in files:
+
         try:
             xml = etree.parse(xml_directory + '/' + f)
             name = xml.xpath('//givenname/text()')[0] + ' ' + xml.xpath('//surname/text()')[0]
@@ -30,6 +34,13 @@ for root, dirs, files in os.walk(xml_directory, topdown=False):
                 for school in schools:
                     school_id = school.attrib['id']
                     institution = school.xpath('institution/text()')[0]
+                    institution = re.sub ('[^A-Za-z0-9 ]+',' ',str(institution))
+                    institution = re.sub ('  ',' ',str(institution))
+                    #print institution
+                    if institution.lower() in univ_normalize:
+                        #print "NORMALIZED"
+                        institution = univ_normalize[institution]
+
                     degree_level = school.xpath('degree/@level')[0]
                     degree = school.xpath('degree/text()')[0]
                     major_code = str(school.xpath('major/@code')[0])
@@ -40,7 +51,7 @@ for root, dirs, files in os.walk(xml_directory, topdown=False):
                         counter += 1
                         univ_major_list.append(str(institution + '_' + major_code).lower())
                         univ_major_number_map[str(institution + '_' + major_code).lower()] = counter
-                        univ_major_number_map[str(institution + '_' + major).lower()] = counter
+                        #univ_major_number_map[str(institution + '_' + major).lower()] = counter
 
                     if str(institution + '_' + major).lower() == 'vellore institute of technology_computer science':
                         pass
@@ -70,15 +81,16 @@ for root, dirs, files in os.walk(xml_directory, topdown=False):
                         univ_major_emp_skill[univ_major_number_map[tum]] = []
                         univ_major_emp_skill[univ_major_number_map[tum]].append(temp_list)
 
+
         except:
             pass
 
 j = json.dumps(univ_major_emp_skill, indent=4, separators=(',', ': '))
-f = open('univ_major_emp_skill.json', 'w')
+f = open('univ_major_emp_skill_0501.json', 'w')
 print >> f, j
 f.close()
 
 j1 = json.dumps(univ_major_number_map, indent=4, separators=(',', ': '))
-f = open('univ_major_number_map.json', 'w')
+f = open('univ_major_number_map_0501.json', 'w')
 print >> f, j1
 f.close()

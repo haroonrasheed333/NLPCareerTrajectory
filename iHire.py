@@ -16,6 +16,7 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from univ_lookup import extract_univ
+from univ_lookup import createDataForGraph
 from Marisa import get_degree_level_from_resume, get_degree
 
 
@@ -41,7 +42,8 @@ with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
 title_title_map = json.loads(open("title_title_map.json").read())
 skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
 univ_dict = json.loads(open("static/univs_list.json","rb").read())
-
+skills_employer = json.loads(open("static/networkgraph.json").read())
+univ_major_number = json.loads(open("static/univ_mapping.json").read())
 
 def extract_text_from_pdf(pdf_filename):
     resource_manager = PDFResourceManager()
@@ -126,6 +128,7 @@ def analyze():
             global university
             university = extract_univ(open(textfile_name).read(), univ_dict)
             print university
+            createDataForGraph(university, skills_employer, univ_major_number)
 
             resume_text = [open(textfile_name).read()]
             resume_tfidf = tfidf_vect.transform(resume_text)
