@@ -51,20 +51,20 @@ f.close()
 
 
 
-#skills_employer = json.loads(open("static/networkgraph.json").read())
-#univ_major_map = json.loads(open("static/univ_mapping.json").read())
-#print "from create data for graph"
-#univ = "university of california berkeley"
-#result = {}
-#result["links"] = []
-#if univ in univ_major_map:
-#    print "here"
-#    indices = []
-#    for key in univ_major_map[univ]:
-#        indices.append(univ_major_map[univ][key])
-#    print indices
-#    for index in indices:
-#        if str(index) in skills_employer:
-#            for d in skills_employer[str(index)]["links"]:
-#                result["links"].append(d)
-#print result
+skills_employer = json.loads(open("static/networkgraph.json").read())
+univ_major_map = json.loads(open("static/univ_mapping.json").read())
+print "from create data for graph"
+univ = "university of california berkeley"
+result = {}
+result["links"] = []
+if univ in univ_major_map:
+    print "here"
+    indices = []
+    for key in univ_major_map[univ]:
+        indices.append(univ_major_map[univ][key])
+    print indices
+    for index in indices:
+        if str(index) in skills_employer:
+            for d in skills_employer[str(index)]["links"]:
+                result["links"].append(d)
+print result

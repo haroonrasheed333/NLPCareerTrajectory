@@ -42,6 +42,7 @@ with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
 title_title_map = json.loads(open("title_title_map.json").read())
 skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
 univ_dict = json.loads(open("static/univs_list.json","rb").read())
+univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 skills_employer = json.loads(open("static/networkgraph.json").read())
 univ_major_number = json.loads(open("static/univ_mapping.json").read())
 
@@ -126,7 +127,7 @@ def analyze():
 
             print filename
             global university
-            university = extract_univ(open(textfile_name).read(), univ_dict)
+            university = extract_univ(open(textfile_name).read(), univ_dict, univ_normalize)
             print university
             createDataForGraph(university, skills_employer, univ_major_number)
 

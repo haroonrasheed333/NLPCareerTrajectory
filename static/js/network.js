@@ -1,8 +1,50 @@
 var university = document.getElementById("university").value;
-console.log(countries);
-console.log("eeeee");
 console.log(document.getElementById("university").value);
+
+var skillsEmployer, univNumberMap;
+
 $(document).ready(function () {
+
+$.getJSON("../static/networkgraph.json", function(json) {
+    skillsEmployer= json;
+});
+
+
+$.getJSON("../static/univ_mapping.json", function(json) {
+    univNumberMap= json;
+});
+
+// Trying to create data for network graph from JS -- Not Usin
+//function create_data(univ, major, skills_employer, univ_major_map){
+//    univ = univ.toString().toLowerCase();
+//    major = major.toString().toLowerCase();
+//    var result = {};
+//    result["links"] = [];
+//    if (univ in univ_major_map){
+//        var indices = [];
+//        if (major == null){
+//            for (key in univ_major_map[univ]){
+//                indices.push(univ_major_map[univ][key]);
+//            }
+//        }
+//        else{
+//            if (major in univ_major_map[univ]){
+//                indices.push(univ_major_map[univ][major]);
+//            }
+//        }
+//    }
+//    for (index in indices){
+//        if (index.toString() in skills_employer){
+//            for (d in skills_employer[str(index)]["links"]){
+//                result["links"].append(d);
+//            }
+//        }
+//    }
+//}
+
+
+
+
 $("#inputs").empty;
 if (university.length > 2){
     $("#inputs").append('<h3> Displaying alumni network for all majors from your university. Key in your major to filter the network</h3></br>');
@@ -81,7 +123,7 @@ var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
     .size([width, height])
-    .gravity(.075)
+    .gravity(.1)
     .linkDistance(150)
     .charge(-300)
     .on("tick", tick)

@@ -26,7 +26,7 @@ def ngrams(text, n):
         for i in range(len(words)-(n-1)):
             yield(' '.join(words[i:i+n]))
 
-def extract_univ(data,univ_dict):
+def extract_univ(data,univ_dict,univ_normalize):
     data = stripxml(str(data))
     data = data.lower()
     data = data.replace('\xc2\xa0', ' ')
@@ -41,7 +41,9 @@ def extract_univ(data,univ_dict):
     n=10
     while (n>1):
         for ngram in ngrams(str(second).lower(), n):
-            if ngram.lower() in univ_dict:
+            if ngram.lower() in univ_normalize:
+                return univ_normalize[str(ngram.lower())]
+            elif ngram.lower() in univ_dict:
                 return ngram.title()
         n = n - 1
 
