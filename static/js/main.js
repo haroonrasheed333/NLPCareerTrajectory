@@ -40,6 +40,8 @@ $(document).ready(function () {
             var predicted=[];
             var skills_map = [];
             var all_titles = [];
+            var scores = [];
+
             data.employer.forEach(function(aa){
                 employer.push(aa);
             });
@@ -47,8 +49,12 @@ $(document).ready(function () {
                 title.push(aa);
             });
 
-            data.predicted.forEach(function(aa){
+            data.final_prediction_list.forEach(function(aa){
                 predicted.push(aa);
+            });
+
+            data.final_score_sorted.forEach(function(aa){
+                scores.push(aa);
             });
 
             data.skills_map.forEach(function(aa){
@@ -59,9 +65,10 @@ $(document).ready(function () {
                 all_titles.push(aa);
             });
 
+            // console.log(data);
 
-            var link1="http://www.simplyhired.com/k-";
-            var link3="-jobs.html";
+            var link1 = "http://www.simplyhired.com/k-";
+            var link3 = "-jobs.html";
             var i = 0;
 
             $("#predictions-div").empty();
@@ -82,7 +89,8 @@ $(document).ready(function () {
 
                 var href = link1.concat(predicted[i].concat(link3));
                 cand_skill_list = data.candidate_skills[predicted[i]];
-                li.append($('<div title="' + predicted[i] + '"><a target="_blank" href="' + href + '">' + predicted[i] + '</a></div>'));
+
+                li.append($('<div title="' + predicted[i] + '"><a target="_blank" href="' + href + '">' + predicted[i] + '</a><span class="score">' + scores[i] + '</span></div>'));
 
                 var skill_div = $('<div class="skills-list-div"></div>');
                 var skill_ul = $('<ul class="skills-list"></ul>');
@@ -97,6 +105,8 @@ $(document).ready(function () {
 
                 predicted_titles_list.append(li);
             }
+
+            console.log(scores);
 
             $("#predictions-div").append(predicted_titles_list);
 
@@ -121,7 +131,7 @@ $(document).ready(function () {
                     if (title in skills_map[j]) {
                         skills = skills_map[j][title]['skills'];
                         percents = skills_map[j][title]['percent'];
-                        for (var k = 0; k < 20; k++) {
+                        for (var k = 0; k < 15; k++) {
                             skill_table.append($('<tr><td>' + skills[k] + '</td><td>' + percents[k] + '</td></tr>'));
                         }
                     }

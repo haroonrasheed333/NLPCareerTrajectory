@@ -152,6 +152,10 @@ a:hover {
 #network-div{
 }
 
+.score {
+  float: right;
+}
+
 
 /*#main{*/
   /*margin-left: auto;*/

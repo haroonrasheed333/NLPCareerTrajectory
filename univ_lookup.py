@@ -29,7 +29,7 @@ def ngrams(text, n):
 def extract_univ(data,univ_dict):
     data = stripxml(str(data))
     data = data.lower()
-    data=data.replace('\xc2\xa0', ' ')
+    data = data.replace('\xc2\xa0', ' ')
     #print data
     data = re.sub ('[^A-Za-z0-9 ]+',' ',str(data))
     data = re.sub ('  ',' ',str(data))

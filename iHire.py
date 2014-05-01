@@ -4,9 +4,7 @@ import re
 import csv
 import nltk
 import json
-import random
 import string
-import codecs
 import pickle
 import numpy as np
 from cStringIO import StringIO
@@ -17,7 +15,6 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from career_trajectory_svm_new_0416 import unigram_features, bigram_features, tfidftransform
 from univ_lookup import extract_univ
 from Marisa import get_degree_level_from_resume, get_degree
 
@@ -42,36 +39,11 @@ with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
     tfidf_vect = pickle.load(hash_v)
 
 title_title_map = json.loads(open("title_title_map.json").read())
-
 skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
-
 univ_dict = json.loads(open("static/univs_list.json","rb").read())
 
 
-def feature_consolidation(resume_text, top_unigram_list, top_bigram_list):
-    """
-    Function to consolidate all the featuresets for the training data
-
-    Args:
-        top_unigram_list -- list of top unigrams from the training dataset
-        top_bigram_list -- list of top bigrams from the training dataset
-
-    Returns:
-        consolidated_features -- list of consolidated features
-    """
-    uni_feats = [" ".join(unigram_features(resume_text, top_unigram_list))]
-    bi_feats = [" ".join(bigram_features(resume_text, top_bigram_list))]
-    consolidated_features = []
-    ind = 0
-    while ind < len(uni_feats):
-        consolidated_features.append(uni_feats[ind] + bi_feats[ind])
-        ind += 1
-    return consolidated_features
-
-
 def extract_text_from_pdf(pdf_filename):
-    # os.system("pdftotext -layout " + filename)
-
     resource_manager = PDFResourceManager()
     return_string = StringIO()
     la_params = LAParams()
@@ -91,6 +63,28 @@ def extract_text_from_pdf(pdf_filename):
     return extracted_text
 
 
+def get_top_five_predictions(predicted_decision):
+    top_five_predictions = []
+    normalized_prediction_score = []
+    for i in range(1):
+        predicted_dec_dup = predicted_decision[i]
+        predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
+        max_s = max(predicted_dec_dup_sorted)
+        min_s = min(predicted_dec_dup_sorted)
+
+        normalized_prediction_score = \
+            [
+                int(float(val - min_s) * 100 / float(max_s - min_s)) for val in predicted_dec_dup_sorted[:5]
+            ]
+
+        for j in range(5):
+            top_five_predictions.append(
+                labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])]
+            )
+
+    return top_five_predictions, normalized_prediction_score
+
+
 @iHire.route('/')
 def hello_world():
     global flag
@@ -98,15 +92,17 @@ def hello_world():
     print flag
     return render_template('index_result.html', flag = flag)
 
+
 @iHire.route('/network')
 def network():
     return render_template('network.html', parameter = university)
+
 
 @iHire.route("/analyze", methods=['POST','GET'])
 def analyze():
     global flag
     if request.method:
-        flag =1
+        flag = 1
         # Get and save file from browser upload
         files = request.files['file']
         if files:
@@ -118,6 +114,7 @@ def analyze():
 
             if extension == 'pdf':
                 text_from_pdf = extract_text_from_pdf(filename)
+                text_from_pdf = text_from_pdf.replace('\xc2\xa0', ' ')
                 with open(filename_without_extension + '.txt', 'wb') as write_file:
                     write_file.write(text_from_pdf)
 
@@ -126,42 +123,19 @@ def analyze():
                 textfile_name = filename
 
             print filename
-
             global university
-            university = extract_univ(open(textfile_name).read(),univ_dict)
+            university = extract_univ(open(textfile_name).read(), univ_dict)
             print university
 
-
             resume_text = [open(textfile_name).read()]
-
             resume_tfidf = tfidf_vect.transform(resume_text)
-            # resume_tfidf_array = resume_tfidf.toarray()
-            # resume_degree_level = np.array([get_degree_level_from_resume([(resume_text[0], '', '')])])
-            # print resume_degree_level
-            # resume_tfidf_array_degree_level = np.concatenate((resume_tfidf_array, resume_degree_level.T), axis=1)
-
-
-            predicted_score = model.predict(resume_tfidf)
             predicted_decision = model.decision_function(resume_tfidf)
 
-            predicted = []
+            top_five_predictions, normalized_prediction_score = get_top_five_predictions(predicted_decision)
 
-            for i in range(1):
-                predicted_dec_dup = predicted_decision[i]
-                predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
-                top_five_predictions = []
-                predicted.append(labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[0])])
-                for j in range(5):
-                    top_five_predictions.append(
-                        labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])]
-                    )
-
-                print "Predicted top5: " + ", ".join(top_five_predictions)
-
-            # hard coding responses for now
             out = dict()
             top_five_predictions_caps = [title_title_map[tfp] for tfp in top_five_predictions]
-            out["predicted"] = top_five_predictions_caps
+
             out["employer"] = ["Deloitte","Sales Force","Yahoo"]
             out["title"] = ["UX Designer", "Software engineer", "Consultant"]
             out["university"] = university
@@ -183,11 +157,30 @@ def analyze():
             except UnicodeDecodeError:
                 tokens = nltk.word_tokenize(resume_text[0].decode('utf-8').lower())
 
+            skill_score = []
             for pred in top_five_predictions:
                 top15 = skills_map_with_percent[title_title_map[pred]]["skills"][:15]
+                print top15
                 temp_skill_list = [t for t in top15 if len(t) > 1 and t.lower() in tokens]
 
                 out["candidate_skills"][title_title_map[pred]] = temp_skill_list
+                skill_score.append(int(len(temp_skill_list) / 15.0 * 100.0))
+
+            final_score = [sum(x)/2 for x in zip(normalized_prediction_score, skill_score)]
+
+            final_titles_list = []
+            sorted_score_indexes = [i[0] for i in sorted(enumerate(final_score), key=lambda x:x[1], reverse=True)]
+
+            for s in sorted_score_indexes:
+                final_titles_list.append(title_title_map[top_five_predictions[s]])
+
+            final_score_sorted = sorted(final_score, reverse=True)
+
+            print final_titles_list
+            print final_score_sorted
+
+            out["final_prediction_list"] = final_titles_list
+            out["final_score_sorted"] = final_score_sorted
 
             if os.path.isfile(textfile_name):
                     os.remove(textfile_name)
