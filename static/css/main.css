@@ -11,6 +11,7 @@ Version:        1
 body {
   font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
   color: #333;
+  background: transparent;
 }
 
 h1, h2, h3, h4, h5 {
@@ -153,7 +154,24 @@ a:hover {
 }
 
 .score {
+  margin-right: 10px;
+  font-size: 22px;
+}
+
+.bar {
+  background: gray;
+  margin-right: 2px;
+  width: 20px;
+  height: 18px;
+  float: left;
+}
+
+#score-div {
   float: right;
+}
+
+#bar-div {
+  display: inline-block;
 }
 
 
@@ -203,7 +221,7 @@ a:hover {
   font-size: 18px;
   color: #666;
   line-height: 40px;
-  width: 100%;
+  width: auto;
   padding: 10px 15px;
   border-bottom: 1px solid #e3e3e3;
   list-style-type: none;

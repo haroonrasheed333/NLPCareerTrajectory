@@ -90,7 +90,7 @@ $(document).ready(function () {
                 var href = link1.concat(predicted[i].concat(link3));
                 cand_skill_list = data.candidate_skills[predicted[i]];
 
-                li.append($('<div title="' + predicted[i] + '"><a target="_blank" href="' + href + '">' + predicted[i] + '</a><span class="score">' + scores[i] + '</span></div>'));
+                li.append($('<div title="' + predicted[i] + '"><a target="_blank" href="' + href + '">' + predicted[i] + '</a><div id="score-div"><span class="score">' + scores[i] + '</span><div id="bar-div"><span class="bar" id="bar1-' + i + '"></span><span class="bar" id="bar2-' + i + '"></span><span class="bar" id="bar3-' + i + '"></span></div></div></div>'));
 
                 var skill_div = $('<div class="skills-list-div"></div>');
                 var skill_ul = $('<ul class="skills-list"></ul>');
@@ -104,11 +104,21 @@ $(document).ready(function () {
                 li.append(skill_div);
 
                 predicted_titles_list.append(li);
+
             }
 
             console.log(scores);
 
             $("#predictions-div").append(predicted_titles_list);
+
+            for (var i = 0; i < scores.length; i++) {
+                if (scores[i] < 40) {
+                    $('#bar3-' + i).css("background", "lightgray");
+                    $('#bar2-' + i).css("background", "lightgray");
+                } else if (scores[i] < 70) {
+                    $('#bar3-' + i).css("background", "lightgray");
+                }
+            }
 
             $("#skills-div").empty();
 
