@@ -56,6 +56,32 @@ def extract_univ(data,univ_dict):
     #                break
     return ""
 
+
+def createDataForGraph(univ, skills_employer, univ_major_map):
+    print "from create data for graph"
+    print univ
+    univ = str(univ).lower()
+    result = {}
+    result["links"] = []
+    if univ in univ_major_map:
+        print "here"
+        indices = []
+        for key in univ_major_map[univ]:
+            indices.append(univ_major_map[univ][key])
+        print indices
+        for index in indices:
+            if str(index)in skills_employer:
+                for d in skills_employer[str(index)]["links"]:
+                    result["links"].append(d)
+
+    j = json.dumps(result)
+    f = open("static/miserables.json", "w")
+    print >> f, j
+    f.close()
+
+
+
+
 def extract_univ_json(data):
     univ_dict = json.loads(open("static/univs_list.json","rb").read())
     n=10
