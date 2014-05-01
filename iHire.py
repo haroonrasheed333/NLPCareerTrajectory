@@ -160,7 +160,6 @@ def analyze():
             skill_score = []
             for pred in top_five_predictions:
                 top15 = skills_map_with_percent[title_title_map[pred]]["skills"][:15]
-                print top15
                 temp_skill_list = [t for t in top15 if len(t) > 1 and t.lower() in tokens]
 
                 out["candidate_skills"][title_title_map[pred]] = temp_skill_list

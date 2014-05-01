@@ -1,5 +1,8 @@
+"""
+Validate score generation functionality
+"""
 from nose.tools import *
-from util import get_top_five_predictions
+from util2 import get_top_five_predictions
 
 
 class TestScoreGeneration():
@@ -46,11 +49,11 @@ class TestScoreGeneration():
         assert_equals([], normalized_scores)
 
 
-t = TestScoreGeneration()
-t.setup_class()
-t.test_should_return_top_five_predicted_titles()
-t.test_top_predicted_title_should_be_data_analyst()
-t.test_highest_normalized_score_should_be_hundred()
-t.test_lowest_normalized_score_should_be_greater_than_or_equal_to_zero()
-t.test_should_return_empty_lists_when_valid_decision_list_is_not_passed()
-t.teardown_class()
+# t = TestScoreGeneration()
+# t.setup_class()
+# t.test_should_return_top_five_predicted_titles()
+# t.test_top_predicted_title_should_be_data_analyst()
+# t.test_highest_normalized_score_should_be_hundred()
+# t.test_lowest_normalized_score_should_be_greater_than_or_equal_to_zero()
+# t.test_should_return_empty_lists_when_valid_decision_list_is_not_passed()
+# t.teardown_class()

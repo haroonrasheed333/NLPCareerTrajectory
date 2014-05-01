@@ -1,3 +1,6 @@
+"""
+Verify corpus builder functionality
+"""
 import os
 from nose.tools import *
 from corpus_builder import prepare_data
@@ -113,9 +116,9 @@ class TestCorpusBuilder:
                 os.rmdir(root)
 
 
-t = TestCorpusBuilder()
-t.setup_class()
-t.test_should_extract_resume_content_from_xml_files_and_save_as_plaintext_files()
-t.test_should_not_select_resumes_without_present_job()
-t.test_should_not_select_resumes_with_present_job_not_in_top_jobs()
-t.teardown_class()
+# t = TestCorpusBuilder()
+# t.setup_class()
+# t.test_should_extract_resume_content_from_xml_files_and_save_as_plaintext_files()
+# t.test_should_not_select_resumes_without_present_job()
+# t.test_should_not_select_resumes_with_present_job_not_in_top_jobs()
+# t.teardown_class()

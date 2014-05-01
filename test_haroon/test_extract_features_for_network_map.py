@@ -6,7 +6,7 @@ import os
 import nltk
 from lxml import etree
 from nose.tools import *
-from util import extract_features_for_network_map
+from util2 import extract_features_for_network_map
 
 nltk.data.path.append('nltk_data')
 

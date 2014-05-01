@@ -1,3 +1,6 @@
+"""
+Validate functionality to split corpus
+"""
 import os
 from nose.tools import *
 from corpus_builder import prepare_data

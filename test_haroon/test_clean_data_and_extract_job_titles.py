@@ -1,3 +1,7 @@
+"""
+Validate functionality to clean and extract job titles
+"""
+
 import os
 from lxml import etree
 from nose.tools import *

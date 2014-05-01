@@ -1,0 +1,184 @@
+import os
+import csv
+import json
+from lxml import etree
+
+
+def extract_features_for_network_map(xml_directory, save_csv):
+
+    if not os.path.exists(xml_directory):
+        return {}
+
+    school_job_details = []
+    for root, dirs, files in os.walk(xml_directory, topdown=False):
+        for f in files:
+            if os.path.isfile(xml_directory + '/' + f):
+                xml = etree.parse(xml_directory + '/' + f)
+                education = xml.xpath('//education')[0]
+                schools = education.xpath('//school')
+                school_details = []
+                resume_id = f.split('.')[0]
+                for school in schools:
+                    try:
+                        school_id = school.attrib['id']
+                    except ValueError:
+                        school_id = ''
+
+                    institution = school.xpath('institution/text()')[0]
+
+                    try:
+                        degree_level = school.xpath('degree/@level')[0]
+                    except IndexError:
+                        degree_level = ''
+
+                    degree = school.xpath('degree/text()')[0]
+
+                    major_code = school.xpath('major/@code')[0]
+                    major = school.xpath('major/text()')[0]
+                    school_details.append((school_id, institution, degree_level, degree, major_code, major))
+
+                job_details = []
+                try:
+                    experience = xml.xpath('//experience')[0]
+                    jobs = experience.xpath('//job')
+                    for job in jobs:
+                        employer = job.xpath('employer/text()')[0]
+
+                        try:
+                            job_location = job.xpath('address/city/text()')[0]
+                            job_state = job.xpath('address/state/text()')[0]
+                        except IndexError:
+                            job_location = ''
+                            job_state = ''
+
+                        title = job.xpath('title/text()')[0]
+                        job_details.append((employer, job_location, job_state, title))
+                except IndexError:
+                    job_details.append(('', '', '', ''))
+
+                for school_detail in school_details:
+                    for job_detail in job_details:
+                        school_job_details.append(
+                            (
+                                resume_id,
+                                school_detail[0],
+                                school_detail[1],
+                                school_detail[2],
+                                school_detail[3],
+                                school_detail[4],
+                                school_detail[5],
+                                job_detail[0],
+                                job_detail[1],
+                                job_detail[2],
+                                job_detail[3]
+                            )
+                        )
+
+            else:
+                school_job_details.append(['', '', '', '', '', '', '', '', '', ''])
+
+    if save_csv:
+        with open("institution_degree_job_map.csv", "wb") as csv_file:
+            writer = csv.writer(csv_file)
+            for school_job_detail in school_job_details:
+                try:
+                    writer.writerow(school_job_detail)
+                except:
+                    pass
+    else:
+        school_job_details_dict = dict()
+        for sjd in school_job_details:
+            value = school_job_details_dict.get(sjd[0], None)
+            if value:
+                school_job_details_dict[sjd[0]].append(sjd)
+            else:
+                school_job_details_dict[sjd[0]] = []
+                school_job_details_dict[sjd[0]].append(sjd)
+        return school_job_details_dict
+
+def get_top_five_predictions(predicted_decision, labels_names=[]):
+    if not predicted_decision:
+        return [], []
+
+    top_five_predictions = []
+    normalized_prediction_score = []
+    for i in range(1):
+        predicted_dec_dup = predicted_decision[i]
+        predicted_dec_dup_sorted = sorted(predicted_dec_dup, reverse=True)
+        max_s = max(predicted_dec_dup_sorted)
+        min_s = min(predicted_dec_dup_sorted)
+
+        normalized_prediction_score = \
+            [
+                int(float(val - min_s) * 100 / float(max_s - min_s)) for val in predicted_dec_dup_sorted[:5]
+            ]
+
+        if type(predicted_decision[i]) is list:
+            predicted_decision_temp = predicted_decision[i]
+        else:
+            predicted_decision_temp = predicted_decision[i].tolist()
+
+        for j in range(5):
+            top_five_predictions.append(
+                labels_names[predicted_decision_temp.index(predicted_dec_dup_sorted[j])]
+            )
+
+    return top_five_predictions, normalized_prediction_score
+
+
+def get_degree(resume_text):
+    resume_text = resume_text.lower()
+
+    if 'education' in resume_text:
+        parted = resume_text.split('education')[1]
+        edu_text = parted[:150]
+    else:
+        edu_text = resume_text
+    degree_level = 0
+
+    for d in ["doctor ", "ph.d", "phd", "ph. d"]:
+        if d in edu_text:
+            return 0.021
+
+    masters = \
+        [
+            "master", "ms degree", "mpa ", "mhrm", "mfa ", "mba ", "m.sc", "m.s ", "m.h.a", "m.f.a", "m.b.a", "m. s",
+            "m.a", "m. tech", "m. ed", "m. a"
+        ]
+
+    for m in masters:
+        if m in edu_text:
+            return 0.018
+
+    bachelors = \
+        [
+            "bachelor", "bsc", "bsit", "bse", "bsba", "bs of", "bs degree", "bgs", "bfa", "bba", "bs ", "ba ", "b.sc",
+            "b.s.n", "b.s.", "b.s. ", "b.phil", "b.f.a", "b.e", "b.com", "b.b.a", "b.a.", "b.tech", "b. tech", "b. a",
+            "bs,"
+        ]
+
+    for b in bachelors:
+        if b in edu_text:
+            return 0.016
+
+    associate = ["associate", "as degree", "as ", "aas ", "a.s.", "a.s ", "a.a.s", "a.a. ", "a. a"]
+
+    for a in associate:
+        if a in edu_text:
+            return 0.014
+
+    if "diploma" in edu_text:
+        return 0.013
+
+    high_school = ["high school diploma", "hs dip", "h. s. ", "high school degree", "h.s "]
+
+    for h in high_school:
+        if h in edu_text:
+            return 0.012
+
+    return degree_level
+
+
+def get_degree_level_from_resume(resume_data):
+    degree_level = [get_degree(resume_text) for (resume_text, tag, fname) in resume_data]
+    return degree_level
