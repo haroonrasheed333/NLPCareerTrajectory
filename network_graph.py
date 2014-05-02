@@ -3,7 +3,8 @@ import csv
 import json
 from lxml import etree
 import re
-
+from util import stripxml
+from univ_lookup import extract_univ
 # resume_id, school_id, institution, degree_level, degree, major_code, major, employer, job_title
 
 user_name = os.environ.get('USER')
@@ -13,7 +14,8 @@ univ_major_list = []
 univ_major_emp_skill = dict()
 counter = 0
 names = []
-univ_normalize = json.loads(open("/Users/divyakarthikeyan/univ_map.json","rb").read())
+univ_dict = json.loads(open("static/univs_list.json","rb").read())
+univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 print univ_normalize["oakland city university main campus"]
 
 with open('skills_0424_no_stemming_full_ds.json') as skills_json_file:
@@ -29,11 +31,13 @@ for root, dirs, files in os.walk(xml_directory, topdown=False):
                 names.append(name)
                 education = xml.xpath('//education')[0]
                 schools = education.xpath('//school')
+
                 resume_id = f.split('.')[0]
                 temp_univ_major_list = []
                 for school in schools:
-                    school_id = school.attrib['id']
-                    institution = school.xpath('institution/text()')[0]
+                    school_text = stripxml(etree.tostring(school))
+                    #institution = school.xpath('institution/text()')[0]
+                    institution = extract_univ( school_text, univ_dict, univ_normalize)
                     institution = re.sub ('[^A-Za-z0-9 ]+',' ',str(institution))
                     institution = re.sub ('  ',' ',str(institution))
                     #print institution
@@ -86,11 +90,11 @@ for root, dirs, files in os.walk(xml_directory, topdown=False):
             pass
 
 j = json.dumps(univ_major_emp_skill, indent=4, separators=(',', ': '))
-f = open('univ_major_emp_skill_0501.json', 'w')
+f = open('univ_major_emp_skill_0502.json', 'w')
 print >> f, j
 f.close()
 
 j1 = json.dumps(univ_major_number_map, indent=4, separators=(',', ': '))
-f = open('univ_major_number_map_0501.json', 'w')
+f = open('univ_major_number_map_0502.json', 'w')
 print >> f, j1
 f.close()
