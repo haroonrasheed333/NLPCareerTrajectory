@@ -10,9 +10,9 @@ import json
 #        test.write(line.lower() + ',\n')
 #    test.write('}')
 #
-#result = {}
-#skills_map = json.loads(open ("univ_major_emp_skill_0502.json" , "rb").read())
-#for key in skills_map:
+# result = {}
+# skills_map = json.loads(open ("univ_major_emp_skill_0502.json" , "rb").read())
+# for key in skills_map:
 #    result[key] = {}
 #    result[key]["links"] = []
 #    while(len(result)<250):
@@ -23,10 +23,10 @@ import json
 #                    newdict = {"source": skills_map[key][i][0][j] , "target" :skills_map[key][i][1][k] , "weight" :1 }
 #                    result[key]["links"].append(newdict)
 #
-#j = json.dumps(result, indent=4, separators=(',', ': '))
-#f = open('static/networkgraph.json', 'w')
-#print >> f, j
-#f.close()
+# j = json.dumps(result, indent=4, separators=(',', ': '))
+# f = open('static/networkgraph.json', 'w')
+# print >> f, j
+# f.close()
 
 #map = json.loads(open("univ_major_number_map_0502.json" , "rb").read())
 #result = {}
@@ -106,5 +106,5 @@ import json
 #f.close()
 
 
-univ = '"uc berekley"'
-print univ.strip("'")
+# univ = '"uc berekley"'
+# print univ.strip("'")

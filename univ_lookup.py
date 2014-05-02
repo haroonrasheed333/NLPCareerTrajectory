@@ -59,13 +59,14 @@ def createDataForGraph(univ, major, skills_employer, univ_major_map, major_code)
         if (major):
             print major_code[major]
             if major in major_code:
-                indices.append(univ_major_map[univ][major_code[major]])
+                if major_code[major] in univ_major_map[univ]:
+                    indices.append(univ_major_map[univ][major_code[major]])
         else:
             for key in univ_major_map[univ]:
                 indices.append(univ_major_map[univ][key])
         print indices
         for index in indices:
-            if str(index)in skills_employer:
+            if str(index) in skills_employer:
                 for d in skills_employer[str(index)]["links"]:
                     result["links"].append(d)
 
@@ -149,9 +150,10 @@ def createData(univ, skills_employer, univ_major_map):
     return result
 
 if __name__ == '__main__':
+    pass
     #extract_univ("Berekeley")
     #data = open('/Users/divyakarthikeyan/Downloads/39-bc5e01a4f80acbcc3b0f1a92c1c7cd1a_CPhamDesignResume.pdf').
-    data = extract_text_from_pdf('/Users/divyakarthikeyan/Downloads/39-bc5e01a4f80acbcc3b0f1a92c1c7cd1a_CPhamDesignResume.pdf')
-    print data
-    print "---"
-    print extract_univ(data)
+    # data = extract_text_from_pdf('/Users/divyakarthikeyan/Downloads/39-bc5e01a4f80acbcc3b0f1a92c1c7cd1a_CPhamDesignResume.pdf')
+    # print data
+    # print "---"
+    # print extract_univ(data)

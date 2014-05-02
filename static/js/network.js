@@ -74,6 +74,8 @@ $.ajax({
            success: function(data)
            {
                console.log(data);
+               $("#network-graph").remove();
+               $("body").append($('<div id ="network-graph" class = column-100></div>'));
                create_network();
            }
          });

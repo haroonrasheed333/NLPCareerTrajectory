@@ -241,11 +241,11 @@ if __name__ == '__main__':
     print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
 
     # Pickle the classifier and training features to test it on the heldout dataset.
-    # with open('svmclassifier_new_0420_marisa.pkl', 'wb') as outfile:
-    #     pickle.dump(clf, outfile)
-    #
-    # with open('label_names_0420_marisa.pkl', 'wb') as lab_names:
-    #     pickle.dump(labels_names, lab_names)
-    #
-    # with open('tfidf_vect_0420_marisa.pkl', 'wb') as hash_v:
-    #     pickle.dump(vectorizer, hash_v)
+    with open('svmclassifier_new_0420_marisa.pkl', 'wb') as outfile:
+        pickle.dump(clf, outfile)
+
+    with open('label_names_0420_marisa.pkl', 'wb') as lab_names:
+        pickle.dump(labels_names, lab_names)
+
+    with open('tfidf_vect_0420_marisa.pkl', 'wb') as hash_v:
+        pickle.dump(vectorizer, hash_v)

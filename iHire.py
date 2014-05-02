@@ -108,7 +108,7 @@ def submit():
     if request.method == 'POST':
         print "printing value from ajax call"
         major = str(request.form["major"])
-        major = major.strip("'")
+        major = major.strip('"')
         createDataForGraph(university, major, skills_employer, univ_major_number, major_code_lookup)
         return str(request.form["major"])
 
