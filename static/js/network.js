@@ -59,14 +59,10 @@ else{
 
  $("#submit-button").on('click',function(){
 
-    var major_input = document.getElementById("major-ajax").value;
+    if (university.length>2){
+        var major_input = document.getElementById("major-ajax").value;
 
-//     var university_input = document.getElementById("univeristy-ajax").value;
-     var major_input = document.getElementById("major-ajax").value;
-//     console.log(university_input);
-     console.log(major_input);
-
-$.ajax({
+        $.ajax({
            datatype: 'json',
            url: '/submit',
            type: 'POST',
@@ -79,6 +75,30 @@ $.ajax({
                create_network();
            }
          });
+
+    }
+     else{
+
+        var major_input = document.getElementById("major-ajax").value;
+        var university_input = document.getElementById("university-ajax").value;
+
+        $.ajax({
+           datatype: 'json',
+           url: '/submit',
+           type: 'POST',
+           data : {"major": JSON.stringify(major_input), "university": JSON.stringify(university_input)},
+           success: function(data)
+           {
+               console.log(data);
+               $("#network-graph").remove();
+               $("body").append($('<div id ="network-graph" class = column-100></div>'));
+               create_network();
+           }
+         });
+
+    }
+
+
  })
 
 

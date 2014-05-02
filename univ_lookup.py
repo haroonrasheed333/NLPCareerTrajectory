@@ -54,6 +54,7 @@ def createDataForGraph(univ, major, skills_employer, univ_major_map, major_code)
     univ = str(univ).lower()
     result = {}
     result["links"] = []
+    print univ
     if univ in univ_major_map:
         indices = []
         if (major):
