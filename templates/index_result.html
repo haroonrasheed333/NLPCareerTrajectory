@@ -38,12 +38,12 @@
             <div class="row-fluid">
               <span class="btn btn-info btn-sm fileinput-button">
                 <i class="icon-plus icon-white"></i>
-                <span>Select resume...</span>
+                <span>Select Resume</span>
                 <input id="fileupload" type="file" name="file" multiple>
               </span>
               <span class="files">
               </span>
-              <input id="upload-button" class="btn btn-primary pull-right" type="button" value="Begin my career analysis" />
+              <input id="upload-button" class="btn btn-primary pull-right" type="button" value="Begin My Career Analysis" />
             </div>
           </form>
         </div>
@@ -73,32 +73,39 @@
           <form style="margin: 0px;" id="file-upload" enctype="multipart/form-data">
             <div class="row-fluid">
               <span class="btn btn-info btn-sm fileinput-button">
-                <i class="icon-plus icon-white"></i>
-                <span>Select resume...</span>
+                <div id="sel-res">
+                  <i class="icon-plus icon-white"></i>
+                  <span>Select Resume</span>
+                </div>
                 <input id="fileupload" type="file" name="file" value="fileupload" multiple>
               </span>
               <span class="files">
               </span>
-              <input id="upload-button" class="btn btn-primary pull-right" type="button" value="Begin my career analysis" />
+              <input id="upload-button" class="btn btn-primary pull-right" type="button" value="Begin My Career Analysis" />
             </div>
           </form>
         </div>
       </div>
      </div>
-     <hr>
      <div class="row-class">
-       <div class="column-25 column">
-         <div id="skills-div" class="padding-5">
-         </div>
-       </div>
-       <div class="column-50 column">
-         <div id="predictions-div" class="padding-5">
-         </div>
-       </div>
-       <div class="column-25 column">
-         <div id="network" class="padding-5">
-         </div>
+      <div id="spinner-id">
+        <div id="blockG_1" class="spinner-class">
         </div>
+        <div id="blockG_2" class="spinner-class">
+        </div>
+        <div id="blockG_3" class="spinner-class">
+        </div>
+      </div>
+     </div>
+     <div class="row-class">
+       <div class="column-25 column block">
+         <div id="skills-div">
+         </div>
+       </div>
+       <div class="column-66 column block">
+         <div id="predictions-div">
+         </div>
+       </div>
       </div>
     </div>
     {% endif %}
