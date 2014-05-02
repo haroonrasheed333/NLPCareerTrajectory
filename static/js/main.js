@@ -26,6 +26,7 @@ $(document).ready(function () {
             });
         },
         submit: function (e, data) {
+            $('#spinner-id').css('display', 'inline-block');
         },
         done: function (e, data) {
 
@@ -73,7 +74,9 @@ $(document).ready(function () {
 
             $("#predictions-div").empty();
 
-            $("#predictions-div").append($('<h3 class="center-text">Your Top 5 Job Predictions</h3>'))
+            $('#spinner-id').css('display', 'none');
+
+            $("#predictions-div").append($('<h3 class="block-title">Your Top 5 Job Predictions</h3>'))
 
             $("#predicted-titles-list" ).remove();
             var predicted_titles_list = $('<ul id="predicted-titles-list"></ul>');
@@ -112,11 +115,11 @@ $(document).ready(function () {
             $("#predictions-div").append(predicted_titles_list);
 
             for (var i = 0; i < scores.length; i++) {
-                if (scores[i] < 40) {
-                    $('#bar3-' + i).css("background", "lightgray");
-                    $('#bar2-' + i).css("background", "lightgray");
+                if (scores[i] < 45) {
+                    $('#bar3-' + i).css("background", "#78ECE8");
+                    $('#bar2-' + i).css("background", "#78ECE8");
                 } else if (scores[i] < 70) {
-                    $('#bar3-' + i).css("background", "lightgray");
+                    $('#bar3-' + i).css("background", "#78ECE8");
                 }
             }
 
@@ -127,46 +130,76 @@ $(document).ready(function () {
             for (var i = 0; i < all_titles.length; i++) {
                 sel1.append($("<option>").attr('value', all_titles[i]).text(all_titles[i]));
             }
-            $("#skills-div").append($('<h3>Top Skills</h3>'));
+            $("#skills-div").append($('<h3 class="block-title">Top Skills</h3>'));
             $("#skills-div").append(sel1);
 
             $('#skill-map').val(predicted[0]);
-            $( "#skills-table" ).remove();
+            $( "#title-skills-list" ).remove();
             var title = predicted[0]
-            if (title != '0') {
-                var skill_table = $('<table id="skills-table"></table>');
+
+
+            if (title != 0) {
+                var title_skills_ul = $('<ul id="title-skills-list"></ul>');
                 for (var j = 0; j < skills_map.length; j++) {
                     var skills = [];
                     var percents = [];
                     if (title in skills_map[j]) {
                         skills = skills_map[j][title]['skills'];
                         percents = skills_map[j][title]['percent'];
-                        for (var k = 0; k < 15; k++) {
-                            skill_table.append($('<tr><td>' + skills[k] + '</td><td>' + percents[k] + '</td></tr>'));
+                        var num_skills = 15;
+                        if (num_skills > skills.length) {
+                            num_skills = skills.length;
+                        }
+                        for (var k = 0; k < num_skills; k++) {
+                            title_skills_ul.append($('<li><div class="skill-name"><h4>' + skills[k] + '</h4></div><div class="skill-percent"><h4>' + percents[k] + '</h4></div></li>'));
                         }
                     }
                 }
-                $("#skills-div").append(skill_table);
+                $("#skills-div").append(title_skills_ul);
             }
+
+            // if (title != '0') {
+            //     var skill_table = $('<table id="skills-table"></table>');
+            //     for (var j = 0; j < skills_map.length; j++) {
+            //         var skills = [];
+            //         var percents = [];
+            //         if (title in skills_map[j]) {
+            //             skills = skills_map[j][title]['skills'];
+            //             percents = skills_map[j][title]['percent'];
+            //             var num_skills = 15;
+            //             if (num_skills > skills.length) {
+            //                 num_skills = skills.length;
+            //             }
+            //             for (var k = 0; k < num_skills; k++) {
+            //                 skill_table.append($('<tr><td>' + skills[k] + '</td><td>' + percents[k] + '</td></tr>'));
+            //             }
+            //         }
+            //     }
+            //     $("#skills-div").append(skill_table);
+            // }
 
             // Dynamically create input options.
             $( "#skill-map" ).change(function() {
-                $( "#skills-table" ).remove();
+                $( "#title-skills-list").remove();
                 var title = $(this).val();
                 if (title != '0') {
-                    var skill_table = $('<table id="skills-table"></table>');
+                    var title_skills_ul = $('<ul id="title-skills-list"></ul>');
                     for (var j = 0; j < skills_map.length; j++) {
                         var skills = [];
                         var percents = [];
                         if (title in skills_map[j]) {
                             skills = skills_map[j][title]['skills'];
                             percents = skills_map[j][title]['percent'];
-                            for (var k = 0; k < 20; k++) {
-                                skill_table.append($('<tr><td>' + skills[k] + '</td><td>' + percents[k] + '</td></tr>'));
+                            var num_skills = 15;
+                            if (num_skills > skills.length) {
+                                num_skills = skills.length;
+                            }
+                            for (var k = 0; k < num_skills; k++) {
+                                title_skills_ul.append($('<li><div class="skill-name"><h4>' + skills[k] + '</h4></div><div class="skill-percent"><h4>' + percents[k] + '</h4></div></li>'));
                             }
                         }
                     }
-                    $("#skills-div").append(skill_table);
+                    $("#skills-div").append(title_skills_ul);
                 }
             });
 
