@@ -46,16 +46,6 @@ def extract_univ(data,univ_dict,univ_normalize):
             elif ngram.lower() in univ_dict:
                 return ngram.title()
         n = n - 1
-
-    #with open("static/UniqueFBUnivNames.csv", 'rb') as f:
-    #    reader = csv.reader(f)
-    #    for row in reader:
-    #        row = re.sub('[^A-Za-z0-9 ]+', ' ', str(row))
-    #        row = re.sub('  ', ' ', str(row))
-    #        if str(row).lower() in second:
-    #            if len(str(row).split())>1:
-    #                return str(row)
-    #                break
     return ""
 
 
@@ -139,6 +129,21 @@ def generate_ngrams(res):
         out[n] = zip(*[tokens[i:] for i in range(n)])
 
     return out
+
+
+def createData(univ, skills_employer, univ_major_map):
+    univ = str(univ).lower()
+    result = {}
+    result["links"] = []
+    if univ in univ_major_map:
+        indices = []
+        for key in univ_major_map[univ]:
+            indices.append(univ_major_map[univ][key])
+        for index in indices:
+            if str(index)in skills_employer:
+                for d in skills_employer[str(index)]["links"]:
+                    result["links"].append(d)
+    return result
 
 if __name__ == '__main__':
     #extract_univ("Berekeley")
