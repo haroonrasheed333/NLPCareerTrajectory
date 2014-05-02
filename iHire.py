@@ -45,6 +45,7 @@ univ_dict = json.loads(open("static/univs_list.json","rb").read())
 univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 skills_employer = json.loads(open("static/networkgraph.json").read())
 univ_major_number = json.loads(open("static/univ_mapping.json").read())
+major_code_lookup = json.loads(open("static/DeptCodes.json").read())
 
 def extract_text_from_pdf(pdf_filename):
     resource_manager = PDFResourceManager()
@@ -98,7 +99,18 @@ def hello_world():
 
 @iHire.route('/network')
 def network():
+    global university
     return render_template('network.html', parameter = university)
+
+@iHire.route('/submit', methods = ['POST'])
+def submit():
+    global university
+    if request.method == 'POST':
+        print "printing value from ajax call"
+        major = str(request.form["major"])
+        major = major.strip("'")
+        createDataForGraph(university, major, skills_employer, univ_major_number, major_code_lookup)
+        return str(request.form["major"])
 
 
 @iHire.route("/analyze", methods=['POST','GET'])
@@ -129,7 +141,7 @@ def analyze():
             global university
             university = extract_univ(open(textfile_name).read(), univ_dict, univ_normalize)
             print university
-            createDataForGraph(university, skills_employer, univ_major_number)
+            createDataForGraph(university, "", skills_employer, univ_major_number, major_code_lookup)
 
             resume_text = [open(textfile_name).read()]
             resume_tfidf = tfidf_vect.transform(resume_text)

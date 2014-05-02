@@ -11,30 +11,26 @@ input { font-size: 14px; width : 300px; padding: 10px;margin-left: 10px; border:
 .link {
   fill: none;
   stroke: #666;
-  stroke-width: 1px;
+  stroke-width: 0.7px;
 }
 
 #licensing {
   fill: green;
 }
 
-.link.licensing {
-  stroke: green;
-}
-
-.link.resolved {
-  stroke-dasharray: 0,2 1;
-}
-
-
 circle {
   fill: #ccc;
   stroke: #333;
-  stroke-width: 1.5px;
+  stroke-width: 1.0px;
 }
 
 text {
   font: 10px sans-serif;
   pointer-events: none;
   text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+#network-graph{
+    width: 1200px;
+    height : 1200px;
 }

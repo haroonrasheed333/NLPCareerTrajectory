@@ -5,14 +5,6 @@ var skillsEmployer, univNumberMap;
 
 $(document).ready(function () {
 
-$.getJSON("../static/networkgraph.json", function(json) {
-    skillsEmployer= json;
-});
-
-
-$.getJSON("../static/univ_mapping.json", function(json) {
-    univNumberMap= json;
-});
 
 // Trying to create data for network graph from JS -- Not Usin
 //function create_data(univ, major, skills_employer, univ_major_map){
@@ -48,20 +40,46 @@ $.getJSON("../static/univ_mapping.json", function(json) {
 $("#inputs").empty;
 if (university.length > 2){
     $("#inputs").append('<h3> Displaying alumni network for all majors from your university. Key in your major to filter the network</h3></br>');
-    $("#inputs").append('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="major" id="major-ajax-x" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/></div>');
-    $("#inputs").append('<div class="column-25 column"><input id="submit-button" class="btn btn-primary pull-right" type="button" value="Re-create network" /></div>');
+    $("#inputs").append('<form id = "input-form"><div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="major" id="major-ajax-x" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/></div>');
+    $("#inputs").append('<div class="column-25 column"><input id="submit-button" class="btn btn-primary pull-right" type="submit" value="Re-create network" /></div></form>');
     create_network();
 
 }
 else{
 
     $("#inputs").append('<h3> Key in your university and major to generate your alumni network</h3></br>');
-    $("#inputs").append('<div class="column-33 column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="university" id="university-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>')
+    $("#inputs").append('<form id = "input-form"><div class="column-33 column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="university" id="university-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>')
     $("#inputs").append('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="country" id="major-ajax-x" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/></div>')
-    $("#inputs").append('<div class="column-25 column"><input id="submit-button" class="btn btn-primary pull-right" type="button" value="Create network" style="position: absolute;" /></div>');
+    $("#inputs").append('<div class="column-25 column"><input id="submit-button" class="btn btn-primary pull-right" type="subimt" value="Create network" style="position: absolute;" /></div></form>');
 //    create_network();
 
 }
+
+
+
+ $("#submit-button").on('click',function(){
+
+    var major_input = document.getElementById("major-ajax").value;
+
+//     var university_input = document.getElementById("univeristy-ajax").value;
+     var major_input = document.getElementById("major-ajax").value;
+//     console.log(university_input);
+     console.log(major_input);
+
+$.ajax({
+           datatype: 'json',
+           url: '/submit',
+           type: 'POST',
+           data : {"major": JSON.stringify(document.getElementById("major-ajax").value)},
+           success: function(data)
+           {
+               console.log(data);
+               create_network();
+           }
+         });
+ })
+
+
 
 // Initialize ajax autocomplete:
 $('#major-ajax').autocomplete({
@@ -72,6 +90,8 @@ $('#major-ajax').autocomplete({
         return re.test(suggestion.value);
     },
     onSelect: function(suggestion) {
+
+        document.getElementById("major-ajax").value = suggestion.value;
         $('#selction-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
     },
     onHint: function (hint) {
@@ -91,6 +111,7 @@ $('#university-ajax').autocomplete({
         return re.test(suggestion.value);
     },
     onSelect: function(suggestion) {
+        document.getElementById("university-ajax").value = suggestion.value;
         $('#selction-ajax').html('You selected: ' + suggestion.value + ', ' + suggestion.data);
     },
     onHint: function (hint) {
@@ -123,7 +144,7 @@ var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
     .size([width, height])
-    .gravity(.1)
+    .gravity(.5)
     .linkDistance(150)
     .charge(-300)
     .on("tick", tick)
