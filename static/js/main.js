@@ -210,7 +210,7 @@ $(document).ready(function () {
                                 num_skills = skills.length;
                             }
                             for (var k = 0; k < num_skills; k++) {
-                                title_skills_ul.append($('<li><div class="skill-name"><h4>' + skills[k] + '</h4></div><div class="skill-percent"><h4>' + percents[k] + '</h4></div></li>'));
+                                title_skills_ul.append($('<li><div class="skill-name"><h5>' + skills[k] + '</h5></div><div class="skill-percent"><h5>' + percents[k] + '</h5></div></li>'));
                             }
                         }
                     }

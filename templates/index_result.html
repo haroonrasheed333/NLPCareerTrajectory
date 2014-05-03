@@ -51,8 +51,13 @@
     </div>
   </div>
   {% else %}
-  <header>
-    <img src="{{ url_for('static', filename='images/logo_temp.gif') }}" alt="Logo">
+  <header class="nav">
+    <img class="logo-img" src="{{ url_for('static', filename='images/logo_temp.gif') }}" alt="Logo">
+    <ul>
+      <li><h4><a href="/" class="active">Home</a></h4></li>
+      <li><h4><a href="/network">Network</a></h4></li>
+      <li><h4><a href="/about">About</a></h4></li>
+    </ul>
   </header>
   <div class="input-class">
      <div id="getinput" class="upload">

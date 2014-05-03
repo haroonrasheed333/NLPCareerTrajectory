@@ -23,6 +23,39 @@ header {
   margin-right: auto;
 }
 
+.logo-img {
+  margin-top: 25px;
+  margin-left: 100px;
+}
+
+.nav {
+  margin-bottom: 0px;
+}
+
+.nav ul {
+  display: block;
+  float: right;
+  list-style-type: none;
+  padding-right: 50px;
+  margin-right: 50px;
+  margin-top: 40px;
+}
+
+.nav li {
+  display: inline-block;
+  margin-left: 50px;
+}
+
+.nav a {
+  color: #6CB4AE;
+  text-decoration: none;
+}
+
+.nav .active {
+  color: #36535a;
+  text-decoration: none;
+}
+
 footer {
   height: 50px;
   background: #36535a;
