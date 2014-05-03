@@ -116,10 +116,10 @@ class TestCleanDataAndExtractJobTitles():
                 os.rmdir(root)
 
 
-# t = TestCleanDataAndExtractJobTitles()
-# t.setup_class()
-# t.test_cleaned_resume_data_should_not_have_candidate_name()
-# t.test_cleaned_resume_data_should_not_have_candidate_contact()
-# t.test_cleaned_resume_data_should_not_have_present_job_information()
-# t.test_present_job_title_should_match_resume_label()
-# t.teardown_class()
+t = TestCleanDataAndExtractJobTitles()
+t.setup_class()
+t.test_cleaned_resume_data_should_not_have_candidate_name()
+t.test_cleaned_resume_data_should_not_have_candidate_contact()
+t.test_cleaned_resume_data_should_not_have_present_job_information()
+t.test_present_job_title_should_match_resume_label()
+t.teardown_class()

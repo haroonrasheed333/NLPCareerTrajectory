@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    $('.collapse-class').live('click', function () {
+        var id = $(this).attr('id');
+        var no = id.substring(9);
+        $('#more-' + no).slideToggle(255);
+    });
+
     added_files = []
 
     $('#fileupload').fileupload({
@@ -85,9 +91,9 @@ $(document).ready(function () {
                 var li;
 
                 if (i % 2 == 0) {
-                    li = $('<li class="even-row"></li>');
+                    li = $('<li class="even-row collapse-class" id="collapse-' + i + '"></li>');
                 } else {
-                    li = $('<li></li>');
+                    li = $('<li class="collapse-class" id="collapse-' + i + '"></li>');
                 }
 
                 var href = link1.concat(predicted[i].concat(link3));
@@ -105,6 +111,14 @@ $(document).ready(function () {
                 }
 
                 li.append(skill_div);
+
+                var more_info = $('<div class="more-info-div" id="more-' + i + '"></div>');
+                more_info.append($('<div><span><strong>Average Salary: </strong>$100,000</div></span>'));
+                more_info.append($('<div><span><strong>Average Experience: </strong>5 Years</div></span>'));
+                more_info.append($('<div><span><strong>Related Job Titles: </strong>Software Developer, Programmer, Developer</div></span>'));
+                more_info.append($('<div><span><a target="_blank" href="' + href + '">Search ' + predicted[i] + ' Jobs</a></div></span>'));
+
+                li.append(more_info);
 
                 predicted_titles_list.append(li);
 
@@ -151,11 +165,12 @@ $(document).ready(function () {
                             num_skills = skills.length;
                         }
                         for (var k = 0; k < num_skills; k++) {
-                            title_skills_ul.append($('<li><div class="skill-name"><h4>' + skills[k] + '</h4></div><div class="skill-percent"><h4>' + percents[k] + '</h4></div></li>'));
+                            title_skills_ul.append($('<li><div class="skill-name"><h5>' + skills[k] + '</h5></div><div class="skill-percent"><h5>' + percents[k] + '</h5></div></li>'));
                         }
                     }
                 }
                 $("#skills-div").append(title_skills_ul);
+                $("footer").css("display", "block");
             }
 
             // if (title != '0') {
@@ -202,6 +217,8 @@ $(document).ready(function () {
                     $("#skills-div").append(title_skills_ul);
                 }
             });
+
+            $(".more-info-div").hide();
 
             $("#network").empty();
             $("#network").append($('<a href="http://127.0.0.1:5000/network"><h5>What are my alumni doing</h5></a><h5><a href="http://127.0.0.1:5000/network"></a></h5>'));
