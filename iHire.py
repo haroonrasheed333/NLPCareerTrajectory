@@ -117,6 +117,7 @@ def submit():
             major = major.strip('"')
             if "university" in request.form:
                 university_ip = str(request.form["university"])
+                print university_ip
                 university_ip = university_ip.strip('"')
                 createDataForGraph(university_ip, major, skills_employer, univ_major_number, major_code_lookup)
             else:
