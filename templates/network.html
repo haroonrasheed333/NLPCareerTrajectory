@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
+	<link href="/static/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/css/network.css">
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/demo.css">
 </head>
 <body>
+	<header class="nav">
+		<img class="logo-img" src="{{ url_for('static', filename='images/logo_temp.gif') }}" alt="Logo">
+		<ul>
+		  <li><h4><a href="/">Home</a></h4></li>
+		  <li><h4><a href="/network" class="active">Network</a></h4></li>
+		  <li><h4><a href="/about">About</a></h4></li>
+		</ul>
+	</header>
 
-<input type="hidden"  id="university" value = "{{ parameter }}" />
+	<div class="row-class">
+		<input type="hidden"  id="university" value = "{{ parameter }}" />
+		<div id="inputs">
+		</div>
+	</div>
+	<div id="network-graph"></div>
 
-<div id ="inputs">
-
-</div>
-
-
-
-<div id ="network-graph" class = column-100></div>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="{{ url_for('static', filename='js/jquery-1.8.1.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery.ui.widget.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery.iframe-transport.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery.fileupload.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jquery.autocomplete.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jquery.autocomplete.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jquery.mockjax.js') }}"></script>
