@@ -102,6 +102,10 @@ def network():
     global university
     return render_template('network.html', parameter = university)
 
+@iHire.route('/about')
+def about():
+    return render_template('about.html')
+
 @iHire.route('/submit', methods = ['POST'])
 def submit():
     global university

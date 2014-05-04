@@ -117,8 +117,48 @@ input[type="button"] {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
 }
 
-h1, h2, h3, h4, h5 {
+h2, h3, h4, h5 {
   font-weight: 300;
+}
+
+.about {
+  background: #ECE9E9;
+}
+
+.about h1, .about p {
+  text-align: center;
+}
+
+.about p {
+  font-size: 20px;
+  margin-bottom: 50px;
+}
+
+.about h1 {
+  font-size: 48px;
+  font-weight: 400;
+  color: #36535a;
+  margin-top: 50px;
+}
+
+.about-img {
+  margin-left: 120px;
+}
+
+.about-img img {
+  width: 240px;
+  height: 240px;
+}
+
+.member-desc h3 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 18px;
+  color: #36535a;
+}
+
+.member-desc p {
+  margin-bottom: 0;
 }
 
 h3 {
@@ -150,6 +190,10 @@ h3 {
 
 .column-25 {
     width: 25%;
+}
+
+.column-30 {
+    width: 30%;
 }
 
 .column-33 {

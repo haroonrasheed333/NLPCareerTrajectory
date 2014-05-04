@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/static/css/jquery.fileupload-ui.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/demo.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+</head>
+<body class="about">
+	<header class="nav">
+	    <img class="logo-img" src="{{ url_for('static', filename='images/logo_temp.gif') }}" alt="Logo">
+	    <ul>
+	      <li><h4><a href="/">Home</a></h4></li>
+	      <li><h4><a href="/network">Network</a></h4></li>
+	      <li><h4><a href="/about" class="active">About</a></h4></li>
+	    </ul>
+  	</header>
+
+  	<div class="row-class">
+  		<h1>OUR <strong>TEAM</strong></h1>
+  		<br>
+  		<p>We are a team of graduate students at University of California Berkeley's School of Information</p>
+  		<div class="about-img">
+  			<div class="column-25 column block">
+  				<div class="member-pic">
+  					<img src="{{ url_for('static', filename='images/DSC07247.JPG') }}" alt="Haroon">
+  				</div>
+  				<div class="member-desc">
+  					<h3>Haroon Rasheed</h3>
+  					<p></p>
+  				</div>
+	  		</div>
+	  		<div class="column-25 column block">
+	  			<div class="member-pic">
+  					<img src="{{ url_for('static', filename='images/DSC07248.JPG') }}" alt="Haroon">
+  				</div>
+  				<div class="member-desc">
+  					<h3>Divya Karthikeyan</h3>
+  					<p></p>
+  				</div>
+	  		</div>
+	  		<div class="column-25 column block">
+	  			<div class="member-pic">
+  					<img src="{{ url_for('static', filename='images/DSC07249.JPG') }}" alt="Haroon">
+  				</div>
+  				<div class="member-desc">
+  					<h3>Bharath Gunasekaran</h3>
+  					<p></p>
+  				</div>
+	  		</div>
+  		</div>
+  	</div>
+
+	<script src="./static/js/main.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="{{ url_for('static', filename='js/jquery-1.8.1.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.ui.widget.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.iframe-transport.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.fileupload.js') }}"></script>
+</body>
