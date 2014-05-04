@@ -72,6 +72,8 @@ def createDataForGraph(univ, major, skills_employer, univ_major_map, major_code)
                     result["links"].append(d)
 
     j = json.dumps(result, indent=4, separators=(',', ': '))
+    if os.path.isfile("static/miserables.json"):
+        os.remove("static/miserables.json")
     f = open("static/miserables.json", "w")
     print >> f, j
     f.close()
