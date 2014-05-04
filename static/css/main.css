@@ -101,6 +101,26 @@ footer {
   margin-right: auto;
 }
 
+#input-form {
+  display: inline;
+}
+
+#university-ajax, #major-ajax {
+  border-radius: 0px;
+  height: 25px;
+  width: 300px;
+}
+
+#network-submit-button {
+  width: 175px;
+  height: 35px;
+  float: left;
+}
+
+#inputs h3 {
+  text-align: center;
+}
+
 .icon-white {
   background-image: url("../images/glyphicons-halflings-white.png");
 }

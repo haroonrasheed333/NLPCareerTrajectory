@@ -38,28 +38,46 @@ $(document).ready(function () {
 
 
 $("#inputs").empty;
-if (university.length > 2){
-    $("#inputs").append('<h3> Displaying alumni network for all majors from your university. Key in your major to filter the network</h3></br>');
-    $("#inputs").append('<form id = "input-form"><div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="major" id="major-ajax-x" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/></div>');
-    $("#inputs").append('<div class="column-25 column"><input id="submit-button" class="btn btn-primary pull-right" type="submit" value="Re-create network" /></div></form>');
-    create_network();
 
-}
-else{
+if (university.length > 2) {
+  var h3 = $('<h3>Displaying alumni network for all majors from your university. Key in your major to filter the network</h3><br>');
+  var form = $('<form id="input-form"></form>');
+  var major_div = $('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
+  var submit_button = $('<div class="column-25 column"><input id="network-submit-button" class="btn btn-primary pull-right" type="submit" value="Re-create network" /></div>');
 
-    $("#inputs").append('<h3> Key in your university and major to generate your alumni network</h3></br>');
-    $("#inputs").append('<form id = "input-form"><div class="column-33 column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="university" id="university-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>')
-    $("#inputs").append('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="country" id="major-ajax-x" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/></div>')
-    $("#inputs").append('<div class="column-25 column"><input id="submit-button" class="btn btn-primary pull-right" type="subimt" value="Create network" style="position: absolute;" /></div></form>');
+  $("#inputs").append(h3);
+  form.append(major_div);
+  $("#inputs").append(form);
+  $("#inputs").append(submit_button);
+  create_network();
+
+} else {
+
+  var h3 = $('<h3>Key in your university and major to generate your alumni network</h3><br>');
+  var form = $('<form id="input-form"></form>');
+  var univ_div = $('<div class="column-33 column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
+  var major_div = $('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
+  var submit_button = $('<div class="column-25 column"><input id="network-submit-button" class="btn btn-primary pull-right" type="submit" value="Create network" /></div>');
+
+  $("#inputs").append(h3);
+  form.append(univ_div);
+  form.append(major_div);
+  $("#inputs").append(form);
+  $("#inputs").append(submit_button);
+
+    // $("#inputs").append('<h3> Key in your university and major to generate your alumni network</h3></br>');
+    // $("#inputs").append('<form id = "input-form"><div class="column-33 column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="university" id="university-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>')
+    // $("#inputs").append('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="country" id="major-ajax-x" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/></div>')
+    // $("#inputs").append('<div class="column-25 column"><input id="network-submit-button" class="btn btn-primary pull-right" type="subimt" value="Create network" style="position: absolute;" /></div></form>');
 //    create_network();
 
 }
 
 
 
- $("#submit-button").on('click',function(){
+ $("#network-submit-button").on('click',function(){
 
-    if (university.length>2){
+    if (university.length > 2){
         var major_input = document.getElementById("major-ajax").value;
 
         $.ajax({
@@ -76,8 +94,7 @@ else{
            }
          });
 
-    }
-     else{
+    } else {
 
         var major_input = document.getElementById("major-ajax").value;
         var university_input = document.getElementById("university-ajax").value;
@@ -91,7 +108,7 @@ else{
            {
                console.log(data);
                $("#network-graph").remove();
-               $("body").append($('<div id ="network-graph" class = column-100></div>'));
+               $("body").append($('<div id ="network-graph" class="column-100"></div>'));
                create_network();
            }
          });
@@ -159,8 +176,8 @@ links.forEach(function(link) {
 });
 
 
-var width = 960,
-    height = 500;
+var width = 1200,
+    height = 800;
 
 var force = d3.layout.force()
     .nodes(d3.values(nodes))
