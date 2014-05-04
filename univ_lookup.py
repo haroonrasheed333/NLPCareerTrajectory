@@ -75,6 +75,7 @@ def createDataForGraph(univ, major, skills_employer, univ_major_map, major_code)
     f = open("static/miserables.json", "w")
     print >> f, j
     f.close()
+    return
 
 
 
