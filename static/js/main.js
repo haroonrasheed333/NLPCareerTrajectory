@@ -42,117 +42,159 @@ $(document).ready(function () {
 
         success: function(data) {
 
-            var employer =[];
-            var title = [];
-            var predicted=[];
-            var skills_map = [];
-            var all_titles = [];
-            var scores = [];
+            response_data = data;
+            // populateData(data);
+            console.log(location);
+            location.href = location.origin + '/results_home';
+        }
+    });
 
-            data.employer.forEach(function(aa){
-                employer.push(aa);
-            });
-            data.title.forEach(function(aa){
-                title.push(aa);
-            });
+    $(window).load(function() {
+        url_pathname = location.pathname;
+        if (url_pathname == "/results_home") {
+            $.ajax({
+               datatype: 'json',
+               url: '/results',
+               success: function(data)
+               {
+                   populateData(data);
+               }
+             });
+        }
 
-            data.final_prediction_list.forEach(function(aa){
-                predicted.push(aa);
-            });
+        if (url_pathname == "/") {
+            $.ajax({
+               datatype: 'json',
+               url: '/clear_results',
+               success: function(data)
+               {
+                   console.log(data);
+               }
+             });
+        }
+    });
 
-            data.final_score_sorted.forEach(function(aa){
-                scores.push(aa);
-            });
+    function populateData(data) {
+        var employer =[];
+        var title = [];
+        var predicted=[];
+        var skills_map = [];
+        var all_titles = [];
+        var scores = [];
 
-            data.skills_map.forEach(function(aa){
-                skills_map.push(aa);
-            });
+        data = $.parseJSON(data);
+        console.log(data);
 
-            data.titles.forEach(function(aa){
-                all_titles.push(aa);
-            });
+        data.employer.forEach(function(aa){
+            employer.push(aa);
+        });
+        data.title.forEach(function(aa){
+            title.push(aa);
+        });
+        data.final_prediction_list.forEach(function(aa){
+            predicted.push(aa);
+        });
+        data.final_score_sorted.forEach(function(aa){
+            scores.push(aa);
+        });
+        data.skills_map.forEach(function(aa){
+            skills_map.push(aa);
+        });
+        data.titles.forEach(function(aa){
+            all_titles.push(aa);
+        });
 
-            // console.log(data);
+        var link1 = "http://www.simplyhired.com/k-";
+        var link3 = "-jobs.html";
+        var i = 0;
 
-            var link1 = "http://www.simplyhired.com/k-";
-            var link3 = "-jobs.html";
-            var i = 0;
+        $("#predictions-div").empty();
+        $('#spinner-id').css('display', 'none');
+        $("#predictions-div").append($('<h3 class="block-title">Your Top 5 Job Predictions</h3>'))
+        $("#predicted-titles-list" ).remove();
+        var predicted_titles_list = $('<ul id="predicted-titles-list"></ul>');
 
-            $("#predictions-div").empty();
-
-            $('#spinner-id').css('display', 'none');
-
-            $("#predictions-div").append($('<h3 class="block-title">Your Top 5 Job Predictions</h3>'))
-
-            $("#predicted-titles-list" ).remove();
-            var predicted_titles_list = $('<ul id="predicted-titles-list"></ul>');
-
-            for (var i = 0; i < predicted.length; i++) {
-                var li;
-
-                if (i % 2 == 0) {
-                    li = $('<li class="even-row collapse-class" id="collapse-' + i + '"></li>');
-                } else {
-                    li = $('<li class="collapse-class" id="collapse-' + i + '"></li>');
-                }
-
-                var href = link1.concat(predicted[i].concat(link3));
-                cand_skill_list = data.candidate_skills[predicted[i]];
-
-                li.append($('<div title="' + predicted[i] + '"><a target="_blank" href="' + href + '">' + predicted[i] + '</a><div id="score-div"><span class="score">' + scores[i] + '</span><div id="bar-div"><span class="bar" id="bar1-' + i + '"></span><span class="bar" id="bar2-' + i + '"></span><span class="bar" id="bar3-' + i + '"></span></div></div></div>'));
-
-                var skill_div = $('<div class="skills-list-div"></div>');
-                var skill_ul = $('<ul class="skills-list"></ul>');
-
-                skill_div.append(skill_ul);
-
-                for (var k = 0; k < cand_skill_list.length; k++) {
-                    skill_ul.append($('<li>· ' + cand_skill_list[k] + '</li>'));
-                }
-
-                li.append(skill_div);
-
-                var more_info = $('<div class="more-info-div" id="more-' + i + '"></div>');
-                more_info.append($('<div><span><strong>Average Salary: </strong>$100,000</div></span>'));
-                more_info.append($('<div><span><strong>Average Experience: </strong>5 Years</div></span>'));
-                more_info.append($('<div><span><strong>Related Job Titles: </strong>Software Developer, Programmer, Developer</div></span>'));
-                more_info.append($('<div><span><a target="_blank" href="' + href + '">Search ' + predicted[i] + ' Jobs</a></div></span>'));
-
-                li.append(more_info);
-
-                predicted_titles_list.append(li);
-
+        for (var i = 0; i < predicted.length; i++) {
+            var li;
+            if (i % 2 == 0) {
+                li = $('<li class="even-row collapse-class" id="collapse-' + i + '"></li>');
+            } else {
+                li = $('<li class="collapse-class" id="collapse-' + i + '"></li>');
             }
+            var href = link1.concat(predicted[i].concat(link3));
+            cand_skill_list = data.candidate_skills[predicted[i]];
 
-            console.log(scores);
+            li.append($('<div title="' + predicted[i] + '"><a target="_blank" href="' + href + '">' + predicted[i] + '</a><div id="score-div"><span class="score">' + scores[i] + '</span><div id="bar-div"><span class="bar" id="bar1-' + i + '"></span><span class="bar" id="bar2-' + i + '"></span><span class="bar" id="bar3-' + i + '"></span></div></div></div>'));
 
-            $("#predictions-div").append(predicted_titles_list);
+            var skill_div = $('<div class="skills-list-div"></div>');
+            var skill_ul = $('<ul class="skills-list"></ul>');
 
-            for (var i = 0; i < scores.length; i++) {
-                if (scores[i] < 45) {
-                    $('#bar3-' + i).css("background", "#78ECE8");
-                    $('#bar2-' + i).css("background", "#78ECE8");
-                } else if (scores[i] < 70) {
-                    $('#bar3-' + i).css("background", "#78ECE8");
+            skill_div.append(skill_ul);
+
+            for (var k = 0; k < cand_skill_list.length; k++) {
+                skill_ul.append($('<li>· ' + cand_skill_list[k] + '</li>'));
+            }
+            li.append(skill_div);
+
+            var more_info = $('<div class="more-info-div" id="more-' + i + '"></div>');
+            more_info.append($('<div><span><strong>Average Salary: </strong>$100,000</div></span>'));
+            more_info.append($('<div><span><strong>Average Experience: </strong>5 Years</div></span>'));
+            more_info.append($('<div><span><strong>Related Job Titles: </strong>Software Developer, Programmer, Developer</div></span>'));
+            more_info.append($('<div><span><a target="_blank" href="' + href + '">Search ' + predicted[i] + ' Jobs</a></div></span>'));
+
+            li.append(more_info);
+            predicted_titles_list.append(li);
+        }
+
+        $("#predictions-div").append(predicted_titles_list);
+
+        for (var i = 0; i < scores.length; i++) {
+            if (scores[i] < 45) {
+                $('#bar3-' + i).css("background", "#78ECE8");
+                $('#bar2-' + i).css("background", "#78ECE8");
+            } else if (scores[i] < 70) {
+                $('#bar3-' + i).css("background", "#78ECE8");
+            }
+        }
+        $("#skills-div").empty();
+
+        var sel1 = $('<select id="skill-map">');
+        sel1.append($("<option>").attr('value', '0').text("Select a Title"));
+        for (var i = 0; i < all_titles.length; i++) {
+            sel1.append($("<option>").attr('value', all_titles[i]).text(all_titles[i]));
+        }
+        $("#skills-div").append($('<h3 class="block-title">Top Skills</h3>'));
+        $("#skills-div").append(sel1);
+
+        $('#skill-map').val(predicted[0]);
+        $( "#title-skills-list" ).remove();
+        var title = predicted[0]
+
+        if (title != 0) {
+            var title_skills_ul = $('<ul id="title-skills-list"></ul>');
+            for (var j = 0; j < skills_map.length; j++) {
+                var skills = [];
+                var percents = [];
+                if (title in skills_map[j]) {
+                    skills = skills_map[j][title]['skills'];
+                    percents = skills_map[j][title]['percent'];
+                    var num_skills = 15;
+                    if (num_skills > skills.length) {
+                        num_skills = skills.length;
+                    }
+                    for (var k = 0; k < num_skills; k++) {
+                        title_skills_ul.append($('<li><div class="skill-name"><h5>' + skills[k] + '</h5></div><div class="skill-percent"><h5>' + percents[k] + '</h5></div></li>'));
+                    }
                 }
             }
-
-            $("#skills-div").empty();
-
-            var sel1 = $('<select id="skill-map">');
-            sel1.append($("<option>").attr('value', '0').text("Select a Title"));
-            for (var i = 0; i < all_titles.length; i++) {
-                sel1.append($("<option>").attr('value', all_titles[i]).text(all_titles[i]));
-            }
-            $("#skills-div").append($('<h3 class="block-title">Top Skills</h3>'));
-            $("#skills-div").append(sel1);
-
-            $('#skill-map').val(predicted[0]);
-            $( "#title-skills-list" ).remove();
-            var title = predicted[0]
-
-
-            if (title != 0) {
+            $("#skills-div").append(title_skills_ul);
+            $("footer").css("display", "block");
+        }
+        // Dynamically create input options.
+        $( "#skill-map" ).change(function() {
+            $( "#title-skills-list").remove();
+            var title = $(this).val();
+            if (title != '0') {
                 var title_skills_ul = $('<ul id="title-skills-list"></ul>');
                 for (var j = 0; j < skills_map.length; j++) {
                     var skills = [];
@@ -170,93 +212,12 @@ $(document).ready(function () {
                     }
                 }
                 $("#skills-div").append(title_skills_ul);
-                $("footer").css("display", "block");
             }
+        });
 
-            // if (title != '0') {
-            //     var skill_table = $('<table id="skills-table"></table>');
-            //     for (var j = 0; j < skills_map.length; j++) {
-            //         var skills = [];
-            //         var percents = [];
-            //         if (title in skills_map[j]) {
-            //             skills = skills_map[j][title]['skills'];
-            //             percents = skills_map[j][title]['percent'];
-            //             var num_skills = 15;
-            //             if (num_skills > skills.length) {
-            //                 num_skills = skills.length;
-            //             }
-            //             for (var k = 0; k < num_skills; k++) {
-            //                 skill_table.append($('<tr><td>' + skills[k] + '</td><td>' + percents[k] + '</td></tr>'));
-            //             }
-            //         }
-            //     }
-            //     $("#skills-div").append(skill_table);
-            // }
+        $(".more-info-div").hide();
 
-            // Dynamically create input options.
-            $( "#skill-map" ).change(function() {
-                $( "#title-skills-list").remove();
-                var title = $(this).val();
-                if (title != '0') {
-                    var title_skills_ul = $('<ul id="title-skills-list"></ul>');
-                    for (var j = 0; j < skills_map.length; j++) {
-                        var skills = [];
-                        var percents = [];
-                        if (title in skills_map[j]) {
-                            skills = skills_map[j][title]['skills'];
-                            percents = skills_map[j][title]['percent'];
-                            var num_skills = 15;
-                            if (num_skills > skills.length) {
-                                num_skills = skills.length;
-                            }
-                            for (var k = 0; k < num_skills; k++) {
-                                title_skills_ul.append($('<li><div class="skill-name"><h5>' + skills[k] + '</h5></div><div class="skill-percent"><h5>' + percents[k] + '</h5></div></li>'));
-                            }
-                        }
-                    }
-                    $("#skills-div").append(title_skills_ul);
-                }
-            });
-
-            $(".more-info-div").hide();
-
-            $("#network").empty();
-            $("#network").append($('<a href="http://127.0.0.1:5000/network"><h5>What are my alumni doing</h5></a><h5><a href="http://127.0.0.1:5000/network"></a></h5>'));
-
-//            // $("#predictions-div").append($('<h4>Your top 5 Job predictions</h4>'));
-//            $("#network-div").append($('<table id="network"></table>'));
-//
-//            var table1 = document.getElementById("network");
-//            console.log(table1);
-//            var i =0;
-//            console.log(employer.length+title.length);
-//            var thead1 = document.createElement('thead');
-//
-//            table1.appendChild(thead1);
-//            thead1.appendChild(document.createElement("th")).appendChild(document.createTextNode("Top Employers and Job titles for your specialization"));
-//
-//            while(i<(employer.length+title.length)){
-//                if (i<employer.length){
-//
-//                console.log('here');
-//                var row = table1.insertRow(i);
-//                var cell = row.insertCell(0);
-//                var newText  = document.createTextNode(employer[i])
-//                cell.appendChild(newText);
-//                console.log(cell);
-//                i++;
-//            }
-//            else
-//            {
-//               console.log('here');
-//                var row = table1.insertRow(i);
-//                var cell = row.insertCell(0);
-//                var newText  = document.createTextNode(title[i-(employer.length)])
-//                cell.appendChild(newText);
-//                console.log(cell);
-//                i++;
-//            }
-//        }
+        $("#network").empty();
+        $("#network").append($('<a href="http://127.0.0.1:5000/network"><h5>What are my alumni doing</h5></a><h5><a href="http://127.0.0.1:5000/network"></a></h5>'));
     }
-});
 });

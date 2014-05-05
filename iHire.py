@@ -22,6 +22,8 @@ from Marisa import get_degree_level_from_resume, get_degree
 
 global flag
 global university
+global results_json
+results_json = dict()
 university = ''
 flag = 1
 
@@ -40,12 +42,13 @@ with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
     tfidf_vect = pickle.load(hash_v)
 
 title_title_map = json.loads(open("title_title_map.json").read())
-skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
+skills_map_with_percent = json.loads(open("skills_map_with_percent_new_0504_upper.json").read())
 univ_dict = json.loads(open("static/univs_list.json","rb").read())
 univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 skills_employer = json.loads(open("static/networkgraph.json").read())
 univ_major_number = json.loads(open("static/univ_mapping.json").read())
 major_code_lookup = json.loads(open("static/DeptCodes.json").read())
+
 
 def extract_text_from_pdf(pdf_filename):
     resource_manager = PDFResourceManager()
@@ -92,15 +95,30 @@ def get_top_five_predictions(predicted_decision):
 @iHire.route('/')
 def hello_world():
     global flag
-    print"main page"
+    print "main page"
     print flag
-    return render_template('index_result.html', flag = flag)
+    return render_template('index_homepage.html')
 
+
+@iHire.route('/results_home')
+def results_home():
+    return render_template('index_result.html')
+
+@iHire.route('/results')
+def results():
+    global results_json
+    return json.dumps(results_json)
+
+@iHire.route('/clear_results')
+def clear_results():
+    global results_json
+    results_json = dict()
+    return json.dumps(results_json)
 
 @iHire.route('/network')
 def network():
     global university
-    return render_template('network.html', parameter = university)
+    return render_template('network.html', parameter=university)
 
 @iHire.route('/about')
 def about():
@@ -128,6 +146,7 @@ def submit():
 @iHire.route("/analyze", methods=['POST','GET'])
 def analyze():
     global flag
+    global results_json
     if request.method:
         flag = 1
         # Get and save file from browser upload
@@ -216,7 +235,9 @@ def analyze():
             if os.path.isfile(filename):
                     os.remove(filename)
 
+            results_json = OrderedDict(out)
             return json.dumps(OrderedDict(out))
+            # return render_template('index_result.html')
     
 if __name__ == '__main__':
     iHire.run(host='0.0.0.0')

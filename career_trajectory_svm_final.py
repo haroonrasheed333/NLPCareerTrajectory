@@ -155,7 +155,7 @@ if __name__ == '__main__':
         decode_error='ignore',
         stop_words='english',
         ngram_range=(1, 2),
-        max_df=0.5,
+        max_df=0.75,
         max_features=100000
     )
     # marisa_bi_vect = MarisaTfidfVectorizer(

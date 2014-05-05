@@ -77,6 +77,8 @@ def clean_data_and_extract_job_titles(fname, paths, names, job_titles, labels_li
 
         if name not in names:
             names.append(name)
+        else:
+            return names, job_titles, labels_list
 
         # Remove the candidate contact information from the resume.
         if contact:

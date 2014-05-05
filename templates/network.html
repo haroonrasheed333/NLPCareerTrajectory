@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<html>
 <meta charset="utf-8">
 <head>
 	<link href="/static/css/bootstrap.css" rel="stylesheet">
@@ -7,9 +7,9 @@
 </head>
 <body>
 	<header class="nav">
-		<img class="logo-img" src="{{ url_for('static', filename='images/logo_temp.gif') }}" alt="Logo">
+		<a href="/"><img class="logo-img" src="{{ url_for('static', filename='images/logo_temp.gif') }}" alt="Logo"></a>
 		<ul>
-		  <li><h4><a href="/">Home</a></h4></li>
+		  <li><h4><a href="/results_home">Home</a></h4></li>
 		  <li><h4><a href="/network" class="active">Network</a></h4></li>
 		  <li><h4><a href="/about">About</a></h4></li>
 		</ul>
@@ -31,6 +31,8 @@
 <script src="{{ url_for('static', filename='js/majorsLookup.js') }}"></script>
 <script src="{{ url_for('static', filename='js/univsLookup.js') }}"></script>
 <script src="{{ url_for('static', filename='js/network.js') }}"></script>
+<script src="./static/js/main.js"></script>
 
 
 </body>
+</html>

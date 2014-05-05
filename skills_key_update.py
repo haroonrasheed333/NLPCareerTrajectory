@@ -3,7 +3,7 @@ import json
 f = open('top_titles.txt', 'rb')
 top_jobs = [t.strip() for t in f.readlines()]
 
-skills_with_percent_dict = json.loads(open('skills_map_with_percent_new_0429.json').read())
+skills_with_percent_dict = json.loads(open('skills_map_with_percent.json').read())
 
 for j in top_jobs:
     try:
@@ -11,10 +11,11 @@ for j in top_jobs:
     except KeyError:
         pass
 
-skills_with_percent_dict['UI/UX Designer / Developer'] = skills_with_percent_dict.pop('ui/ux designer / developer')
+# skills_with_percent_dict['UI/UX Designer'] = skills_with_percent_dict.pop('ui/ux designer')
+# skills_with_percent_dict['UI/UX developer'] = skills_with_percent_dict.pop('ui/ux developer')
 
 j = json.dumps(skills_with_percent_dict, indent=4, separators=(',', ': '))
-f = open('skills_map_with_percent_new_0429_upper.json', 'w')
+f = open('skills_map_with_percent_new_0504_upper.json', 'w')
 print >> f, j
 f.close()
 

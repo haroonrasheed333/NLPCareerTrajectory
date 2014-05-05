@@ -1,4 +1,5 @@
-<html><head>
+<html>
+<head>
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <title>UC Berkeley: Career predictor</title>
     <link href="/static/css/bootstrap.css" rel="stylesheet">
@@ -9,52 +10,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
 
 </head>
-<body>
-  <!-- title bar -->
-  {% if flag == 0 %}
-  <div class="row-class">
-    <div class="row-class">
-      <a href="http://127.0.0.1:5000/about">
-        <h5>About Us</h5>
-      </a>
-      <h5>
-        <a href="http://127.0.0.1:5000/about">
-        </a>
-      </h5>
-    </div>
-
-    <div id="top_hp">
-      <div id="logo_hp">
-        <img src="{{ url_for('static', filename='images/logo_new.jpg') }}" width="300" height="155"></img>
-      </div>
-    </div>
-
-    </br>
-
-    <div id="main_hp">
-      <div id="getinput_hp">
-        <div class="upload">
-          <form style="margin: 0px;" id="file-upload" enctype="multipart/form-data">
-            <div class="row-fluid">
-              <span class="btn btn-info btn-sm fileinput-button">
-                <i class="icon-plus icon-white"></i>
-                <span>Select Resume</span>
-                <input id="fileupload" type="file" name="file" multiple>
-              </span>
-              <span class="files">
-              </span>
-              <input id="upload-button" class="btn btn-primary pull-right" type="button" value="Begin My Career Analysis" />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  {% else %}
+<body id="results-body">
   <header class="nav">
-    <img class="logo-img" src="{{ url_for('static', filename='images/logo_temp.gif') }}" alt="Logo">
+    <a href="/"><img class="logo-img" src="{{ url_for('static', filename='images/logo_temp.gif') }}" alt="Logo"></a>
     <ul>
-      <li><h4><a href="/" class="active">Home</a></h4></li>
       <li><h4><a href="/network">Network</a></h4></li>
       <li><h4><a href="/about">About</a></h4></li>
     </ul>
@@ -99,8 +58,6 @@
   </div>
   <footer>
   </footer>
-    {% endif %}
-
   <!-- JS -->
 
   <script src="./static/js/main.js"></script>

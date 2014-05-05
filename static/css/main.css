@@ -49,6 +49,7 @@ header {
 .nav a {
   color: #6CB4AE;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .nav .active {

@@ -669,6 +669,6 @@ if __name__ == '__main__':
     # create_skills_json_no_stemming(traintest_corpus.resumes, xml_directory, True)
     # create_skills_json(traintest_corpus.resumes, xml_directory, True)
     # create_skills_map(traintest_corpus.resumes, xml_directory)
-    # create_skills_map_with_percentage(traintest_corpus.resumes, xml_directory, True)
-    create_skills_map_with_percentage_new(traintest_corpus.resumes, xml_directory, True)
+    create_skills_map_with_percentage(traintest_corpus.resumes, xml_directory, True)
+    # create_skills_map_with_percentage_new(traintest_corpus.resumes, xml_directory, True)
     # create_skills_json_no_stemming_full_ds()
