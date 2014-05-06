@@ -75,6 +75,26 @@ def normalize_job_titles(original_titles):
         if temp_title.find(',') > -1:
             temp_title = temp_title.split(',')[1]
 
+        ui_ux_design = ['ui/ux design', 'ui design', 'ux design', 'user interface design', 'user experience design']
+        ui_ux_develop = ['ui/ux develop', 'ui develop', 'ux develop', 'user interface develop', 'user experience develop']
+
+        flag = False
+        for des in ui_ux_design:
+            if des in original_title.lower():
+                normalized_titles.append("ui/ux designer")
+                flag = True
+                break
+        if flag:
+            continue
+
+        for dev in ui_ux_develop:
+            if dev in original_title.lower():
+                normalized_titles.append("ui/ux developer")
+                flag = True
+                break
+        if flag:
+            continue
+
         title_expand = expand_job_title(temp_title)
         title_perms = title_permutations(title_expand)
 
@@ -89,14 +109,6 @@ def normalize_job_titles(original_titles):
             title = title_perms[0]
             titles_dict[title] = title_expand
 
-        if "ui/ux designer" in original_title.lower():
-            normalized_titles.append("ui/ux designer / developer")
-            continue
-
-        if "ui/ux developer" in original_title.lower():
-            normalized_titles.append("ui/ux designer / developer")
-            continue
-
         normalized_titles.append(titles_dict[title])
 
     return normalized_titles
@@ -104,18 +116,21 @@ def normalize_job_titles(original_titles):
 
 
 if __name__ == '__main__':
-    job_titles_file = 'JobTitles.txt'
-    f = open(job_titles_file)
-    original_titles = f.readlines()
-    normalized_titles = normalize_job_titles(original_titles)
+    # job_titles_file = 'JobTitles.txt'
+    # f = open(job_titles_file)
+    # original_titles = f.readlines()
+    # normalized_titles = normalize_job_titles(original_titles)
+    #
+    # print len(original_titles)
+    # print len(normalized_titles)
+    # print len(set(original_titles))
+    # print len(set(normalized_titles))
+    #
+    # print '{:<45}'.format("Actual Title"), '{:<45}'.format("Normalized Title")
+    # print "-------------------------------------------------------------------"
+    #
+    # for i in range(len(normalized_titles)):
+    #     print '{:<45}'.format(original_titles[i].rstrip()), '{:<45}'.format(string.capwords(normalized_titles[i]))
 
-    print len(original_titles)
-    print len(normalized_titles)
-    print len(set(original_titles))
-    print len(set(normalized_titles))
-
-    print '{:<45}'.format("Actual Title"), '{:<45}'.format("Normalized Title")
-    print "-------------------------------------------------------------------"
-
-    for i in range(len(normalized_titles)):
-        print '{:<45}'.format(original_titles[i].rstrip()), '{:<45}'.format(string.capwords(normalized_titles[i]))
+    normalized_titles = normalize_job_titles(['user interface developer'])
+    print normalized_titles

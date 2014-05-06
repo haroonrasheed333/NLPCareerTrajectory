@@ -45,11 +45,11 @@ def extract_univ(data,univ_dict,univ_normalize):
                 return univ_normalize[str(ngram.lower())]
             elif ngram.lower() in univ_dict:
                 return ngram.title()
-        n = n - 1
+        n -= 1
     return ""
 
 
-def createDataForGraph(univ, major, skills_employer, univ_major_map, major_code):
+def create_data_for_graph(univ, major, skills_employer, univ_major_map, major_code):
     print "Inside create data"
     univ = str(univ).lower()
     result = {}
@@ -139,7 +139,7 @@ def generate_ngrams(res):
     return out
 
 
-def createData(univ, skills_employer, univ_major_map):
+def create_data(univ, skills_employer, univ_major_map):
     univ = str(univ).lower()
     result = {}
     result["links"] = []

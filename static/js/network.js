@@ -1,5 +1,5 @@
 var university = document.getElementById("university").value;
-console.log(document.getElementById("university").value);
+// console.log(document.getElementById("university").value);
 
 var skillsEmployer, univNumberMap;
 
@@ -87,7 +87,7 @@ if (university.length > 2) {
            data : {"major": JSON.stringify(document.getElementById("major-ajax").value)},
            success: function(data)
            {
-               console.log(data);
+               // console.log(data);
                $("#network-graph").remove();
                $("body").append($('<div id ="network-graph" class = column-100></div>'));
                create_network();
@@ -106,7 +106,7 @@ if (university.length > 2) {
            data : {"major": JSON.stringify(major_input), "university": JSON.stringify(university_input)},
            success: function(data)
            {
-               console.log(data);
+               // console.log(data);
                $("#network-graph").remove();
                $("body").append($('<div id ="network-graph" class="column-100"></div>'));
                create_network();
@@ -165,7 +165,7 @@ function create_network(){
 d3.json("../static/miserables.json", function(error, json) {
 
 var links = json.links;
-console.log(links);
+// console.log(links);
 
 var nodes = {};
 
