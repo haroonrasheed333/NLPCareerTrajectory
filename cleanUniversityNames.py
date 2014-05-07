@@ -40,16 +40,15 @@ skills_map = json.loads(open ("univ_major_emp_skill_0502.json" , "rb").read())
 for key in skills_map:
     for i in range ( 0 ,len(skills_map[key])):
         for j in range (0,len(skills_map[key][i][0])):
-            if skills_map[key][i][0][j] not in result:
-                result[skills_map[key][i][0][j]] = []
-print result
-
+            if '"%s"' %skills_map[key][i][0][j] not in result:
+                result['"%s"' %skills_map[key][i][0][j]] = []
 for emp in result:
+    #print emp
     for key in skills_map:
         for i in range (0 ,len(skills_map[key])):
-            if key in skills_map[key][i][0]:
+            if emp in skills_map[key][i][0]:
                 for j in range (0, len(skills_map[key][i][0])):
-                    if skills_map[key][i][0][j] != key:
+                    if skills_map[key][i][0][j] != emp:
                         result[emp].append(skills_map[key][i][0][j])
 
 j = json.dumps(result, indent=4, separators=(',', ': '))
