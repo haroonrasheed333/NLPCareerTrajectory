@@ -82,7 +82,7 @@ def create_data_for_graph(univ, major, skills_employer, univ_major_map, major_co
 
 
 
-def createDataForTree(univ, major, skills_employer_tree, univ_major_map, major_code):
+def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, major_code):
     print "Inside create tree"
     univ = str(univ).lower()
     print univ
