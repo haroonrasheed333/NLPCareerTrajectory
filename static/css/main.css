@@ -363,7 +363,7 @@ a:hover {
   float: right;
 }
 
-#bar-div {
+.bar-div {
   display: inline-block;
 }
 
