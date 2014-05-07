@@ -1,0 +1,196 @@
+account executive,15-1199.10
+account executive,15-1199.08
+account executive,15-1142.00
+account executive,15-1132.00
+account executive,15-1199.09
+accounting assistant,15-1199.08
+accounting manager,15-1199.08
+administrative assistant,15-1133.00
+administrative assistant,15-1199.09
+administrative assistant,15-1199.12
+administrative assistant,15-1141.00
+administrative assistant,15-1199.10
+administrative assistant,15-1151.00
+administrative assistant,15-1199.08
+administrative assistant,15-1142.00
+administrative assistant,15-1122.00
+administrative assistant,15-1132.00
+assistant vice president,15-1132.00
+assistant vice president,15-1122.00
+associate director,15-1142.00
+associate director,15-1132.00
+associate director,15-1199.09
+associate director,15-1199.10
+associate director,15-2041.00
+associate director,15-1122.00
+business analyst,15-1199.10
+business analyst,15-1199.08
+business analyst,15-1122.00
+business analyst,15-1132.00
+business consultant,15-1122.00
+business consultant,15-1142.00
+business consultant,15-1199.08
+business development manager,15-1199.10
+business development manager,15-1132.00
+chief financial officer,15-1142.00
+chief information officer,15-1142.00
+chief information officer,15-1199.09
+chief operating officer,15-1142.00
+computer technician,15-1151.00
+consultant,15-1132.00
+consultant,15-1122.00
+consultant,15-1133.00
+consultant,15-1199.09
+consultant,15-1142.00
+consultant,15-1199.08
+consultant,15-1151.00
+customer service manager,15-1142.00
+data analyst,15-1199.08
+data scientist,15-1151.00
+data scientist,15-1121.00
+data scientist,15-1199.06
+data scientist,15-1131.00
+data scientist,15-1199.11
+data scientist,15-1199.10
+data scientist,15-1134.00
+data scientist,15-2041.02
+data scientist,15-1132.00
+data scientist,15-1143.00
+data scientist,15-1122.00
+data scientist,15-2041.00
+data scientist,15-1199.04
+data scientist,15-1199.08
+data scientist,15-1142.00
+data scientist,15-1141.00
+data scientist,15-1133.00
+data scientist,15-1199.07
+designer,15-1142.00
+designer,15-1151.00
+designer,15-1199.11
+designer,15-1134.00
+designer,15-1199.08
+designer,15-1133.00
+designer,15-1132.00
+designer,15-1199.09
+designer,15-1199.10
+developer,15-1199.08
+developer,15-1142.00
+developer,15-1134.00
+developer,15-1131.00
+developer,15-1132.00
+developer,15-1133.00
+developer,15-1141.00
+developer,15-1199.10
+executive administrative assistant,15-1132.00
+executive administrative assistant,15-1199.08
+executive assistant,15-1132.00
+general manager,15-1199.11
+general manager,15-1199.09
+general manager,15-1142.00
+general manager,15-1199.08
+general manager,15-1132.00
+human resources coordinator,15-1142.00
+information technology consultant,15-1142.00
+information technology consultant,15-1132.00
+information technology consultant,15-1151.00
+information technology manager,15-1122.00
+information technology manager,15-1142.00
+management consultant,15-1132.00
+managing director,15-1151.00
+managing director,15-1199.08
+managing director,15-1142.00
+managing director,15-1199.09
+marketing assistant,15-1199.10
+marketing consultant,15-1132.00
+marketing consultant,15-1122.00
+marketing consultant,15-1199.10
+marketing coordinator,15-1199.10
+marketing coordinator,15-1132.00
+marketing director,15-1199.10
+marketing manager,15-1199.10
+marketing specialist,15-1199.10
+marketing specialist,15-1132.00
+president,15-1199.10
+product manager,15-1199.09
+product manager,15-1199.08
+product manager,15-1199.11
+product manager,15-1132.00
+product manager,15-1142.00
+product manager,15-1199.10
+program manager,15-1199.10
+program manager,15-1122.00
+program manager,15-1199.09
+program manager,15-1151.00
+program manager,15-1132.00
+program manager,15-1134.00
+program manager,15-1142.00
+program manager,15-1199.08
+project manager,15-1199.10
+project manager,15-1142.00
+project manager,15-1122.00
+project manager,15-1199.09
+project manager,15-1199.08
+project manager,15-1132.00
+project manager,15-1151.00
+quality assurance analyst,15-1199.01
+quality assurance analyst,15-1142.00
+quality assurance analyst,15-1199.08
+quality assurance analyst,15-1132.00
+quality assurance analyst,15-1199.09
+quality assurance analyst,15-1121.00
+quality assurance analyst,15-1151.00
+senior account executive,15-1142.00
+senior account executive,15-1132.00
+senior account executive,15-1199.10
+senior account executive,15-1199.08
+senior account manager,15-1199.10
+senior account manager,15-1199.08
+senior associate,15-1133.00
+senior associate,15-1199.06
+senior associate,15-1121.00
+senior associate,15-1199.08
+senior associate,15-1122.00
+senior associate,15-1199.01
+senior associate,15-1132.00
+senior associate,15-1142.00
+senior associate,15-1199.10
+senior associate,15-1199.09
+senior associate,15-1151.00
+senior business analyst,15-1199.08
+senior consultant,15-1142.00
+senior consultant,15-1199.09
+senior consultant,15-1132.00
+senior consultant,15-1199.08
+senior consultant,15-1122.00
+senior director,15-1142.00
+senior director,15-1132.00
+senior director,15-1122.00
+senior program manager,15-1122.00
+senior program manager,15-1132.00
+senior program manager,15-1134.00
+senior program manager,15-1199.09
+senior program manager,15-1142.00
+senior project manager,15-1199.09
+senior project manager,15-1199.10
+senior project manager,15-1199.08
+senior project manager,15-1132.00
+senior software engineer,15-1132.00
+software engineer,15-1132.00
+system engineer,15-1142.00
+system engineer,15-1132.00
+system engineer,15-1133.00
+systems administrator,15-1142.00
+systems analyst,15-1142.00
+systems analyst,15-1133.00
+systems analyst,15-1122.00
+systems analyst,15-1199.08
+systems analyst,15-1132.00
+systems analyst,15-1121.00
+technical writer,15-1151.00
+ui/ux developer,15-1132.00
+ui/ux developer,15-1134.00
+vice president,15-1199.10
+web designer,15-1131.00
+web designer,15-1134.00
+web developer,15-1134.00
+web developer,15-1132.00

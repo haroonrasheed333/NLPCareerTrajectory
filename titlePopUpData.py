@@ -4,6 +4,7 @@ import re
 import csv
 import json
 
+
 def cell_text(cell):
     return " ".join(cell.stripped_strings)
 #
@@ -16,10 +17,7 @@ def cell_text(cell):
 #        output.writerow(col)
 #    output.writerow([])
 
-
-
-
-result = {}
+result = dict()
 #onet = csv.reader(open("static/onet.csv","rb"))
 titles = csv.reader(open("top_titles.txt", "rb"))
 for line in titles:
@@ -27,16 +25,16 @@ for line in titles:
 
 
     lineModified = re.sub(' ','+', line[0])
-    soup = BeautifulSoup(urllib2.urlopen('http://www.onetonline.org/find/quick?s=' + '%s' %lineModified).read())
-    i = 0
-    for table in soup.find_all('table'):
-        for row in table.find_all('tr'):
-            if i ==1:
-                col = map(cell_text, row.find_all(re.compile('t[dh]')))
-                result["%s" %line[0]]["actual title"] = str(col[2]).strip('Bright Outlook')
-                code = str(col[1])
-                break
-            i = i+1
+    # soup = BeautifulSoup(urllib2.urlopen('http://www.onetonline.org/find/quick?s=' + '%s' %lineModified).read())
+    # i = 0
+    # for table in soup.find_all('table'):
+    #     for row in table.find_all('tr'):
+    #         if i ==1:
+    #             col = map(cell_text, row.find_all(re.compile('t[dh]')))
+    #             result["%s" %line[0]]["actual title"] = str(col[2]).strip('Bright Outlook')
+    #             code = str(col[1])
+    #             break
+    #         i = i+1
 
     soup = BeautifulSoup(urllib2.urlopen('http://www.onetonline.org/link/summary/' + '%s' %code).read())
     result["%s" %line[0]]["description"] = str(soup.find_all('p')[0]).strip('<>p/')
@@ -59,7 +57,7 @@ for line in titles:
             if i > 1:
                 col = map(cell_text, row.find_all(re.compile('t[dh]')))
                 result["%s" %line[0]]["education"][str(col[0])] = str(col[1])
-            i = i+1
+            i += 1
 
     lineModified = re.sub(' ','-', line[0])
     try:

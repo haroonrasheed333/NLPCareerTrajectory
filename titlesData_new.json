@@ -1,0 +1,1585 @@
+{
+    "Executive Administrative Assistant": {
+        "salary": "$48671",
+        "trends": {
+            "Top industries (2012)": "Educational Services Professional, Scientific, and Technical Services",
+            "Employment (2012)": "874,000 employees",
+            "Projected job openings (2012-2022)": "105,200",
+            "Projected growth (2012-2022)": "Little or no change (-2% to 2%)",
+            "Median wages (2013)": "$23.70 hourly, $49,290 annual"
+        },
+        "education": "Some college, no degree",
+        "description": "Provide high-level administrative support by conducting research, preparing statistical reports, handling information requests, and performing clerical functions such as preparing correspondence, receiving visitors, arranging conference calls, and scheduling meetings. May also train and supervise lower-level clerical staff.",
+        "related_titles": [
+            "Administrative Assistant",
+            " Executive Assistant",
+            " Executive Secretary",
+            " Administrative Secretary",
+            " Office Manager"
+        ]
+    },
+    "Senior Business Analyst": {
+        "salary": "$93950",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "206,000 employees",
+            "Projected job openings (2012-2022)": "40,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$39.59 hourly, $82,340 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Produce financial and market intelligence by querying data repositories and generating periodic reports. Devise methods for identifying data patterns and trends in available information sources.",
+        "related_titles": [
+            "Business Intelligence Analyst; Business Intelligence Manager; Commercial Intelligence Manager; Competitive Intelligence Analyst; Consultant",
+            " Strategic Business and Technology Intelligence; Director of Enterprise Strategy; Director of Market Intelligence; Director",
+            " Global Intelligence; Intelligence Analyst; Manager",
+            " Market Intelligence"
+        ]
+    },
+    "Human Resources Generalist": {
+        "salary": "$57507",
+        "trends": {
+            "Top industries (2012)": "Management of Companies and Enterprises Manufacturing",
+            "Employment (2012)": "103,000 employees",
+            "Projected job openings (2012-2022)": "40,600",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$48.46 hourly, $100,800 annual"
+        },
+        "education": "Post-baccalaureate certificate",
+        "description": "Plan, direct, or coordinate human resources activities and staff of an organization.",
+        "related_titles": [
+            "Human Resources Manager (HR Manager)",
+            " Director of Human Resources",
+            " Human Resources Director (HR Director)",
+            " Employee Benefits Manager",
+            " Human Resources Vice President"
+        ]
+    },
+    "Business Development Director": {
+        "salary": "$126371",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Management of Companies and Enterprises",
+            "Employment (2012)": "181,000 employees",
+            "Projected job openings (2012-2022)": "61,700",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$59.24 hourly, $123,220 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, direct, or coordinate marketing policies and programs, such as determining the demand for products and services offered by a firm and its competitors, and identify potential customers. Develop pricing strategies with the goal of maximizing the firm's profits or share of the market while ensuring the firm's customers are satisfied. Oversee product development or monitor trends that indicate the need for new products and services.",
+        "related_titles": [
+            "Marketing Director",
+            " Marketing Manager",
+            " Vice President of Marketing",
+            " Business Development Manager",
+            " Marketing Coordinator"
+        ]
+    },
+    "Vice President": {
+        "salary": "$175468",
+        "trends": {
+            "Top industries (2012)": "Self-Employed",
+            "Employment (2012)": "331,000 employees",
+            "Projected job openings (2012-2022)": "87,800",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$82.50 hourly, $171,610 annual"
+        },
+        "education": "Post-baccalaureate certificate",
+        "description": "Determine and formulate policies and provide overall direction of companies or private and public sector organizations within guidelines set up by a board of directors or similar governing body. Plan, direct, or coordinate operational activities at the highest level of management with the help of subordinate executives and staff managers.",
+        "related_titles": [
+            "Chief Executive Officer (CEO)",
+            " President",
+            " Chief Financial Officer (CFO)",
+            " Vice President",
+            " Chief Operating Officer (COO)"
+        ]
+    },
+    "Recruiter": {
+        "salary": "$60501",
+        "trends": {
+            "Top industries (2012)": "Administrative and Support Services Government",
+            "Employment (2012)": "418,000 employees",
+            "Projected job openings (2012-2022)": "109,500",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$27.23 hourly, $56,630 annual"
+        },
+        "education": "Associate's degree",
+        "description": "Perform activities in the human resource area. Includes employment specialists who screen, recruit, interview, and place workers.",
+        "related_titles": [
+            "Corporate Recruiter",
+            " Employment Coordinator",
+            " Employment Representative",
+            " Employment Specialist",
+            " Human Resources Coordinator"
+        ]
+    },
+    "Sales Consultant": {
+        "salary": "$43841",
+        "trends": {
+            "Top industries (2012)": "Wholesale Trade Manufacturing",
+            "Employment (2012)": "1,481,000 employees",
+            "Projected job openings (2012-2022)": "420,700",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$26.16 hourly, $54,410 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Sell goods for wholesalers or manufacturers to businesses or groups of individuals. Work requires substantial knowledge of items sold.",
+        "related_titles": [
+            "Account Executive",
+            " Account Manager",
+            " Outside Sales",
+            " Outside Sales Representative",
+            " Sales"
+        ]
+    },
+    "Data Scientist": {
+        "salary": "$103411",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "28,000 employees",
+            "Projected job openings (2012-2022)": "16,100",
+            "Projected growth (2012-2022)": "Much faster than average (22% or higher)",
+            "Median wages (2013)": "$38.12 hourly, $79,290 annual"
+        },
+        "education": "Education Level Required",
+        "description": "Develop or apply mathematical or statistical theory and methods to collect, organize, interpret, and summarize numerical data to provide usable information. May specialize in fields such as bio-statistics, agricultural statistics, business statistics, or economic statistics. Includes mathematical and survey statisticians.",
+        "related_titles": [
+            " Program Research Specialist",
+            " Senior Statistician",
+            " Statistical Analyst",
+            " Statistician",
+            " Statistician (Demographer)"
+        ]
+    },
+    "Senior Project Manager": {
+        "salary": "$104433",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "206,000 employees",
+            "Projected job openings (2012-2022)": "40,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$39.59 hourly, $82,340 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, initiate, and manage information technology (IT) projects. Lead and guide the work of technical staff. Serve as liaison between business and technical aspects of projects. Plan project stages and assess business implications for each stage. Monitor progress to assure deadlines, standards, and cost targets are met.",
+        "related_titles": [
+            "IT Manager",
+            " IT Project Manager",
+            " Manager of IT",
+            " Program Manager",
+            " Project Manager"
+        ]
+    },
+    "Accountant": {
+        "salary": "$69065",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services",
+            "Employment (2012)": "1,275,000 employees",
+            "Projected job openings (2012-2022)": "544,200",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$31.29 hourly, $65,080 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Analyze financial information and prepare financial reports to determine or maintain record of assets, liabilities, profit and loss, tax liability, or other financial activities within an organization.",
+        "related_titles": [
+            "Accountant",
+            " Certified Public Accountant (CPA)",
+            " Staff Accountant",
+            " Accounting Manager",
+            " Cost Accountant"
+        ]
+    },
+    "Senior Director": {
+        "salary": "$89680",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Management of Companies and Enterprises",
+            "Employment (2012)": "532,000 employees",
+            "Projected job openings (2012-2022)": "146,900",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$54.18 hourly, $112,700 annual"
+        },
+        "education": "Master's degree",
+        "description": "Direct financial activities, such as planning, procurement, and investments for all or part of an organization.",
+        "related_titles": [
+            "Chief Financial Officer (CFO)",
+            " Chief School Finance Officer",
+            " Comptroller",
+            " Controller",
+            " Director of Finance"
+        ]
+    },
+    "Executive Director": {
+        "salary": "$176791",
+        "trends": {
+            "Top industries (2012)": "Self-Employed",
+            "Employment (2012)": "331,000 employees",
+            "Projected job openings (2012-2022)": "87,800",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$82.50 hourly, $171,610 annual"
+        },
+        "education": "Post-baccalaureate certificate",
+        "description": "Determine and formulate policies and provide overall direction of companies or private and public sector organizations within guidelines set up by a board of directors or similar governing body. Plan, direct, or coordinate operational activities at the highest level of management with the help of subordinate executives and staff managers.",
+        "related_titles": [
+            "Chief Executive Officer (CEO)",
+            " President",
+            " Chief Financial Officer (CFO)",
+            " Vice President",
+            " Chief Operating Officer (COO)"
+        ]
+    },
+    "Senior Consultant": {
+        "salary": "$69314",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Information",
+            "Employment (2012)": "143,000 employees",
+            "Projected job openings (2012-2022)": "43,500",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$45.85 hourly, $95,380 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Design or configure voice, video, and data communications systems. Supervise installation and post-installation service and maintenance.",
+        "related_titles": [
+            "Consultant",
+            " Network Technician",
+            " Principal Consultant",
+            " Registered Communications Distribution Designer (RCDD)",
+            " Senior Consultant"
+        ]
+    },
+    "Marketing Consultant": {
+        "salary": "$79639",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Finance and Insurance",
+            "Employment (2012)": "416,000 employees",
+            "Projected job openings (2012-2022)": "188,500",
+            "Projected growth (2012-2022)": "Much faster than average (22% or higher)",
+            "Median wages (2013)": "$29.23 hourly, $60,800 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Research market conditions in local, regional, or national areas, or gather information to determine potential sales of a product or service, or create a marketing campaign. May gather information on competitors, prices, sales, and methods of marketing and distribution.",
+        "related_titles": [
+            "Market Research Analyst",
+            " Market Analyst",
+            " Project Manager",
+            " Market Research Consultant",
+            " Client Service and Consulting Manager"
+        ]
+    },
+    "Business Development Manager": {
+        "salary": "$121724",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Management of Companies and Enterprises",
+            "Employment (2012)": "181,000 employees",
+            "Projected job openings (2012-2022)": "61,700",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$59.24 hourly, $123,220 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, direct, or coordinate marketing policies and programs, such as determining the demand for products and services offered by a firm and its competitors, and identify potential customers. Develop pricing strategies with the goal of maximizing the firm's profits or share of the market while ensuring the firm's customers are satisfied. Oversee product development or monitor trends that indicate the need for new products and services.",
+        "related_titles": [
+            "Marketing Director",
+            " Marketing Manager",
+            " Vice President of Marketing",
+            " Business Development Manager",
+            " Marketing Coordinator"
+        ]
+    },
+    "Sales Associate": {
+        "salary": "$31997",
+        "trends": {
+            "Top industries (2012)": "Wholesale Trade Manufacturing",
+            "Employment (2012)": "1,481,000 employees",
+            "Projected job openings (2012-2022)": "420,700",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$26.16 hourly, $54,410 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Sell goods for wholesalers or manufacturers to businesses or groups of individuals. Work requires substantial knowledge of items sold.",
+        "related_titles": [
+            "Account Executive",
+            " Account Manager",
+            " Outside Sales",
+            " Outside Sales Representative",
+            " Sales"
+        ]
+    },
+    "Legal Secretary": {
+        "salary": "$45604",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services",
+            "Employment (2012)": "223,000 employees",
+            "Projected job openings (2012-2022)": "26,800",
+            "Projected growth (2012-2022)": "Decline (-3% or lower)",
+            "Median wages (2013)": "$20.38 hourly, $42,390 annual"
+        },
+        "education": "High school diploma or equivalent",
+        "description": "Perform secretarial duties using legal terminology, procedures, and documents. Prepare legal papers and correspondence, such as summonses, complaints, motions, and subpoenas. May also assist with legal research.",
+        "related_titles": [
+            "Legal Secretary",
+            " Legal Assistant",
+            " Magistrate Assistant",
+            " Confidential Secretary",
+            " Judicial Administrative Assistant"
+        ]
+    },
+    "Marketing Coordinator": {
+        "salary": "$126678",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Management of Companies and Enterprises",
+            "Employment (2012)": "181,000 employees",
+            "Projected job openings (2012-2022)": "61,700",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$59.24 hourly, $123,220 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, direct, or coordinate marketing policies and programs, such as determining the demand for products and services offered by a firm and its competitors, and identify potential customers. Develop pricing strategies with the goal of maximizing the firm's profits or share of the market while ensuring the firm's customers are satisfied. Oversee product development or monitor trends that indicate the need for new products and services.",
+        "related_titles": [
+            "Marketing Director",
+            " Marketing Manager",
+            " Vice President of Marketing",
+            " Business Development Manager",
+            " Marketing Coordinator"
+        ]
+    },
+    "Human Resources Director": {
+        "salary": "$101860",
+        "trends": {
+            "Top industries (2012)": "Administrative and Support Services Government",
+            "Employment (2012)": "418,000 employees",
+            "Projected job openings (2012-2022)": "109,500",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$27.23 hourly, $56,630 annual"
+        },
+        "education": "Associate's degree",
+        "description": "Perform activities in the human resource area. Includes employment specialists who screen, recruit, interview, and place workers.",
+        "related_titles": [
+            "Corporate Recruiter",
+            " Employment Coordinator",
+            " Employment Representative",
+            " Employment Specialist",
+            " Human Resources Coordinator"
+        ]
+    },
+    "Information Technology Consultant": {
+        "salary": "$80210",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Finance and Insurance",
+            "Employment (2012)": "333,000 employees",
+            "Projected job openings (2012-2022)": "97,100",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$59.59 hourly, $123,950 annual"
+        },
+        "education": "Some college, no degree",
+        "description": "Plan, direct, or coordinate activities in such fields as electronic data processing, information systems, systems analysis, and computer programming.",
+        "related_titles": [
+            "Information Technology Manager (IT Manager)",
+            " Information Technology Director (IT Director)",
+            " Information Systems Director (IS Director)",
+            " Data Processing Manager",
+            " MIS Director (Management Information Systems Director)"
+        ]
+    },
+    "Human Resources Manager": {
+        "salary": "$81305",
+        "trends": {
+            "Top industries (2012)": "Management of Companies and Enterprises Manufacturing",
+            "Employment (2012)": "103,000 employees",
+            "Projected job openings (2012-2022)": "40,600",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$48.46 hourly, $100,800 annual"
+        },
+        "education": "Post-baccalaureate certificate",
+        "description": "Plan, direct, or coordinate human resources activities and staff of an organization.",
+        "related_titles": [
+            "Human Resources Manager (HR Manager)",
+            " Director of Human Resources",
+            " Human Resources Director (HR Director)",
+            " Employee Benefits Manager",
+            " Human Resources Vice President"
+        ]
+    },
+    "UI/UX Developer": {
+        "salary": "$95868",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "141,000 employees",
+            "Projected job openings (2012-2022)": "50,700",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$30.37 hourly, $63,160 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Design, create, and modify Web sites. Analyze user needs to implement Web site content, graphics, performance, and capacity. May integrate Web sites with other computer applications. May convert written, graphic, audio, and video components to compatible Web formats by using software designed to facilitate the creation of Web and multimedia content.",
+        "related_titles": [
+            "Webmaster",
+            " Web Designer",
+            " Web Developer"
+        ]
+    },
+    "Designer": {
+        "salary": "$53164",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "141,000 employees",
+            "Projected job openings (2012-2022)": "50,700",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$30.37 hourly, $63,160 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Design, create, and modify Web sites. Analyze user needs to implement Web site content, graphics, performance, and capacity. May integrate Web sites with other computer applications. May convert written, graphic, audio, and video components to compatible Web formats by using software designed to facilitate the creation of Web and multimedia content.",
+        "related_titles": [
+            "Webmaster",
+            " Web Designer",
+            " Web Developer"
+        ]
+    },
+    "Marketing Manager": {
+        "salary": "$130350",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Management of Companies and Enterprises",
+            "Employment (2012)": "181,000 employees",
+            "Projected job openings (2012-2022)": "61,700",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$59.24 hourly, $123,220 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, direct, or coordinate marketing policies and programs, such as determining the demand for products and services offered by a firm and its competitors, and identify potential customers. Develop pricing strategies with the goal of maximizing the firm's profits or share of the market while ensuring the firm's customers are satisfied. Oversee product development or monitor trends that indicate the need for new products and services.",
+        "related_titles": [
+            "Marketing Director",
+            " Marketing Manager",
+            " Vice President of Marketing",
+            " Business Development Manager",
+            " Marketing Coordinator"
+        ]
+    },
+    "UX Researcher": {
+        "salary": "$107714",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Educational Services",
+            "Employment (2012)": "18,000 employees",
+            "Projected job openings (2012-2022)": "5,600",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$22.94 hourly, $47,720 annual"
+        },
+        "education": "Master's degree",
+        "description": "Plan, develop, or conduct surveys. May analyze and interpret the meaning of survey data, determine survey objectives, or suggest or test question wording. Includes social scientists who primarily design questionnaires or supervise survey teams.",
+        "related_titles": [
+            "Research Fellow",
+            " Field Interviewer",
+            " Research Associate",
+            " Research Interviewer",
+            " Market Survey Representative"
+        ]
+    },
+    "Sales Representative": {
+        "salary": "$60835",
+        "trends": {
+            "Top industries (2012)": "Retail Trade Wholesale Trade",
+            "Employment (2012)": "359,000 employees",
+            "Projected job openings (2012-2022)": "106,900",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$52.18 hourly, $108,540 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, direct, or coordinate the actual distribution or movement of a product or service to the customer. Coordinate sales distribution by establishing sales territories, quotas, and goals and establish training programs for sales representatives. Analyze sales statistics gathered by staff to determine sales potential and inventory requirements and monitor the preferences of customers.",
+        "related_titles": [
+            "Sales Manager",
+            " Vice President of Sales",
+            " Director of Sales",
+            " District Sales Manager",
+            " Regional Sales Manager"
+        ]
+    },
+    "Accounting Manager": {
+        "salary": "$86871",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services",
+            "Employment (2012)": "1,800,000 employees",
+            "Projected job openings (2012-2022)": "370,000",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$17.18 hourly, $35,730 annual"
+        },
+        "education": "High school diploma or equivalent",
+        "description": "Compute, classify, and record numerical data to keep financial records complete. Perform any combination of routine calculating, posting, and verifying duties to obtain primary financial data for use in maintaining accounting records. May also check the accuracy of figures, calculations, and postings pertaining to business transactions recorded by other workers.",
+        "related_titles": [
+            "Accounting Clerk",
+            " Accounting Assistant",
+            " Accounts Payables Clerk",
+            " Bookkeeper",
+            " Account Clerk"
+        ]
+    },
+    "Data Analyst": {
+        "salary": "$77903",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "206,000 employees",
+            "Projected job openings (2012-2022)": "40,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$39.59 hourly, $82,340 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Produce financial and market intelligence by querying data repositories and generating periodic reports. Devise methods for identifying data patterns and trends in available information sources.",
+        "related_titles": [
+            "Business Intelligence Analyst; Business Intelligence Manager; Commercial Intelligence Manager; Competitive Intelligence Analyst; Consultant",
+            " Strategic Business and Technology Intelligence; Director of Enterprise Strategy; Director of Market Intelligence; Director",
+            " Global Intelligence; Intelligence Analyst; Manager",
+            " Market Intelligence"
+        ]
+    },
+    "Chief Operating Officer": {
+        "salary": "$175016",
+        "trends": {
+            "Top industries (2012)": "Self-Employed",
+            "Employment (2012)": "331,000 employees",
+            "Projected job openings (2012-2022)": "87,800",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$82.50 hourly, $171,610 annual"
+        },
+        "education": "Post-baccalaureate certificate",
+        "description": "Determine and formulate policies and provide overall direction of companies or private and public sector organizations within guidelines set up by a board of directors or similar governing body. Plan, direct, or coordinate operational activities at the highest level of management with the help of subordinate executives and staff managers.",
+        "related_titles": [
+            "Chief Executive Officer (CEO)",
+            " President",
+            " Chief Financial Officer (CFO)",
+            " Vice President",
+            " Chief Operating Officer (COO)"
+        ]
+    },
+    "Web Developer": {
+        "salary": "$66401",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "141,000 employees",
+            "Projected job openings (2012-2022)": "50,700",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$30.37 hourly, $63,160 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Design, create, and modify Web sites. Analyze user needs to implement Web site content, graphics, performance, and capacity. May integrate Web sites with other computer applications. May convert written, graphic, audio, and video components to compatible Web formats by using software designed to facilitate the creation of Web and multimedia content.",
+        "related_titles": [
+            "Webmaster",
+            " Web Designer",
+            " Web Developer"
+        ]
+    },
+    "Product Manager": {
+        "salary": "$130815",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "206,000 employees",
+            "Projected job openings (2012-2022)": "40,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$39.59 hourly, $82,340 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, initiate, and manage information technology (IT) projects. Lead and guide the work of technical staff. Serve as liaison between business and technical aspects of projects. Plan project stages and assess business implications for each stage. Monitor progress to assure deadlines, standards, and cost targets are met.",
+        "related_titles": [
+            "IT Manager",
+            " IT Project Manager",
+            " Manager of IT",
+            " Program Manager",
+            " Project Manager"
+        ]
+    },
+    "Project Manager": {
+        "salary": "$123546",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "206,000 employees",
+            "Projected job openings (2012-2022)": "40,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$39.59 hourly, $82,340 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, initiate, and manage information technology (IT) projects. Lead and guide the work of technical staff. Serve as liaison between business and technical aspects of projects. Plan project stages and assess business implications for each stage. Monitor progress to assure deadlines, standards, and cost targets are met.",
+        "related_titles": [
+            "IT Manager",
+            " IT Project Manager",
+            " Manager of IT",
+            " Program Manager",
+            " Project Manager"
+        ]
+    },
+    "Data Researcher": {
+        "salary": "$38126",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "28,000 employees",
+            "Projected job openings (2012-2022)": "16,100",
+            "Projected growth (2012-2022)": "Much faster than average (22% or higher)",
+            "Median wages (2013)": "$38.12 hourly, $79,290 annual"
+        },
+        "education": "Education Level Required",
+        "description": "Develop or apply mathematical or statistical theory and methods to collect, organize, interpret, and summarize numerical data to provide usable information. May specialize in fields such as bio-statistics, agricultural statistics, business statistics, or economic statistics. Includes mathematical and survey statisticians.",
+        "related_titles": [
+            " Program Research Specialist",
+            " Senior Statistician",
+            " Statistical Analyst",
+            " Statistician",
+            " Statistician (Demographer)"
+        ]
+    },
+    "Senior Vice President": {
+        "salary": "$180088",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "20,000 employees",
+            "Projected job openings (2012-2022)": "7,600",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$31.15 hourly, $64,790 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan and design land areas for projects such as parks and other recreational facilities, airports, highways, hospitals, schools, land subdivisions, and commercial, industrial, and residential sites.",
+        "related_titles": [
+            "Designer",
+            " Director of Landscape Architecture and Planning",
+            " Golf Course Architect",
+            " Land Planner",
+            " Landscape Architect"
+        ]
+    },
+    "Accounting Assistant": {
+        "salary": "$35404",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services",
+            "Employment (2012)": "1,800,000 employees",
+            "Projected job openings (2012-2022)": "370,000",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$17.18 hourly, $35,730 annual"
+        },
+        "education": "High school diploma or equivalent",
+        "description": "Compute, classify, and record numerical data to keep financial records complete. Perform any combination of routine calculating, posting, and verifying duties to obtain primary financial data for use in maintaining accounting records. May also check the accuracy of figures, calculations, and postings pertaining to business transactions recorded by other workers.",
+        "related_titles": [
+            "Accounting Clerk",
+            " Accounting Assistant",
+            " Accounts Payables Clerk",
+            " Bookkeeper",
+            " Account Clerk"
+        ]
+    },
+    "Customer Service Manager": {
+        "salary": "$37893",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Administrative and Support Services",
+            "Employment (2012)": "2,363,000 employees",
+            "Projected job openings (2012-2022)": "941,600",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$14.84 hourly, $30,870 annual"
+        },
+        "education": "High school diploma or equivalent",
+        "description": "Interact with customers to provide information in response to inquiries about products and services and to handle and resolve complaints.",
+        "related_titles": [
+            "Account Manager",
+            " Account Representative",
+            " Call Center Representative",
+            " Client Services Representative",
+            " Customer Care Representative (CCR)"
+        ]
+    },
+    "Chief Executive Officer": {
+        "salary": "$174656",
+        "trends": {
+            "Top industries (2012)": "Self-Employed",
+            "Employment (2012)": "331,000 employees",
+            "Projected job openings (2012-2022)": "87,800",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$82.50 hourly, $171,610 annual"
+        },
+        "education": "Post-baccalaureate certificate",
+        "description": "Determine and formulate policies and provide overall direction of companies or private and public sector organizations within guidelines set up by a board of directors or similar governing body. Plan, direct, or coordinate operational activities at the highest level of management with the help of subordinate executives and staff managers.",
+        "related_titles": [
+            "Chief Executive Officer (CEO)",
+            " President",
+            " Chief Financial Officer (CFO)",
+            " Vice President",
+            " Chief Operating Officer (COO)"
+        ]
+    },
+    "Senior Software Engineer": {
+        "salary": "$96857",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Manufacturing",
+            "Employment (2012)": "405,000 employees",
+            "Projected job openings (2012-2022)": "134,700",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$48.75 hourly, $101,410 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Research, design, develop, and test operating systems-level software, compilers, and network distribution software for medical, industrial, military, communications, aerospace, business, scientific, and general computing applications. Set operational specifications and formulate and analyze software requirements. May design embedded systems software. Apply principles and techniques of computer science, engineering, and mathematical analysis.",
+        "related_titles": [
+            "Developer",
+            " Infrastructure Engineer",
+            " Network Engineer",
+            " Publishing Systems Analyst",
+            " Senior Software Engineer"
+        ]
+    },
+    "Chief Financial Officer": {
+        "salary": "$165818",
+        "trends": {
+            "Top industries (2012)": "Self-Employed",
+            "Employment (2012)": "331,000 employees",
+            "Projected job openings (2012-2022)": "87,800",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$82.50 hourly, $171,610 annual"
+        },
+        "education": "Post-baccalaureate certificate",
+        "description": "Determine and formulate policies and provide overall direction of companies or private and public sector organizations within guidelines set up by a board of directors or similar governing body. Plan, direct, or coordinate operational activities at the highest level of management with the help of subordinate executives and staff managers.",
+        "related_titles": [
+            "Chief Executive Officer (CEO)",
+            " President",
+            " Chief Financial Officer (CFO)",
+            " Vice President",
+            " Chief Operating Officer (COO)"
+        ]
+    },
+    "Web Designer": {
+        "salary": "$62563",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "141,000 employees",
+            "Projected job openings (2012-2022)": "50,700",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$30.37 hourly, $63,160 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Design, create, and modify Web sites. Analyze user needs to implement Web site content, graphics, performance, and capacity. May integrate Web sites with other computer applications. May convert written, graphic, audio, and video components to compatible Web formats by using software designed to facilitate the creation of Web and multimedia content.",
+        "related_titles": [
+            "Webmaster",
+            " Web Designer",
+            " Web Developer"
+        ]
+    },
+    "System Engineer": {
+        "salary": "$100697",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Manufacturing",
+            "Employment (2012)": "405,000 employees",
+            "Projected job openings (2012-2022)": "134,700",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$48.75 hourly, $101,410 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Research, design, develop, and test operating systems-level software, compilers, and network distribution software for medical, industrial, military, communications, aerospace, business, scientific, and general computing applications. Set operational specifications and formulate and analyze software requirements. May design embedded systems software. Apply principles and techniques of computer science, engineering, and mathematical analysis.",
+        "related_titles": [
+            "Developer",
+            " Infrastructure Engineer",
+            " Network Engineer",
+            " Publishing Systems Analyst",
+            " Senior Software Engineer"
+        ]
+    },
+    "Business Analyst": {
+        "salary": "$90284",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Finance and Insurance",
+            "Employment (2012)": "521,000 employees",
+            "Projected job openings (2012-2022)": "209,600",
+            "Projected growth (2012-2022)": "Much faster than average (22% or higher)",
+            "Median wages (2013)": "$39.03 hourly, $81,190 annual"
+        },
+        "education": "Associate's degree",
+        "description": "Analyze science, engineering, business, and other data processing problems to implement and improve computer systems. Analyze user requirements, procedures, and problems to automate or improve existing systems and review computer system capabilities, workflow, and scheduling limitations. May analyze or recommend commercially available software.",
+        "related_titles": [
+            "Systems Analyst",
+            " Programmer Analyst",
+            " Business Systems Analyst",
+            " Computer Systems Analyst",
+            " Computer Systems Consultant"
+        ]
+    },
+    "Senior Financial Analyst": {
+        "salary": "$86763",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Government",
+            "Employment (2012)": "29,000 employees",
+            "Projected job openings (2012-2022)": "9,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$36.97 hourly, $76,890 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Enforce or ensure compliance with laws and regulations governing financial and securities institutions and financial and real estate transactions. May examine, verify, or authenticate records.",
+        "related_titles": [
+            " Principal Examiner",
+            " Senior Capital Markets Specialist",
+            " Senior Examiner",
+            " Supervisory Examiner"
+        ]
+    },
+    "Senior Associate": {
+        "salary": "$87536",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "206,000 employees",
+            "Projected job openings (2012-2022)": "40,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$39.59 hourly, $82,340 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, initiate, and manage information technology (IT) projects. Lead and guide the work of technical staff. Serve as liaison between business and technical aspects of projects. Plan project stages and assess business implications for each stage. Monitor progress to assure deadlines, standards, and cost targets are met.",
+        "related_titles": [
+            "IT Manager",
+            " IT Project Manager",
+            " Manager of IT",
+            " Program Manager",
+            " Project Manager"
+        ]
+    },
+    "Systems Analyst": {
+        "salary": "$77678",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Finance and Insurance",
+            "Employment (2012)": "521,000 employees",
+            "Projected job openings (2012-2022)": "209,600",
+            "Projected growth (2012-2022)": "Much faster than average (22% or higher)",
+            "Median wages (2013)": "$39.03 hourly, $81,190 annual"
+        },
+        "education": "Associate's degree",
+        "description": "Analyze science, engineering, business, and other data processing problems to implement and improve computer systems. Analyze user requirements, procedures, and problems to automate or improve existing systems and review computer system capabilities, workflow, and scheduling limitations. May analyze or recommend commercially available software.",
+        "related_titles": [
+            "Systems Analyst",
+            " Programmer Analyst",
+            " Business Systems Analyst",
+            " Computer Systems Analyst",
+            " Computer Systems Consultant"
+        ]
+    },
+    "Quality Assurance Analyst": {
+        "salary": "$84834",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "206,000 employees",
+            "Projected job openings (2012-2022)": "40,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$39.59 hourly, $82,340 annual"
+        },
+        "education": "Master's degree",
+        "description": "Develop and execute software test plans in order to identify software problems and their causes.",
+        "related_titles": [
+            "Quality Assurance Analyst (QA Analyst)",
+            " Quality Assurance Director (QA Director)",
+            " Software Quality Assurance Engineer (SQA Engineer)",
+            " Software Quality Engineer",
+            " Product Assurance Engineer"
+        ]
+    },
+    "Program Manager": {
+        "salary": "$96109",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "206,000 employees",
+            "Projected job openings (2012-2022)": "40,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$39.59 hourly, $82,340 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, initiate, and manage information technology (IT) projects. Lead and guide the work of technical staff. Serve as liaison between business and technical aspects of projects. Plan project stages and assess business implications for each stage. Monitor progress to assure deadlines, standards, and cost targets are met.",
+        "related_titles": [
+            "IT Manager",
+            " IT Project Manager",
+            " Manager of IT",
+            " Program Manager",
+            " Project Manager"
+        ]
+    },
+    "Graphic Designer": {
+        "salary": "$50090",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "260,000 employees",
+            "Projected job openings (2012-2022)": "86,000",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$21.55 hourly, $44,830 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Design or create graphics to meet specific commercial or promotional needs, such as packaging, displays, or logos. May use a variety of mediums to achieve artistic or decorative effects.",
+        "related_titles": [
+            "Graphic Designer",
+            " Graphic Artist",
+            " Designer",
+            " Creative Director",
+            " Artist"
+        ]
+    },
+    "Senior Account Executive": {
+        "salary": "$73838",
+        "trends": {
+            "Top industries (2012)": "Educational Services Health Care and Social Assistance",
+            "Employment (2012)": "2,324,000 employees",
+            "Projected job openings (2012-2022)": "587,600",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$15.79 hourly, $32,840 annual"
+        },
+        "education": "High school diploma or equivalent",
+        "description": "Perform routine clerical and administrative functions such as drafting correspondence, scheduling appointments, organizing and maintaining paper and electronic files, or providing information to callers.",
+        "related_titles": [
+            "Administrative Assistant",
+            " Administrative Associate",
+            " Administrative Secretary",
+            " Administrative Specialist",
+            " Administrative Technician"
+        ]
+    },
+    "Managing Director": {
+        "salary": "$82099",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Management of Companies and Enterprises",
+            "Employment (2012)": "532,000 employees",
+            "Projected job openings (2012-2022)": "146,900",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$54.18 hourly, $112,700 annual"
+        },
+        "education": "Master's degree",
+        "description": "Direct financial activities, such as planning, procurement, and investments for all or part of an organization.",
+        "related_titles": [
+            "Chief Financial Officer (CFO)",
+            " Chief School Finance Officer",
+            " Comptroller",
+            " Controller",
+            " Director of Finance"
+        ]
+    },
+    "Consultant": {
+        "salary": "$70441",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "719,000 employees",
+            "Projected job openings (2012-2022)": "245,200",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$38.40 hourly, $79,870 annual"
+        },
+        "education": "High school diploma or equivalent",
+        "description": "Conduct organizational studies and evaluations, design systems and procedures, conduct work simplification and measurement studies, and prepare operations and procedures manuals to assist management in operating more efficiently and effectively. Includes program analysts and management consultants.",
+        "related_titles": [
+            "Management Analyst",
+            " Business Analyst",
+            " Administrative Analyst",
+            " Employment Programs Analyst",
+            " Program Management Analyst"
+        ]
+    },
+    "Customer Service Representative": {
+        "salary": "$33399",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Administrative and Support Services",
+            "Employment (2012)": "2,363,000 employees",
+            "Projected job openings (2012-2022)": "941,600",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$14.84 hourly, $30,870 annual"
+        },
+        "education": "High school diploma or equivalent",
+        "description": "Interact with customers to provide information in response to inquiries about products and services and to handle and resolve complaints.",
+        "related_titles": [
+            "Account Manager",
+            " Account Representative",
+            " Call Center Representative",
+            " Client Services Representative",
+            " Customer Care Representative (CCR)"
+        ]
+    },
+    "Senior Program Manager": {
+        "salary": "$100452",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "206,000 employees",
+            "Projected job openings (2012-2022)": "40,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$39.59 hourly, $82,340 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, initiate, and manage information technology (IT) projects. Lead and guide the work of technical staff. Serve as liaison between business and technical aspects of projects. Plan project stages and assess business implications for each stage. Monitor progress to assure deadlines, standards, and cost targets are met.",
+        "related_titles": [
+            "IT Manager",
+            " IT Project Manager",
+            " Manager of IT",
+            " Program Manager",
+            " Project Manager"
+        ]
+    },
+    "Sales Manager": {
+        "salary": "$117388",
+        "trends": {
+            "Top industries (2012)": "Retail Trade Wholesale Trade",
+            "Employment (2012)": "359,000 employees",
+            "Projected job openings (2012-2022)": "106,900",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$52.18 hourly, $108,540 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, direct, or coordinate the actual distribution or movement of a product or service to the customer. Coordinate sales distribution by establishing sales territories, quotas, and goals and establish training programs for sales representatives. Analyze sales statistics gathered by staff to determine sales potential and inventory requirements and monitor the preferences of customers.",
+        "related_titles": [
+            "Sales Manager",
+            " Vice President of Sales",
+            " Director of Sales",
+            " District Sales Manager",
+            " Regional Sales Manager"
+        ]
+    },
+    "Associate Director": {
+        "salary": "$90046",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Management of Companies and Enterprises",
+            "Employment (2012)": "532,000 employees",
+            "Projected job openings (2012-2022)": "146,900",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$54.18 hourly, $112,700 annual"
+        },
+        "education": "Master's degree",
+        "description": "Direct financial activities, such as planning, procurement, and investments for all or part of an organization.",
+        "related_titles": [
+            "Chief Financial Officer (CFO)",
+            " Chief School Finance Officer",
+            " Comptroller",
+            " Controller",
+            " Director of Finance"
+        ]
+    },
+    "Technical Writer": {
+        "salary": "$66746",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Manufacturing",
+            "Employment (2012)": "50,000 employees",
+            "Projected job openings (2012-2022)": "22,600",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$32.64 hourly, $67,900 annual"
+        },
+        "education": "Associate's degree",
+        "description": "Write technical materials, such as equipment manuals, appendices, or operating and maintenance instructions. May assist in layout work.",
+        "related_titles": [
+            "Documentation Designer",
+            " Documentation Specialist",
+            " Engineering Writer",
+            " Expert Medical Writer",
+            " Information Developer"
+        ]
+    },
+    "General Manager": {
+        "salary": "$50985",
+        "trends": {
+            "Top industries (2012)": "Manufacturing Professional, Scientific, and Technical Services",
+            "Employment (2012)": "1,973,000 employees",
+            "Projected job openings (2012-2022)": "613,100",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$46.36 hourly, $96,430 annual"
+        },
+        "education": "Associate's degree",
+        "description": "Plan, direct, or coordinate the operations of public or private sector organizations. Duties and responsibilities include formulating policies, managing daily operations, and planning the use of materials and human resources, but are too diverse and general in nature to be classified in any one functional area of management or administration, such as personnel, purchasing, or administrative services.",
+        "related_titles": [
+            "Operations Manager",
+            " General Manager (GM)",
+            " Director of Operations",
+            " Plant Manager",
+            " Store Manager"
+        ]
+    },
+    "Human Resources Assistant": {
+        "salary": "$38826",
+        "trends": {
+            "Top industries (2012)": "Administrative and Support Services Government",
+            "Employment (2012)": "418,000 employees",
+            "Projected job openings (2012-2022)": "109,500",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$27.23 hourly, $56,630 annual"
+        },
+        "education": "Associate's degree",
+        "description": "Perform activities in the human resource area. Includes employment specialists who screen, recruit, interview, and place workers.",
+        "related_titles": [
+            "Corporate Recruiter",
+            " Employment Coordinator",
+            " Employment Representative",
+            " Employment Specialist",
+            " Human Resources Coordinator"
+        ]
+    },
+    "President": {
+        "salary": "$179016",
+        "trends": {
+            "Top industries (2012)": "Self-Employed",
+            "Employment (2012)": "331,000 employees",
+            "Projected job openings (2012-2022)": "87,800",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$82.50 hourly, $171,610 annual"
+        },
+        "education": "Post-baccalaureate certificate",
+        "description": "Determine and formulate policies and provide overall direction of companies or private and public sector organizations within guidelines set up by a board of directors or similar governing body. Plan, direct, or coordinate operational activities at the highest level of management with the help of subordinate executives and staff managers.",
+        "related_titles": [
+            "Chief Executive Officer (CEO)",
+            " President",
+            " Chief Financial Officer (CFO)",
+            " Vice President",
+            " Chief Operating Officer (COO)"
+        ]
+    },
+    "Assistant Manager": {
+        "salary": "$41020",
+        "trends": {
+            "Top industries (2012)": "Government Professional, Scientific, and Technical Services",
+            "Employment (2012)": "206,000 employees",
+            "Projected job openings (2012-2022)": "40,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$39.59 hourly, $82,340 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, initiate, and manage information technology (IT) projects. Lead and guide the work of technical staff. Serve as liaison between business and technical aspects of projects. Plan project stages and assess business implications for each stage. Monitor progress to assure deadlines, standards, and cost targets are met.",
+        "related_titles": [
+            "IT Manager",
+            " IT Project Manager",
+            " Manager of IT",
+            " Program Manager",
+            " Project Manager"
+        ]
+    },
+    "Financial Analyst": {
+        "salary": "$85029",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Professional, Scientific, and Technical Services",
+            "Employment (2012)": "253,000 employees",
+            "Projected job openings (2012-2022)": "100,900",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$37.68 hourly, $78,380 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Conduct quantitative analyses of information affecting investment programs of public or private institutions.",
+        "related_titles": [
+            "Financial Analyst",
+            " Securities Analyst",
+            " Investment Analyst",
+            " Equity Research Analyst",
+            " Credit Products Officer"
+        ]
+    },
+    "Senior Account Manager": {
+        "salary": "$118901",
+        "trends": {
+            "Top industries (2012)": "Wholesale Trade Manufacturing",
+            "Employment (2012)": "1,481,000 employees",
+            "Projected job openings (2012-2022)": "420,700",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$26.16 hourly, $54,410 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Sell goods for wholesalers or manufacturers to businesses or groups of individuals. Work requires substantial knowledge of items sold.",
+        "related_titles": [
+            "Account Executive",
+            " Account Manager",
+            " Outside Sales",
+            " Outside Sales Representative",
+            " Sales"
+        ]
+    },
+    "Assistant Vice President": {
+        "salary": "$175245",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Management of Companies and Enterprises",
+            "Employment (2012)": "532,000 employees",
+            "Projected job openings (2012-2022)": "146,900",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$54.18 hourly, $112,700 annual"
+        },
+        "education": "Master's degree",
+        "description": "Direct financial activities, such as planning, procurement, and investments for all or part of an organization.",
+        "related_titles": [
+            "Chief Financial Officer (CFO)",
+            " Chief School Finance Officer",
+            " Comptroller",
+            " Controller",
+            " Director of Finance"
+        ]
+    },
+    "Customer Service Associate": {
+        "salary": "$34427",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Administrative and Support Services",
+            "Employment (2012)": "2,363,000 employees",
+            "Projected job openings (2012-2022)": "941,600",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$14.84 hourly, $30,870 annual"
+        },
+        "education": "High school diploma or equivalent",
+        "description": "Interact with customers to provide information in response to inquiries about products and services and to handle and resolve complaints.",
+        "related_titles": [
+            "Account Manager",
+            " Account Representative",
+            " Call Center Representative",
+            " Client Services Representative",
+            " Customer Care Representative (CCR)"
+        ]
+    },
+    "Attorney": {
+        "salary": "$102924",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "760,000 employees",
+            "Projected job openings (2012-2022)": "196,500",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$54.95 hourly, $114,300 annual"
+        },
+        "education": "Master's degree",
+        "description": "Represent clients in criminal and civil litigation and other legal proceedings, draw up legal documents, or manage or advise clients on legal transactions. May specialize in a single area or may practice broadly in many areas of law.",
+        "related_titles": [
+            "Attorney",
+            " Associate Attorney",
+            " Lawyer",
+            " Associate",
+            " Assistant Attorney General"
+        ]
+    },
+    "Information Technology Manager": {
+        "salary": "$78296",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Finance and Insurance",
+            "Employment (2012)": "333,000 employees",
+            "Projected job openings (2012-2022)": "97,100",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$59.59 hourly, $123,950 annual"
+        },
+        "education": "Some college, no degree",
+        "description": "Plan, direct, or coordinate activities in such fields as electronic data processing, information systems, systems analysis, and computer programming.",
+        "related_titles": [
+            "Information Technology Manager (IT Manager)",
+            " Information Technology Director (IT Director)",
+            " Information Systems Director (IS Director)",
+            " Data Processing Manager",
+            " MIS Director (Management Information Systems Director)"
+        ]
+    },
+    "UI/UX Designer": {
+        "salary": "$94888",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "141,000 employees",
+            "Projected job openings (2012-2022)": "50,700",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$30.37 hourly, $63,160 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Design, create, and modify Web sites. Analyze user needs to implement Web site content, graphics, performance, and capacity. May integrate Web sites with other computer applications. May convert written, graphic, audio, and video components to compatible Web formats by using software designed to facilitate the creation of Web and multimedia content.",
+        "related_titles": [
+            "Webmaster",
+            " Web Designer",
+            " Web Developer"
+        ]
+    },
+    "Computer Technician": {
+        "salary": "$46850",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Educational Services",
+            "Employment (2012)": "548,000 employees",
+            "Projected job openings (2012-2022)": "196,900",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$22.41 hourly, $46,620 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Provide technical assistance to computer users. Answer questions or resolve computer problems for clients in person, or via telephone or electronically. May provide assistance concerning the use of computer hardware and software, including printing, installation, word processing, electronic mail, and operating systems.",
+        "related_titles": [
+            "Information Technology Specialist (IT Specialist)",
+            " Support Specialist",
+            " Computer Technician",
+            " Computer Support Specialist",
+            " Help Desk Analyst"
+        ]
+    },
+    "Executive Assistant": {
+        "salary": "$50705",
+        "trends": {
+            "Top industries (2012)": "Educational Services Professional, Scientific, and Technical Services",
+            "Employment (2012)": "874,000 employees",
+            "Projected job openings (2012-2022)": "105,200",
+            "Projected growth (2012-2022)": "Little or no change (-2% to 2%)",
+            "Median wages (2013)": "$23.70 hourly, $49,290 annual"
+        },
+        "education": "Some college, no degree",
+        "description": "Provide high-level administrative support by conducting research, preparing statistical reports, handling information requests, and performing clerical functions such as preparing correspondence, receiving visitors, arranging conference calls, and scheduling meetings. May also train and supervise lower-level clerical staff.",
+        "related_titles": [
+            "Administrative Assistant",
+            " Executive Assistant",
+            " Executive Secretary",
+            " Administrative Secretary",
+            " Office Manager"
+        ]
+    },
+    "Marketing Director": {
+        "salary": "$123695",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Management of Companies and Enterprises",
+            "Employment (2012)": "181,000 employees",
+            "Projected job openings (2012-2022)": "61,700",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$59.24 hourly, $123,220 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, direct, or coordinate marketing policies and programs, such as determining the demand for products and services offered by a firm and its competitors, and identify potential customers. Develop pricing strategies with the goal of maximizing the firm's profits or share of the market while ensuring the firm's customers are satisfied. Oversee product development or monitor trends that indicate the need for new products and services.",
+        "related_titles": [
+            "Marketing Director",
+            " Marketing Manager",
+            " Vice President of Marketing",
+            " Business Development Manager",
+            " Marketing Coordinator"
+        ]
+    },
+    "Administrative Assistant": {
+        "salary": "$49547",
+        "trends": {
+            "Top industries (2012)": "Educational Services Professional, Scientific, and Technical Services",
+            "Employment (2012)": "874,000 employees",
+            "Projected job openings (2012-2022)": "105,200",
+            "Projected growth (2012-2022)": "Little or no change (-2% to 2%)",
+            "Median wages (2013)": "$23.70 hourly, $49,290 annual"
+        },
+        "education": "Some college, no degree",
+        "description": "Provide high-level administrative support by conducting research, preparing statistical reports, handling information requests, and performing clerical functions such as preparing correspondence, receiving visitors, arranging conference calls, and scheduling meetings. May also train and supervise lower-level clerical staff.",
+        "related_titles": [
+            "Administrative Assistant",
+            " Executive Assistant",
+            " Executive Secretary",
+            " Administrative Secretary",
+            " Office Manager"
+        ]
+    },
+    "Senior Accountant": {
+        "salary": "$71240",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Government",
+            "Employment (2012)": "29,000 employees",
+            "Projected job openings (2012-2022)": "9,200",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$36.97 hourly, $76,890 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Enforce or ensure compliance with laws and regulations governing financial and securities institutions and financial and real estate transactions. May examine, verify, or authenticate records.",
+        "related_titles": [
+            "Bank Secrecy Act Anti-Money Laundering Officer (BSA/AML Officer)",
+            " Community Reinvestment Act Officer (CRA Officer)",
+            " Credit Union Examiner",
+            " Credit Union Field Examiner",
+            " Examining Officer"
+        ]
+    },
+    "Systems Administrator": {
+        "salary": "$82980",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Educational Services",
+            "Employment (2012)": "366,000 employees",
+            "Projected job openings (2012-2022)": "100,500",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$35.58 hourly, $74,000 annual"
+        },
+        "education": "Post-secondary certificate",
+        "description": "Install, configure, and support an organization's local area network (LAN), wide area network (WAN), and Internet systems or a segment of a network system. Monitor network to ensure network availability to all system users and may perform necessary maintenance to support network availability. May monitor and test Web site performance to ensure Web sites operate correctly and without interruption. May assist in network modeling, analysis, planning, and coordination between network and data communications hardware and software. May supervise computer user support specialists and computer network support specialists. May administer network security measures.",
+        "related_titles": [
+            "Systems Administrator",
+            " Network Administrator",
+            " Network Engineer",
+            " Information Technology Specialist (IT Specialist)",
+            " Local Area Network Administrator (LAN Administrator)"
+        ]
+    },
+    "Management Consultant": {
+        "salary": "$103046",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "719,000 employees",
+            "Projected job openings (2012-2022)": "245,200",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$38.40 hourly, $79,870 annual"
+        },
+        "education": "High school diploma or equivalent",
+        "description": "Conduct organizational studies and evaluations, design systems and procedures, conduct work simplification and measurement studies, and prepare operations and procedures manuals to assist management in operating more efficiently and effectively. Includes program analysts and management consultants.",
+        "related_titles": [
+            "Management Analyst",
+            " Business Analyst",
+            " Administrative Analyst",
+            " Employment Programs Analyst",
+            " Program Management Analyst"
+        ]
+    },
+    "Software Engineer": {
+        "salary": "$94154",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Manufacturing",
+            "Employment (2012)": "405,000 employees",
+            "Projected job openings (2012-2022)": "134,700",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$48.75 hourly, $101,410 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Research, design, develop, and test operating systems-level software, compilers, and network distribution software for medical, industrial, military, communications, aerospace, business, scientific, and general computing applications. Set operational specifications and formulate and analyze software requirements. May design embedded systems software. Apply principles and techniques of computer science, engineering, and mathematical analysis.",
+        "related_titles": [
+            "Developer",
+            " Infrastructure Engineer",
+            " Network Engineer",
+            " Publishing Systems Analyst",
+            " Senior Software Engineer"
+        ]
+    },
+    "Marketing Assistant": {
+        "salary": "$127977",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Management of Companies and Enterprises",
+            "Employment (2012)": "181,000 employees",
+            "Projected job openings (2012-2022)": "61,700",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$59.24 hourly, $123,220 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Plan, direct, or coordinate marketing policies and programs, such as determining the demand for products and services offered by a firm and its competitors, and identify potential customers. Develop pricing strategies with the goal of maximizing the firm's profits or share of the market while ensuring the firm's customers are satisfied. Oversee product development or monitor trends that indicate the need for new products and services.",
+        "related_titles": [
+            "Marketing Director",
+            " Marketing Manager",
+            " Vice President of Marketing",
+            " Business Development Manager",
+            " Marketing Coordinator"
+        ]
+    },
+    "Human Resources Coordinator": {
+        "salary": "$41026",
+        "trends": {
+            "Top industries (2012)": "Administrative and Support Services Government",
+            "Employment (2012)": "418,000 employees",
+            "Projected job openings (2012-2022)": "109,500",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$27.23 hourly, $56,630 annual"
+        },
+        "education": "Associate's degree",
+        "description": "Perform activities in the human resource area. Includes employment specialists who screen, recruit, interview, and place workers.",
+        "related_titles": [
+            "Corporate Recruiter",
+            " Employment Coordinator",
+            " Employment Representative",
+            " Employment Specialist",
+            " Human Resources Coordinator"
+        ]
+    },
+    "Account Executive": {
+        "salary": "$67117",
+        "trends": {
+            "Top industries (2012)": "Wholesale Trade Manufacturing",
+            "Employment (2012)": "1,481,000 employees",
+            "Projected job openings (2012-2022)": "420,700",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$26.16 hourly, $54,410 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Sell goods for wholesalers or manufacturers to businesses or groups of individuals. Work requires substantial knowledge of items sold.",
+        "related_titles": [
+            " Account Manager",
+            " Outside Sales",
+            " Outside Sales Representative",
+            " Sales",
+            " Sales Consultant"
+        ]
+    },
+    "Legal Assistant": {
+        "salary": "$50505",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Government",
+            "Employment (2012)": "277,000 employees",
+            "Projected job openings (2012-2022)": "91,200",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$22.87 hourly, $47,570 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Assist lawyers by investigating facts, preparing legal documents, or researching legal precedent. Conduct research to support a legal proceeding, to formulate a defense, or to initiate legal action.",
+        "related_titles": [
+            "Paralegal",
+            " Law Clerk",
+            " Legal Assistant",
+            " Legal Clerk",
+            " Real Estate Paralegal"
+        ]
+    },
+    "Business Consultant": {
+        "salary": "$96872",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Self-Employed",
+            "Employment (2012)": "719,000 employees",
+            "Projected job openings (2012-2022)": "245,200",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$38.40 hourly, $79,870 annual"
+        },
+        "education": "High school diploma or equivalent",
+        "description": "Conduct organizational studies and evaluations, design systems and procedures, conduct work simplification and measurement studies, and prepare operations and procedures manuals to assist management in operating more efficiently and effectively. Includes program analysts and management consultants.",
+        "related_titles": [
+            "Management Analyst",
+            " Business Analyst",
+            " Administrative Analyst",
+            " Employment Programs Analyst",
+            " Program Management Analyst"
+        ]
+    },
+    "Marketing Specialist": {
+        "salary": "$52589",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Finance and Insurance",
+            "Employment (2012)": "416,000 employees",
+            "Projected job openings (2012-2022)": "188,500",
+            "Projected growth (2012-2022)": "Much faster than average (22% or higher)",
+            "Median wages (2013)": "$29.23 hourly, $60,800 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Research market conditions in local, regional, or national areas, or gather information to determine potential sales of a product or service, or create a marketing campaign. May gather information on competitors, prices, sales, and methods of marketing and distribution.",
+        "related_titles": [
+            "Market Research Analyst",
+            " Market Analyst",
+            " Project Manager",
+            " Market Research Consultant",
+            " Client Service and Consulting Manager"
+        ]
+    },
+    "Assistant Director": {
+        "salary": "$67690",
+        "trends": {
+            "Top industries (2012)": "Finance and Insurance Management of Companies and Enterprises",
+            "Employment (2012)": "532,000 employees",
+            "Projected job openings (2012-2022)": "146,900",
+            "Projected growth (2012-2022)": "Average (8% to 14%)",
+            "Median wages (2013)": "$54.18 hourly, $112,700 annual"
+        },
+        "education": "Master's degree",
+        "description": "Direct financial activities, such as planning, procurement, and investments for all or part of an organization.",
+        "related_titles": [
+            "Chief Financial Officer (CFO)",
+            " Chief School Finance Officer",
+            " Comptroller",
+            " Controller",
+            " Director of Finance"
+        ]
+    },
+    "Chief Information Officer": {
+        "salary": "$143914",
+        "trends": {
+            "Top industries (2012)": "Self-Employed",
+            "Employment (2012)": "331,000 employees",
+            "Projected job openings (2012-2022)": "87,800",
+            "Projected growth (2012-2022)": "Slower than average (3% to 7%)",
+            "Median wages (2013)": "$82.50 hourly, $171,610 annual"
+        },
+        "education": "Post-baccalaureate certificate",
+        "description": "Determine and formulate policies and provide overall direction of companies or private and public sector organizations within guidelines set up by a board of directors or similar governing body. Plan, direct, or coordinate operational activities at the highest level of management with the help of subordinate executives and staff managers.",
+        "related_titles": [
+            "Chief Executive Officer (CEO)",
+            " President",
+            " Chief Financial Officer (CFO)",
+            " Vice President",
+            " Chief Operating Officer (COO)"
+        ]
+    },
+    "Developer": {
+        "salary": "$89954",
+        "trends": {
+            "Top industries (2012)": "Professional, Scientific, and Technical Services Manufacturing",
+            "Employment (2012)": "405,000 employees",
+            "Projected job openings (2012-2022)": "134,700",
+            "Projected growth (2012-2022)": "Faster than average (15% to 21%)",
+            "Median wages (2013)": "$48.75 hourly, $101,410 annual"
+        },
+        "education": "Bachelor's degree",
+        "description": "Research, design, develop, and test operating systems-level software, compilers, and network distribution software for medical, industrial, military, communications, aerospace, business, scientific, and general computing applications. Set operational specifications and formulate and analyze software requirements. May design embedded systems software. Apply principles and techniques of computer science, engineering, and mathematical analysis.",
+        "related_titles": [
+            "Developer",
+            " Infrastructure Engineer",
+            " Network Engineer",
+            " Publishing Systems Analyst",
+            " Senior Software Engineer"
+        ]
+    }
+}

@@ -44,7 +44,7 @@ $(document).ready(function () {
 
             response_data = data;
             // populateData(data);
-            console.log(location);
+            // console.log(location);
             location.href = location.origin + '/results_home';
         }
     });
@@ -68,15 +68,13 @@ $(document).ready(function () {
                url: '/clear_results',
                success: function(data)
                {
-                   console.log(data);
+                   // console.log(data);
                }
              });
         }
     });
 
     function populateData(data) {
-        var employer =[];
-        var title = [];
         var predicted=[];
         var skills_map = [];
         var all_titles = [];
@@ -85,12 +83,6 @@ $(document).ready(function () {
         data = $.parseJSON(data);
         console.log(data);
 
-        data.employer.forEach(function(aa){
-            employer.push(aa);
-        });
-        data.title.forEach(function(aa){
-            title.push(aa);
-        });
         data.final_prediction_list.forEach(function(aa){
             predicted.push(aa);
         });
@@ -104,6 +96,8 @@ $(document).ready(function () {
             all_titles.push(aa);
         });
 
+        console.log(data.title_data);
+
         var link1 = "http://www.simplyhired.com/k-";
         var link3 = "-jobs.html";
         var i = 0;
@@ -114,7 +108,7 @@ $(document).ready(function () {
         $("#predicted-titles-list" ).remove();
         var predicted_titles_list = $('<ul id="predicted-titles-list"></ul>');
 
-        for (var i = 0; i < predicted.length; i++) {
+        for (var i = 0; i < 5; i++) {
             var li;
             if (i % 2 == 0) {
                 li = $('<li class="even-row collapse-class" id="collapse-' + i + '"></li>');
@@ -137,9 +131,18 @@ $(document).ready(function () {
             li.append(skill_div);
 
             var more_info = $('<div class="more-info-div" id="more-' + i + '"></div>');
-            more_info.append($('<div><span><strong>Average Salary: </strong>$100,000</div></span>'));
-            more_info.append($('<div><span><strong>Average Experience: </strong>5 Years</div></span>'));
-            more_info.append($('<div><span><strong>Related Job Titles: </strong>Software Developer, Programmer, Developer</div></span>'));
+            more_info.append($('<div><span><strong>Average Salary: </strong>' + data.title_data[predicted[i]]["salary"] + '</div></span>'));
+            more_info.append($('<div><span><strong>Education Level: </strong>' + data.title_data[predicted[i]]["education"] + '</div></span>'));
+            // more_info.append($('<div><span><strong>Average Experience: </strong>5 Years</div></span>'));
+            more_info.append($('<div><span><strong>Projected Jobs: </strong>' + data.title_data[predicted[i]]["trends"]["Projected job openings (2012-2022)"] + '</div></span>'));
+            more_info.append($('<div><span><strong>Projected Growth: </strong>' + data.title_data[predicted[i]]["trends"]["Projected growth (2012-2022)"] + '</div></span>'));
+            var rel_job = '';
+            for (var a = 0; a < data.title_data[predicted[i]]["related_titles"].length; a++) {
+                rel_job = rel_job + data.title_data[predicted[i]]["related_titles"][a] + ', '
+            }
+            if (rel_job) {
+                more_info.append($('<div><span><strong>Related Job Titles: </strong>' + rel_job + '</div></span>'));
+            }
             more_info.append($('<div><span><a target="_blank" href="' + href + '">Search ' + predicted[i] + ' Jobs</a></div></span>'));
 
             li.append(more_info);
@@ -217,7 +220,49 @@ $(document).ready(function () {
 
         $(".more-info-div").hide();
 
-        $("#network").empty();
-        $("#network").append($('<a href="http://127.0.0.1:5000/network"><h5>What are my alumni doing</h5></a><h5><a href="http://127.0.0.1:5000/network"></a></h5>'));
+        $('#skill-search').append($('<h3 class="block-title">Skill Search</h3>'));
+        var skill_input_div = $('<div class="column-100 column"><input type="text" name="skill" id="skill-ajax" style="position: relative; z-index: 2;"/><input id="skill-submit-button" class="btn btn-primary pull-right" type="submit" value="Go" /></div><input type = "hidden" type="text" name="skill" id="skill-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>');
+        $('#skill-search').append(skill_input_div);
+
+
+        // Initialize ajax autocomplete:
+        $('#skill-ajax').autocomplete({
+            // serviceUrl: '/autosuggest/service/url',
+            lookup: skillsArray,
+            lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+                var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+                return re.test(suggestion.value);
+            },
+            onSelect: function(suggestion) {
+                document.getElementById("skill-ajax").value = suggestion.value;
+            },
+            onHint: function (hint) {
+                $('#skill-ajax-x').val(hint);
+            },
+            onInvalidateSelection: function() {
+            }
+        });
+
+        $("#skill-submit-button").on('click',function() {
+            $("#skill-titles-list").remove();
+            var skill_input = document.getElementById("skill-ajax").value;
+            $.ajax({
+               datatype: 'json',
+               url: '/skill_submit',
+               type: 'POST',
+               data : {"skill": JSON.stringify(skill_input)},
+               success: function(data)
+               {
+                    if (data) {
+                        data = $.parseJSON(data);
+                        var skill_titles_ul = $('<ul id="skill-titles-list"></ul>');
+                        for (var j = 0; j < data.length; j++) {
+                            skill_titles_ul.append($('<li><h5>' + data[j] + '</h5></li>'));
+                        }
+                        $("#skill-search").append(skill_titles_ul);
+                    }
+               }
+            });
+        });
     }
 });

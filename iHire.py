@@ -1,4 +1,3 @@
-# from util import unigram_features, bigram_features
 import os
 import re
 import csv
@@ -6,7 +5,6 @@ import nltk
 import json
 import string
 import pickle
-import numpy as np
 from cStringIO import StringIO
 from collections import OrderedDict
 from flask.templating import render_template
@@ -16,21 +14,22 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from univ_lookup import extract_univ
-from univ_lookup import createDataForGraph
-from univ_lookup import createDataForTree
-from Marisa import get_degree_level_from_resume, get_degree
+
+from univ_lookup import create_data_for_graph
+from univ_lookup import create_data_for_tree
 
 
-global flag
-global university
-global results_json
+# global flag
+# global university
+# global results_json
 results_json = dict()
 university = ''
 flag = 1
 
+#Create Flask instance
 iHire = Flask(__name__)
 iHire.config['UPLOAD_FOLDER'] = ""
-iHire.debug="true"
+iHire.debug = "true"
 
 # Get the pickled classifier model and features
 with open('svmclassifier_new_0420_marisa.pkl', 'rb') as infile:
@@ -51,8 +50,19 @@ skills_employer_tree = json.loads(open("static/treegraphdata.json").read())
 univ_major_number = json.loads(open("static/univ_mapping.json").read())
 major_code_lookup = json.loads(open("static/DeptCodes.json").read())
 
+titles_data = json.loads(open("titlesData_new.json").read())
+
 
 def extract_text_from_pdf(pdf_filename):
+    """
+    Function to extract the text from pdf documents using pdfminer
+
+    Args:
+        pdf_filename -- File name of the pdf document as string
+
+    Returns:
+        extracted_text -- Extracted text as string
+    """
     resource_manager = PDFResourceManager()
     return_string = StringIO()
     la_params = LAParams()
@@ -72,8 +82,17 @@ def extract_text_from_pdf(pdf_filename):
     return extracted_text
 
 
-def get_top_five_predictions(predicted_decision):
-    top_five_predictions = []
+def get_top_predictions(predicted_decision):
+    """
+    Function to find the top predictions and compute scores based on the svm classifier decisions
+
+    Args:
+        predicted_decision -- list of svm prediction decisions
+
+    Returns:
+        top_five_predictions, normalized_prediction_score -- List of top five predictions and normalized scores as tuple
+    """
+    top_predictions = []
     normalized_prediction_score = []
     for i in range(1):
         predicted_dec_dup = predicted_decision[i]
@@ -83,24 +102,20 @@ def get_top_five_predictions(predicted_decision):
 
         normalized_prediction_score = \
             [
-                int(float(val - min_s) * 100 / float(max_s - min_s)) for val in predicted_dec_dup_sorted[:5]
+                int(float(val - min_s) * 100 / float(max_s - min_s)) for val in predicted_dec_dup_sorted
             ]
 
-        for j in range(5):
-            top_five_predictions.append(
+        for j in range(len(predicted_dec_dup)):
+            top_predictions.append(
                 labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])]
             )
 
-    return top_five_predictions, normalized_prediction_score
+    return top_predictions, normalized_prediction_score
 
 
 @iHire.route('/')
 def hello_world():
-    global flag
-    print "main page"
-    print flag
     return render_template('index_homepage.html')
-
 
 @iHire.route('/results_home')
 def results_home():
@@ -126,7 +141,7 @@ def network():
 def about():
     return render_template('about.html')
 
-@iHire.route('/submit', methods = ['POST'])
+@iHire.route('/submit', methods=['POST'])
 def submit():
     global university
     if request.method == 'POST':
@@ -139,13 +154,23 @@ def submit():
                 university_ip = str(request.form["university"])
                 print university_ip
                 university_ip = university_ip.strip('"')
-                createDataForGraph(university_ip, major, skills_employer, univ_major_number, major_code_lookup)
-                createDataForTree(university_ip, major, skills_employer_tree, univ_major_number, major_code_lookup)
+                create_data_for_graph(university_ip, major, skills_employer, univ_major_number, major_code_lookup)
+                create_data_for_tree(university_ip, major, skills_employer_tree, univ_major_number, major_code_lookup)
             else:
-                createDataForGraph(university, major, skills_employer, univ_major_number, major_code_lookup)
-                createDataForTree(university, major, skills_employer_tree, univ_major_number, major_code_lookup)
+                create_data_for_graph(university, major, skills_employer, univ_major_number, major_code_lookup)
+                create_data_for_tree(university, major, skills_employer_tree, univ_major_number, major_code_lookup)
         return str(request.form["major"])
 
+@iHire.route('/skill_submit', methods=['POST'])
+def skill_submit():
+    titles = []
+    if "skill" in request.form:
+        skill = str(request.form["skill"])
+        skill = skill.strip('"')
+        for title in skills_map_with_percent:
+            if skill in skills_map_with_percent[title]["skills"]:
+                titles.append(title)
+    return json.dumps(titles)
 
 @iHire.route("/analyze", methods=['POST','GET'])
 def analyze():
@@ -176,20 +201,17 @@ def analyze():
             global university
             university = extract_univ(open(textfile_name).read(), univ_dict, univ_normalize)
             print university
-            createDataForGraph(university, "", skills_employer, univ_major_number, major_code_lookup)
-            createDataForTree(university, "", skills_employer_tree, univ_major_number, major_code_lookup)
+            create_data_for_graph(university, "", skills_employer, univ_major_number, major_code_lookup)
+            create_data_for_tree(university, "", skills_employer_tree, univ_major_number, major_code_lookup)
+
 
             resume_text = [open(textfile_name).read()]
             resume_tfidf = tfidf_vect.transform(resume_text)
             predicted_decision = model.decision_function(resume_tfidf)
 
-            top_five_predictions, normalized_prediction_score = get_top_five_predictions(predicted_decision)
+            top_predictions, normalized_prediction_score = get_top_predictions(predicted_decision)
 
             out = dict()
-            top_five_predictions_caps = [title_title_map[tfp] for tfp in top_five_predictions]
-
-            out["employer"] = ["Deloitte","Sales Force","Yahoo"]
-            out["title"] = ["UX Designer", "Software engineer", "Consultant"]
             out["university"] = university
 
             skills_map_with_percent_list = []
@@ -203,6 +225,7 @@ def analyze():
             out["titles"] = titles
 
             out["candidate_skills"] = dict()
+            out["title_data"] = dict()
 
             try:
                 tokens = nltk.word_tokenize(resume_text[0].lower())
@@ -210,11 +233,12 @@ def analyze():
                 tokens = nltk.word_tokenize(resume_text[0].decode('utf-8').lower())
 
             skill_score = []
-            for pred in top_five_predictions:
+            for pred in top_predictions:
                 top15 = skills_map_with_percent[title_title_map[pred]]["skills"][:15]
                 temp_skill_list = [t for t in top15 if len(t) > 1 and t.lower() in tokens]
 
                 out["candidate_skills"][title_title_map[pred]] = temp_skill_list
+                out["title_data"][title_title_map[pred]] = titles_data[title_title_map[pred]]
                 skill_score.append(int(len(temp_skill_list) / 15.0 * 100.0))
 
             final_score = [sum(x)/2 for x in zip(normalized_prediction_score, skill_score)]
@@ -223,13 +247,13 @@ def analyze():
             sorted_score_indexes = [i[0] for i in sorted(enumerate(final_score), key=lambda x:x[1], reverse=True)]
 
             for s in sorted_score_indexes:
-                final_titles_list.append(title_title_map[top_five_predictions[s]])
+                final_titles_list.append(title_title_map[top_predictions[s]])
 
             final_score_sorted = sorted(final_score, reverse=True)
 
-            print normalized_prediction_score
-            print final_titles_list
-            print final_score_sorted
+            # print normalized_prediction_score
+            # print final_titles_list
+            # print final_score_sorted
 
             out["final_prediction_list"] = final_titles_list
             out["final_score_sorted"] = final_score_sorted

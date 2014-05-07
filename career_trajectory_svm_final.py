@@ -156,7 +156,7 @@ if __name__ == '__main__':
         stop_words='english',
         ngram_range=(1, 2),
         max_df=0.75,
-        max_features=100000
+        max_features=1000
     )
     # marisa_bi_vect = MarisaTfidfVectorizer(
     #     stop_words='english',
