@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $( document ).tooltip();
+
     $('.collapse-class').live('click', function () {
         var id = $(this).attr('id');
         var no = id.substring(9);
@@ -104,7 +106,7 @@ $(document).ready(function () {
 
         $("#predictions-div").empty();
         $('#spinner-id').css('display', 'none');
-        $("#predictions-div").append($('<h3 class="block-title">Your Top 5 Job Predictions</h3>'))
+        $("#predictions-div").append($('<div class="column-90 column block-title"><h3>Your Top Jobs</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="The top job predictions are made based on various factors like your skills, education, degree level etc."></i></h3></div>'))
         $("#predicted-titles-list" ).remove();
         var predicted_titles_list = $('<ul id="predicted-titles-list"></ul>');
 
@@ -118,10 +120,11 @@ $(document).ready(function () {
             var href = link1.concat(predicted[i].concat(link3));
             cand_skill_list = data.candidate_skills[predicted[i]];
 
-            li.append($('<div title="' + predicted[i] + '"><a target="_blank" href="' + href + '">' + predicted[i] + '</a><div id="score-div"><span class="score">' + scores[i] + '</span><div id="bar-div"><span class="bar" id="bar1-' + i + '"></span><span class="bar" id="bar2-' + i + '"></span><span class="bar" id="bar3-' + i + '"></span></div></div></div>'));
+            li.append($('<div><a target="_blank" href="' + href + '">' + predicted[i] + '</a><div id="score-div"><span class="score" title="Calculated Score">' + scores[i] + '</span><div id="bar-div"><span class="bar" id="bar1-' + i + '"></span><span class="bar" id="bar2-' + i + '"></span><span class="bar" id="bar3-' + i + '"></span></div></div></div>'));
 
             var skill_div = $('<div class="skills-list-div"></div>');
             var skill_ul = $('<ul class="skills-list"></ul>');
+            skill_ul.append($('<li><strong>Matching Skills:</strong></li>'));
 
             skill_div.append(skill_ul);
 
@@ -166,7 +169,7 @@ $(document).ready(function () {
         for (var i = 0; i < all_titles.length; i++) {
             sel1.append($("<option>").attr('value', all_titles[i]).text(all_titles[i]));
         }
-        $("#skills-div").append($('<h3 class="block-title">Top Skills</h3>'));
+        $("#skills-div").append($('<div class="column-90 column block-title"><h3>Top Skills For Jobs</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Top skills for each job is displayed below. Select an option to find the top skills for the job"></i></h3></div>'));
         $("#skills-div").append(sel1);
 
         $('#skill-map').val(predicted[0]);
@@ -220,7 +223,7 @@ $(document).ready(function () {
 
         $(".more-info-div").hide();
 
-        $('#skill-search').append($('<h3 class="block-title">Skill Search</h3>'));
+        $('#skill-search').append($('<div class="column-90 column block-title"><h3>Skill Search</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Search for your skills to find jobs that people with same skills work"></i></h3></div>'));
         var skill_input_div = $('<div class="column-100 column"><input type="text" name="skill" id="skill-ajax" style="position: relative; z-index: 2;"/><input id="skill-submit-button" class="btn btn-primary pull-right" type="submit" value="Go" /></div><input type = "hidden" type="text" name="skill" id="skill-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>');
         $('#skill-search').append(skill_input_div);
 
