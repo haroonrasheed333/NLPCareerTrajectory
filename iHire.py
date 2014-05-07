@@ -42,7 +42,7 @@ with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
     tfidf_vect = pickle.load(hash_v)
 
 title_title_map = json.loads(open("title_title_map.json").read())
-skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
+skills_map_with_percent = json.loads(open("skills_map_with_percent_new_0504_upper.json").read())
 univ_dict = json.loads(open("static/univs_list.json","rb").read())
 univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 skills_employer = json.loads(open("static/networkgraph.json").read())
@@ -105,7 +105,7 @@ def get_top_predictions(predicted_decision):
                 int(float(val - min_s) * 100 / float(max_s - min_s)) for val in predicted_dec_dup_sorted
             ]
 
-        for j in range(len(predicted_dec_dup)):
+        for j in range(5):
             top_predictions.append(
                 labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])]
             )

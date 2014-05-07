@@ -138,6 +138,10 @@ input[type="button"] {
   font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
 }
 
+.fa {
+  line-height: inherit;
+}
+
 h2, h3, h4, h5 {
   font-weight: 300;
 }
@@ -243,6 +247,14 @@ h3 {
 
 .column-75 {
     width: 75%;
+}
+
+.column-80 {
+    width: 80%;
+}
+
+.column-90 {
+    width: 90%;
 }
 
 .column-100 {
