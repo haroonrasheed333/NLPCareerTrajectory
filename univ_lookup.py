@@ -68,13 +68,53 @@ def createDataForGraph(univ, major, skills_employer, univ_major_map, major_code)
         print indices
         for index in indices:
             if str(index) in skills_employer:
-                for d in skills_employer[str(index)]["links"]:
-                    result["links"].append(d)
+                if "links" in skills_employer[str(index)]:
+                    for d in skills_employer[str(index)]["links"]:
+                        result["links"].append(d)
 
     j = json.dumps(result, indent=4, separators=(',', ': '))
     if os.path.isfile("static/miserables.json"):
         os.remove("static/miserables.json")
     f = open("static/miserables.json", "w")
+    print >> f, j
+    f.close()
+    return
+
+
+
+def createDataForTree(univ, major, skills_employer_tree, univ_major_map, major_code):
+    print "Inside create tree"
+    univ = str(univ).lower()
+    print univ
+    result = {}
+    result ["name"] = "Me"
+    result ["children"] = []
+    if univ in univ_major_map:
+        indices = []
+        if (major):
+            print major_code[major]
+            if major in major_code:
+                if major_code[major] in univ_major_map[univ]:
+                    indices.append(univ_major_map[univ][major_code[major]])
+        else:
+            for key in univ_major_map[univ]:
+                indices.append(univ_major_map[univ][key])
+        print indices
+        temp = {}
+        for index in indices:
+            if str(index) in skills_employer_tree:
+                for i in range(0, len(skills_employer_tree[str(index)]["children"])):
+                    if skills_employer_tree[str(index)]["children"][i]["name"] in temp:
+                        pass
+                    else:
+                        temp [skills_employer_tree[str(index)]["children"][i]["name"]] = 1
+        for key in temp:
+            result["children"].append({"name" : key, "children" : []})
+
+    j = json.dumps(result, indent=4, separators=(',', ': '))
+    if os.path.isfile("static/treegraph.json"):
+        os.remove("static/treegraph.json")
+    f = open("static/treegraph.json", "w")
     print >> f, j
     f.close()
     return

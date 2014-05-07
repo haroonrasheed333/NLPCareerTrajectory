@@ -17,6 +17,7 @@ from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from univ_lookup import extract_univ
 from univ_lookup import createDataForGraph
+from univ_lookup import createDataForTree
 from Marisa import get_degree_level_from_resume, get_degree
 
 
@@ -42,10 +43,11 @@ with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
     tfidf_vect = pickle.load(hash_v)
 
 title_title_map = json.loads(open("title_title_map.json").read())
-skills_map_with_percent = json.loads(open("skills_map_with_percent_new_0504_upper.json").read())
+skills_map_with_percent = json.loads(open("skills_map_with_percent_new.json").read())
 univ_dict = json.loads(open("static/univs_list.json","rb").read())
 univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 skills_employer = json.loads(open("static/networkgraph.json").read())
+skills_employer_tree = json.loads(open("static/treegraphdata.json").read())
 univ_major_number = json.loads(open("static/univ_mapping.json").read())
 major_code_lookup = json.loads(open("static/DeptCodes.json").read())
 
@@ -138,8 +140,10 @@ def submit():
                 print university_ip
                 university_ip = university_ip.strip('"')
                 createDataForGraph(university_ip, major, skills_employer, univ_major_number, major_code_lookup)
+                createDataForTree(university_ip, major, skills_employer_tree, univ_major_number, major_code_lookup)
             else:
                 createDataForGraph(university, major, skills_employer, univ_major_number, major_code_lookup)
+                createDataForTree(university, major, skills_employer_tree, univ_major_number, major_code_lookup)
         return str(request.form["major"])
 
 
@@ -173,6 +177,7 @@ def analyze():
             university = extract_univ(open(textfile_name).read(), univ_dict, univ_normalize)
             print university
             createDataForGraph(university, "", skills_employer, univ_major_number, major_code_lookup)
+            createDataForTree(university, "", skills_employer_tree, univ_major_number, major_code_lookup)
 
             resume_text = [open(textfile_name).read()]
             resume_tfidf = tfidf_vect.transform(resume_text)

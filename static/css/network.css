@@ -8,7 +8,7 @@ body { font-family: sans-serif; font-size: 14px; line-height: 1.6em; margin: 0; 
 
 input { font-size: 14px; width : 300px; padding: 10px;margin-left: 10px; border: 1px solid #CCC; display: block;}
 
-.link {
+path.link {
   fill: none;
   stroke: #666;
   stroke-width: 0.7px;

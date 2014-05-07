@@ -9,25 +9,53 @@ import json
 #        #print line
 #        test.write(line.lower() + ',\n')
 #    test.write('}')
-#
-# result = {}
-# skills_map = json.loads(open ("univ_major_emp_skill_0502.json" , "rb").read())
-# for key in skills_map:
-#    result[key] = {}
-#    result[key]["links"] = []
-#    while(len(result)<250):
-#        for i in range ( 0 ,len(skills_map[key])):
-#            for j in range (0,len(skills_map[key][i][0])):
-#                for k in range (0, len(skills_map[key][i][1])):
-#                    skills_map[key][i][0][j] = re.sub ('\u00ad',' ', skills_map[key][i][0][j].decode('utf-8'))
-#                    newdict = {"source": skills_map[key][i][0][j] , "target" :skills_map[key][i][1][k] , "weight" :1 }
-#                    result[key]["links"].append(newdict)
-#
-# j = json.dumps(result, indent=4, separators=(',', ': '))
-# f = open('static/networkgraph.json', 'w')
-# print >> f, j
-# f.close()
 
+#result = {}
+#
+#skills_map = json.loads(open ("univ_major_emp_skill_0502.json" , "rb").read())
+#for key in skills_map:
+#    result[key] = {}
+#    result[key]["name"] = "Me"
+#    result[key]["children"] = []
+#    for i in range ( 0 ,len(skills_map[key])):
+#        for j in range (0,len(skills_map[key][i][0])):
+#            newdict = {}
+#            #skills_map[key][i][0][j] = re.sub ('\u00ad',' ', skills_map[key][i][0][j].decode('utf-8'))
+#            newdict = {"name": skills_map[key][i][0][j] , " children" :[]}
+#            result[key]["children"].append(newdict)
+#
+#j = json.dumps(result, indent=4, separators=(',', ': '))
+#f = open('static/treegraphdata.json', 'w')
+#print >> f, j
+#f.close()
+
+
+
+
+
+
+result = {}
+
+skills_map = json.loads(open ("univ_major_emp_skill_0502.json" , "rb").read())
+for key in skills_map:
+    for i in range ( 0 ,len(skills_map[key])):
+        for j in range (0,len(skills_map[key][i][0])):
+            if skills_map[key][i][0][j] not in result:
+                result[skills_map[key][i][0][j]] = []
+print result
+
+for emp in result:
+    for key in skills_map:
+        for i in range (0 ,len(skills_map[key])):
+            if key in skills_map[key][i][0]:
+                for j in range (0, len(skills_map[key][i][0])):
+                    if skills_map[key][i][0][j] != key:
+                        result[emp].append(skills_map[key][i][0][j])
+
+j = json.dumps(result, indent=4, separators=(',', ': '))
+f = open('static/treegraphemployer.json', 'w')
+print >> f, j
+f.close()
 #map = json.loads(open("univ_major_number_map_0502.json" , "rb").read())
 #result = {}
 #new_univs = []
