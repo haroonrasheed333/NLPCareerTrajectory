@@ -182,3 +182,29 @@ def get_degree(resume_text):
 def get_degree_level_from_resume(resume_data):
     degree_level = [get_degree(resume_text) for (resume_text, tag, fname) in resume_data]
     return degree_level
+
+
+def extract_all_skills():
+    skill_file = json.loads(open('skills_map_with_percent_new_0504_upper.json').read())
+    skills = []
+    for title in skill_file:
+        skills += skill_file[title]['skills']
+
+    skills = list(set(skills))
+
+    skills_autocomplete_list = []
+
+    for skill in skills:
+        temp_dict = {"value": skill}
+        skills_autocomplete_list.append(temp_dict)
+
+    j = json.dumps(skills_autocomplete_list, indent=2)
+    f = open('skills_autocomplete_list.txt', 'w')
+    print >> f, j
+    f.close()
+
+    return
+
+
+if __name__ == '__main__':
+    extract_all_skills()

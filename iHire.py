@@ -156,6 +156,16 @@ def submit():
                 create_data_for_graph(university, major, skills_employer, univ_major_number, major_code_lookup)
         return str(request.form["major"])
 
+@iHire.route('/skill_submit', methods=['POST'])
+def skill_submit():
+    titles = []
+    if "skill" in request.form:
+        skill = str(request.form["skill"])
+        skill = skill.strip('"')
+        for title in skills_map_with_percent:
+            if skill in skills_map_with_percent[title]["skills"]:
+                titles.append(title)
+    return json.dumps(titles)
 
 @iHire.route("/analyze", methods=['POST','GET'])
 def analyze():

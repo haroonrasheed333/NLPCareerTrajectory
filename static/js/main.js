@@ -219,5 +219,50 @@ $(document).ready(function () {
         });
 
         $(".more-info-div").hide();
+
+        $('#skill-search').append($('<h3 class="block-title">Skill Search</h3>'));
+        var skill_input_div = $('<div class="column-100 column"><input type="text" name="skill" id="skill-ajax" style="position: relative; z-index: 2;"/><input id="skill-submit-button" class="btn btn-primary pull-right" type="submit" value="Go" /></div><input type = "hidden" type="text" name="skill" id="skill-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>');
+        $('#skill-search').append(skill_input_div);
+
+
+        // Initialize ajax autocomplete:
+        $('#skill-ajax').autocomplete({
+            // serviceUrl: '/autosuggest/service/url',
+            lookup: skillsArray,
+            lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+                var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+                return re.test(suggestion.value);
+            },
+            onSelect: function(suggestion) {
+                document.getElementById("skill-ajax").value = suggestion.value;
+            },
+            onHint: function (hint) {
+                $('#skill-ajax-x').val(hint);
+            },
+            onInvalidateSelection: function() {
+            }
+        });
+
+        $("#skill-submit-button").on('click',function() {
+            $("#skill-titles-list").remove();
+            var skill_input = document.getElementById("skill-ajax").value;
+            $.ajax({
+               datatype: 'json',
+               url: '/skill_submit',
+               type: 'POST',
+               data : {"skill": JSON.stringify(skill_input)},
+               success: function(data)
+               {
+                    if (data) {
+                        data = $.parseJSON(data);
+                        var skill_titles_ul = $('<ul id="skill-titles-list"></ul>');
+                        for (var j = 0; j < data.length; j++) {
+                            skill_titles_ul.append($('<li><h5>' + data[j] + '</h5></li>'));
+                        }
+                        $("#skill-search").append(skill_titles_ul);
+                    }
+               }
+            });
+        });
     }
 });

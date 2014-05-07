@@ -193,7 +193,7 @@ h3 {
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    max-width: 1080px;
+    max-width: 1300px;
     overflow: hidden;
 }
 
@@ -209,6 +209,10 @@ h3 {
     width: 20%;
 }
 
+.column-23 {
+    width: 23%;
+}
+
 .column-25 {
     width: 25%;
 }
@@ -219,6 +223,10 @@ h3 {
 
 .column-33 {
     width: 33%;
+}
+
+.column-45 {
+  width: 45%;
 }
 
 .column-50 {
@@ -251,7 +259,7 @@ h3 {
 }
 
 .block {
-  margin-right: 50px;
+  margin-right: 15px;
   background: white;
 }
 
@@ -399,7 +407,7 @@ a:hover {
   color: #7C7C7C;
 }
 
-#title-skills-list {
+#title-skills-list, #skill-titles-list {
   font-size:16px;
   border-bottom: none;
   color: #7C7C7C;
@@ -407,9 +415,23 @@ a:hover {
   margin: 0;
 }
 
-#title-skills-list > li {
+#title-skills-list > li, #skill-titles-list > li {
   border-bottom: 1px solid #F3F3F3;
   padding: 5px 25px;
+}
+
+#skill-ajax {
+  width: 85%;
+  height: 30px;
+  background: #f5f5f5;
+}
+
+#skill-submit-button {
+  display: inline;
+}
+
+input {
+  font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
 }
 
 h5 {
