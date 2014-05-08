@@ -97,7 +97,7 @@ def get_top_predictions(predicted_decision):
                 int(float(val - min_s) * 100 / float(max_s - min_s)) for val in predicted_dec_dup_sorted
             ]
 
-        for j in range(5):
+        for j in range(len(predicted_dec_dup)):
             top_predictions.append(
                 labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])]
             )

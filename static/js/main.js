@@ -110,7 +110,7 @@ $(document).ready(function () {
         $("#predicted-titles-list" ).remove();
         var predicted_titles_list = $('<ul id="predicted-titles-list"></ul>');
 
-        for (var i = 0; i < predicted.length; i++) {
+        for (var i = 0; i < 5; i++) {
             var li;
             if (i % 2 == 0) {
                 li = $('<li class="even-row collapse-class" id="collapse-' + i + '"></li>');
