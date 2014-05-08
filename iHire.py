@@ -47,6 +47,7 @@ univ_dict = json.loads(open("static/univs_list.json","rb").read())
 univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 skills_employer = json.loads(open("static/networkgraph.json").read())
 skills_employer_tree = json.loads(open("static/treegraphdata.json").read())
+employer_second_degree_tree = json.loads(open("static/treegraphemployer0507.json").read())
 univ_major_number = json.loads(open("static/univ_mapping.json").read())
 major_code_lookup = json.loads(open("static/DeptCodes.json").read())
 
@@ -155,10 +156,10 @@ def submit():
                 print university_ip
                 university_ip = university_ip.strip('"')
                 create_data_for_graph(university_ip, major, skills_employer, univ_major_number, major_code_lookup)
-                create_data_for_tree(university_ip, major, skills_employer_tree, univ_major_number, major_code_lookup)
+                create_data_for_tree(university_ip, major, skills_employer_tree, univ_major_number, major_code_lookup, employer_second_degree_tree)
             else:
                 create_data_for_graph(university, major, skills_employer, univ_major_number, major_code_lookup)
-                create_data_for_tree(university, major, skills_employer_tree, univ_major_number, major_code_lookup)
+                create_data_for_tree(university, major, skills_employer_tree, univ_major_number, major_code_lookup, employer_second_degree_tree)
         return str(request.form["major"])
 
 @iHire.route('/skill_submit', methods=['POST'])
@@ -202,7 +203,7 @@ def analyze():
             university = extract_univ(open(textfile_name).read(), univ_dict, univ_normalize)
             print university
             create_data_for_graph(university, "", skills_employer, univ_major_number, major_code_lookup)
-            create_data_for_tree(university, "", skills_employer_tree, univ_major_number, major_code_lookup)
+            create_data_for_tree(university, "", skills_employer_tree, univ_major_number, major_code_lookup, employer_second_degree_tree)
 
 
             resume_text = [open(textfile_name).read()]
