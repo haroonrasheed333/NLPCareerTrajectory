@@ -8,7 +8,7 @@ $(document).ready(function () {
 $("#inputs").empty;
 
 if (university.length > 2) {
-  var h3 = $('<h3>Displaying top employers from your connections. Enter your major and fiter these results!</h3><br>');
+  var h3 = $('<h3>Displaying top employers from your university first degree connections. Enter your major to personalize your results!</h3><br>');
   var form = $('<form id="input-form"></form>');
   var major_div = $('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
   var submit_button = $('<div class="column-25 column"><input id="tree-submit-button" class="btn btn-primary pull-right" type="submit" value="Re-create network" /></div>');
@@ -151,7 +151,7 @@ var tree = d3.layout.tree()
 
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.y, d.x]; });
-
+$('#tree-graph').append('<h3>Click on the nodes to view your second degree connection employers</h3></br>')
 var svg = d3.select("#tree-graph").append("svg")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
@@ -200,7 +200,7 @@ function update(source) {
       links = tree.links(nodes);
 
   // Normalize for fixed-depth.
-  nodes.forEach(function(d) { d.y = d.depth * 180 * 1.5; });
+  nodes.forEach(function(d) { d.y = d.depth * 180 * 2; });
 
   // Update the nodes…
   var node = svg.selectAll("g.node")
@@ -211,7 +211,24 @@ function update(source) {
   var nodeEnter = node.enter().append("g")
       .attr("class", "node")
       .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-      .on("click", click);
+      .on("click", click)
+      .on("mouseover", function(d) {
+      if ((d._children) || (d.children)){
+      var g = d3.select(this); // The node
+      // The class is used to remove the additional text later
+      var info = g.append('text')
+         .classed('info', true)
+         .attr('x', 20)
+         .attr('y', 10)
+         .text('');
+      }
+      })
+      .on("mouseout", function(d) {
+      // Remove the info text on mouse out.
+      if ((d._children) || (d.children)){
+      d3.select(this).select('text.info').remove();
+      }
+     });
 
   nodeEnter.append("circle")
       .attr("r", function(d) { return d._children ? (((d._children.length - min)*newRange/oldRange)+ newMin) : d.children? (((d.children.length - min)*newRange/oldRange)+ newMin) : 4; })

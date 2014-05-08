@@ -101,12 +101,12 @@ $(document).ready(function () {
         // console.log(data.title_data);
 
         var link1 = "http://www.simplyhired.com/k-";
-        var link3 = "-jobs.html";
+        var link3 = "-l-san-francisco-ca-jobs.html";
         var i = 0;
 
         $("#predictions-div").empty();
         $('#spinner-id').css('display', 'none');
-        $("#predictions-div").append($('<div class="column-90 column block-title"><h3>Your Top Jobs</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="The top job predictions are made based on various factors like your skills, education, degree level etc."></i></h3></div>'))
+        $("#predictions-div").append($('<div class="column-90 column block-title"><h3>Your Top Matches</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Your top job predictions are determined based on various factors like your skills, education, degree level etc. We compare you against others similar to you to help you decide what you prospective next step could be"></i></h3></div>'))
         $("#predicted-titles-list" ).remove();
         var predicted_titles_list = $('<ul id="predicted-titles-list"></ul>');
 
@@ -120,36 +120,46 @@ $(document).ready(function () {
             var href = link1.concat(predicted[i].concat(link3));
             cand_skill_list = data.candidate_skills[predicted[i]];
 
-            li.append($('<div><a target="_blank" href="' + href + '">' + predicted[i] + '</a><div id="score-div"><span class="score" title="Calculated Score">' + scores[i] + '</span><div class="bar-div" title=""><span class="bar" id="bar1-' + i + '"></span><span class="bar" id="bar2-' + i + '"></span><span class="bar" id="bar3-' + i + '"></span></div></div></div>'));
+            li.append($('<div>' + predicted[i] + '<div id="score-div"><span class="score" title="Calculated Score">' + scores[i] + '</span><div class="bar-div" title=""><span class="bar" id="bar1-' + i + '"></span><span class="bar" id="bar2-' + i + '"></span><span class="bar" id="bar3-' + i + '"></span></div></div></div>'));
 
             var skill_div = $('<div class="skills-list-div"></div>');
             var skill_ul = $('<ul class="skills-list"></ul>');
-            skill_ul.append($('<li><strong>Matching Skills:</strong></li>'));
+            skill_ul.append($('<li><strong>Your matching Skills:</strong></li>'));
 
             skill_div.append(skill_ul);
 
             for (var k = 0; k < cand_skill_list.length; k++) {
                 skill_ul.append($('<li>· ' + cand_skill_list[k] + '</li>'));
             }
-            li.append(skill_div);
+            if (k !=0){
+                li.append(skill_div);
+            }
+
 
             var more_info = $('<div class="more-info-div" id="more-' + i + '"></div>');
-            more_info.append($('<div><span><strong>Average Salary: </strong>' + data.title_data[predicted[i]]["salary"] + '</div></span>'));
+            more_info.append($('<div><span><strong>Salary (US National Average): </strong>' + data.title_data[predicted[i]]["salary"] + '</div></span>'));
             more_info.append($('<div><span><strong>Education Level: </strong>' + data.title_data[predicted[i]]["education"] + '</div></span>'));
             // more_info.append($('<div><span><strong>Average Experience: </strong>5 Years</div></span>'));
             more_info.append($('<div><span><strong>Projected Jobs (2012 - 2022): </strong>' + data.title_data[predicted[i]]["trends"]["Projected job openings (2012-2022)"] + '</div></span>'));
             more_info.append($('<div><span><strong>Projected Growth (2012 - 2022): </strong>' + data.title_data[predicted[i]]["trends"]["Projected growth (2012-2022)"] + '</div></span>'));
             var rel_job = '';
             for (var a = 0; a < data.title_data[predicted[i]]["related_titles"].length; a++) {
+                if (a != data.title_data[predicted[i]]["related_titles"].length - 1){
                 rel_job = rel_job + data.title_data[predicted[i]]["related_titles"][a] + ', '
+                }
+                else{
+                   rel_job = rel_job + data.title_data[predicted[i]]["related_titles"][a]
+                }
             }
             if (rel_job) {
                 more_info.append($('<div><span><strong>Related Job Titles: </strong>' + rel_job + '</div></span>'));
             }
             more_info.append($('<div><span><a target="_blank" href="' + href + '">Search ' + predicted[i] + ' Jobs</a></div></span>'));
 
+            if (k !=0){
             li.append(more_info);
             predicted_titles_list.append(li);
+            }
         }
 
         $("#predictions-div").append(predicted_titles_list);
@@ -169,7 +179,7 @@ $(document).ready(function () {
         for (var i = 0; i < all_titles.length; i++) {
             sel1.append($("<option>").attr('value', all_titles[i]).text(all_titles[i]));
         }
-        $("#skills-div").append($('<div class="column-90 column block-title"><h3>Top Skills For Jobs</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Top skills for each job is displayed below. Select an option to find the top skills for the job"></i></h3></div>'));
+        $("#skills-div").append($('<div class="column-90 column block-title"><h3>Top Skills For Jobs</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Select a Job and find out what skills are most important to land at the selected job"></i></h3></div>'));
         $("#skills-div").append(sel1);
 
         $('#skill-map').val(predicted[0]);
@@ -223,7 +233,7 @@ $(document).ready(function () {
 
         $(".more-info-div").hide();
 
-        $('#skill-search').append($('<div class="column-90 column block-title"><h3>Skill Search</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Search for your skills to find jobs that people with same skills work"></i></h3></div>'));
+        $('#skill-search').append($('<div class="column-90 column block-title"><h3>Skill Search</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Have a peculiar skill? Search for your skills to explore what jobs require your special skill"></i></h3></div>'));
         var skill_input_div = $('<div class="column-100 column"><input type="text" name="skill" id="skill-ajax" style="position: relative; z-index: 2;"/><input id="skill-submit-button" class="btn btn-primary pull-right" type="submit" value="Go" /></div><input type = "hidden" type="text" name="skill" id="skill-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>');
         $('#skill-search').append(skill_input_div);
 
