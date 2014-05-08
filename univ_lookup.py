@@ -91,17 +91,18 @@ def create_data_for_graph(univ, major, skills_employer, univ_major_map, major_co
     return
 
 
-
 def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, major_code, employer_second_degree_tree):
-    print "Inside create tree"
+    if os.path.isfile("static/treegraph.json"):
+        os.remove("static/treegraph.json")
+
     univ = str(univ).lower()
-    print univ
+
     result = {}
-    result ["name"] = "Me"
-    result ["children"] = []
+    result["name"] = "Me"
+    result["children"] = []
     if univ in univ_major_map:
         indices = []
-        if (major):
+        if major:
             print major_code[major]
             if major in major_code:
                 if major_code[major] in univ_major_map[univ]:
@@ -110,8 +111,8 @@ def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, majo
             for key in univ_major_map[univ]:
                 if len(indices) < 8:
                     indices.append(univ_major_map[univ][key])
-        print indices
         temp = {}
+
         for index in indices:
             if str(index) in skills_employer_tree:
                 for i in range(0, len(skills_employer_tree[str(index)]["children"])):
@@ -119,27 +120,23 @@ def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, majo
                         pass
                     else:
                         temp [skills_employer_tree[str(index)]["children"][i]["name"]] = 1
-        #print temp
         i = 0
+
         for key in temp:
             new = []
             if key.lower() in employer_second_degree_tree:
                 for x in employer_second_degree_tree[key.lower()]:
                     if x not in temp:
-                        if len(new) <51:
+                        if len(new) < 51:
                             new.append({"name": x.strip('\t').strip('\n').strip() , "children": []})
                 result["children"].append({"name" : key.title(), "children" : new })
-            i = i + 1
+            i += 1
 
     j = json.dumps(result, indent=4, separators=(',', ': '))
-    if os.path.isfile("static/treegraph.json"):
-        os.remove("static/treegraph.json")
     f = open("static/treegraph.json", "w")
     print >> f, j
     f.close()
     return
-
-
 
 
 def extract_univ_json(data):
