@@ -92,7 +92,7 @@ def create_data_for_graph(univ, major, skills_employer, univ_major_map, major_co
 
 
 
-def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, major_code):
+def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, major_code, employer_second_degree_tree):
     print "Inside create tree"
     univ = str(univ).lower()
     print univ
@@ -108,7 +108,8 @@ def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, majo
                     indices.append(univ_major_map[univ][major_code[major]])
         else:
             for key in univ_major_map[univ]:
-                indices.append(univ_major_map[univ][key])
+                if len(indices) < 8:
+                    indices.append(univ_major_map[univ][key])
         print indices
         temp = {}
         for index in indices:
@@ -118,8 +119,17 @@ def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, majo
                         pass
                     else:
                         temp [skills_employer_tree[str(index)]["children"][i]["name"]] = 1
+        #print temp
+        i = 0
         for key in temp:
-            result["children"].append({"name" : key, "children" : []})
+            new = []
+            if key.lower() in employer_second_degree_tree:
+                for x in employer_second_degree_tree[key.lower()]:
+                    if x not in temp:
+                        if len(new) <51:
+                            new.append({"name": x.strip('\t').strip('\n').strip() , "children": []})
+                result["children"].append({"name" : key.title(), "children" : new })
+            i = i + 1
 
     j = json.dumps(result, indent=4, separators=(',', ': '))
     if os.path.isfile("static/treegraph.json"):

@@ -9,7 +9,7 @@ import json
 #        #print line
 #        test.write(line.lower() + ',\n')
 #    test.write('}')
-
+#
 #result = {}
 #
 #skills_map = json.loads(open ("univ_major_emp_skill_0502.json" , "rb").read())
@@ -19,42 +19,86 @@ import json
 #    result[key]["children"] = []
 #    for i in range ( 0 ,len(skills_map[key])):
 #        for j in range (0,len(skills_map[key][i][0])):
+#            skills_map[key][i][0][j] = skills_map[key][i][0][j].lower()
 #            newdict = {}
-#            #skills_map[key][i][0][j] = re.sub ('\u00ad',' ', skills_map[key][i][0][j].decode('utf-8'))
-#            newdict = {"name": skills_map[key][i][0][j] , " children" :[]}
+#            newdict = {"name": skills_map[key][i][0][j].title() , "children" :[]}
 #            result[key]["children"].append(newdict)
 #
 #j = json.dumps(result, indent=4, separators=(',', ': '))
 #f = open('static/treegraphdata.json', 'w')
 #print >> f, j
 #f.close()
+#
+#j = json.dumps(skills_map, indent=4, separators=(',', ': '))
+#f = open('univ_major_emp_skill_0507.json', 'w')
+#print >> f, j
+#f.close()
 
 
 
 
+#result = {}
+#
+#skills_map = json.loads(open ("univ_major_emp_skill_0507.json" , "rb").read())
+#for key in skills_map:
+#    for i in range ( 0 ,len(skills_map[key])):
+#        for j in range (0,len(skills_map[key][i][0])):
+#            if  skills_map[key][i][0][j].lower() not in result:
+#                result[skills_map[key][i][0][j].lower()] = []
+#print len(result)
+##i = 0
+#emp_names = json.loads(open ("static/treegraphemployer.json" , "rb").read())
+#tree1 = json.loads(open ("static/treegraphdata1.json" , "rb").read())
+#tree2 = json.loads(open ("static/treegraphdata2.json" , "rb").read())
+#
+#for key in tree1:
+#    for name in tree1[key]["children"]:
+#        if name["name"].lower() in emp_names:
+#            for employer in emp_names[name["name"].lower()]:
+#                #print employer
+#                name["children"].append({"name" : employer , "children" : []})
+#
+#print len(tree1)
+#j = json.dumps(tree1, indent=4, separators=(',', ': '))
+#f = open('static/tree1.json', 'wb')
+#print >> f, j
+#f.close()
 
 
+#for key in tree2:
+#    for name in tree2[key]["children"]:
+#        if name["name"].lower() in emp_names:
+#            for employer in emp_names[name["name"].lower()]:
+#                #print employer
+#                name["children"].append({"name" : employer , "children" : []})
+#
+#print len(tree2)
+#j = json.dumps(tree2, indent=4, separators=(',', ': '))
+#f = open('static/tree2.json', 'wb')
+#print >> f, j
+#f.close()
 result = {}
-
-skills_map = json.loads(open ("univ_major_emp_skill_0502.json" , "rb").read())
+skills_map = json.loads(open ("univ_major_emp_skill_0507.json" , "rb").read())
 for key in skills_map:
     for i in range ( 0 ,len(skills_map[key])):
         for j in range (0,len(skills_map[key][i][0])):
-            if '"%s"' %skills_map[key][i][0][j] not in result:
-                result['"%s"' %skills_map[key][i][0][j]] = []
+            if skills_map[key][i][0][j].lower() not in result:
+                result[skills_map[key][i][0][j].lower()] = {}
+print "got employers"
 for emp in result:
-    #print emp
     for key in skills_map:
         for i in range (0 ,len(skills_map[key])):
-            if emp in skills_map[key][i][0]:
+            if emp.lower() in skills_map[key][i][0]:
                 for j in range (0, len(skills_map[key][i][0])):
-                    if skills_map[key][i][0][j] != emp:
-                        result[emp].append(skills_map[key][i][0][j])
-
+                    if skills_map[key][i][0][j].lower() != emp.lower():
+                        if skills_map[key][i][0][j].title() not in result[emp.lower()]:
+                            result[emp.lower()][skills_map[key][i][0][j].title()] = 1
+print "almost there"
 j = json.dumps(result, indent=4, separators=(',', ': '))
-f = open('static/treegraphemployer.json', 'w')
+f = open('static/treegraphemployer0507.json', 'w')
 print >> f, j
 f.close()
+
 #map = json.loads(open("univ_major_number_map_0502.json" , "rb").read())
 #result = {}
 #new_univs = []

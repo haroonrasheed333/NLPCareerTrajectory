@@ -17,6 +17,9 @@ path.link {
 #licensing {
   fill: green;
 }
+.node {
+  cursor: pointer;
+}
 
 circle {
   fill: #ccc;
