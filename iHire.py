@@ -36,7 +36,7 @@ title_title_map = json.loads(open("title_title_map.json").read())
 skills_map_with_percent = json.loads(open("skills_map_with_percent.json").read())
 univ_dict = json.loads(open("static/univs_list.json","rb").read())
 univ_normalize = json.loads(open("static/univ_map.json","rb").read())
-skills_employer = json.loads(open("static/networkgraph.json").read())
+# skills_employer = json.loads(open("static/networkgraph.json").read())
 skills_employer_tree = json.loads(open("static/treegraphdata.json").read())
 employer_second_degree_tree = json.loads(open("static/treegraphemployer0507.json").read())
 univ_major_number = json.loads(open("static/univ_mapping.json").read())
@@ -97,7 +97,7 @@ def get_top_predictions(predicted_decision):
                 int(float(val - min_s) * 100 / float(max_s - min_s)) for val in predicted_dec_dup_sorted
             ]
 
-        for j in range(len(predicted_dec_dup)):
+        for j in range(5):
             top_predictions.append(
                 labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])]
             )
@@ -147,13 +147,7 @@ def submit():
         if "university" in request.form:
             university_ip = str(request.form["university"]).strip('"')
 
-            create_data_for_graph(
-                university_ip,
-                major,
-                skills_employer,
-                univ_major_number,
-                major_code_lookup
-            )
+            # create_data_for_graph(university_ip, major, skills_employer, univ_major_number, major_code_lookup)
 
             create_data_for_tree(
                 university_ip,
@@ -165,13 +159,7 @@ def submit():
             )
 
         else:
-            create_data_for_graph(
-                university,
-                major,
-                skills_employer,
-                univ_major_number,
-                major_code_lookup
-            )
+            # create_data_for_graph(university, major, skills_employer, univ_major_number, major_code_lookup)
 
             create_data_for_tree(
                 university,
@@ -221,7 +209,7 @@ def analyze():
 
             university = extract_univ(open(textfile_name).read(), univ_dict, univ_normalize)
 
-            create_data_for_graph(university, "", skills_employer, univ_major_number, major_code_lookup)
+            # create_data_for_graph(university, "", skills_employer, univ_major_number, major_code_lookup)
 
             create_data_for_tree(
                 university,
