@@ -84,7 +84,7 @@ def read_skills_from_json_file(training_data):
     """
 
     skills_dict = dict()
-    temp_dict = json.loads(open("skills_0426.json").read())
+    temp_dict = json.loads(open("extracted_data/skills_0426.json").read())
     training_files = [file_name for (resume, resume_xml, resume_label, file_name) in training_data]
 
     for title in temp_dict:

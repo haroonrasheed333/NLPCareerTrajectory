@@ -8,7 +8,7 @@ from collections import Counter
 from lxml import etree
 from util import stripxml
 from collections import defaultdict
-from JobTitleNormalization import normalize_job_titles
+from job_title_normalization import normalize_job_titles
 
 user_name = os.environ.get('USER')
 
@@ -24,6 +24,7 @@ def split_data(labels_list, paths):
 
     Args:
         labels_list -- list of tuples with filename and tag information for each resume
+        paths -- Dict consisting of source and destination directories for data
     """
 
     # Path where the sample text resumes are present
@@ -58,6 +59,18 @@ def split_data(labels_list, paths):
 
 
 def clean_data_and_extract_job_titles(fname, paths, names, job_titles, labels_list):
+    """
+    Function to clean data and extract job titles from resume.
+
+    Args:
+        fname - string. Name of the resume file
+        paths - dict containing paths of source directories
+        names - string. Extracted candidate names from resume. Used to remove duplicate resumes.
+        job_titles - list. Titles extracted from resume
+        labels_list - list. Titles that will be used as labels for classifier.
+
+    """
+
     source_dir = paths['main_source_directory'] + '/' + paths['xml_data_directory']
 
     try:
@@ -126,7 +139,6 @@ def clean_data_and_extract_job_titles(fname, paths, names, job_titles, labels_li
         return names, job_titles, labels_list
     except:
         return names, job_titles, labels_list
-
 
    
 def prepare_data(paths):

@@ -83,7 +83,7 @@ def extract_features_for_network_map(xml_directory, save_csv):
                 school_job_details.append(['', '', '', '', '', '', '', '', '', ''])
 
     if save_csv:
-        with open("institution_degree_job_map.csv", "wb") as csv_file:
+        with open("extracted_data/institution_degree_job_map.csv", "wb") as csv_file:
             writer = csv.writer(csv_file)
             for school_job_detail in school_job_details:
                 try:
@@ -191,7 +191,7 @@ def get_degree_level_from_resume(resume_data):
 
 
 def extract_all_skills():
-    skill_file = json.loads(open('skills_map_with_percent_new_0504_upper.json').read())
+    skill_file = json.loads(open('skills_map_with_percent.json').read())
     skills = []
     for title in skill_file:
         skills += skill_file[title]['skills']
@@ -205,7 +205,7 @@ def extract_all_skills():
         skills_autocomplete_list.append(temp_dict)
 
     j = json.dumps(skills_autocomplete_list, indent=2)
-    f = open('skills_autocomplete_list.txt', 'w')
+    f = open('extracted_data/skills_autocomplete_list.txt', 'w')
     print >> f, j
     f.close()
 

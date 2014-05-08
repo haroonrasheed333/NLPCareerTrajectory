@@ -35,7 +35,7 @@ def read_skills_from_json_file(training_data):
     """
 
     skills_dict = dict()
-    temp_dict = json.loads(open("skills_0418.json").read())
+    temp_dict = json.loads(open("../skills_0418.json").read())
     training_files = [fname for (resume, resume_label, fname) in training_data]
 
     for title in temp_dict:
@@ -302,11 +302,11 @@ if __name__ == '__main__':
     features['top_unigrams'] = top_unigrams
     features['top_bigrams'] = top_bigrams
 
-    with open('features_0418_h_new.pkl', 'wb') as f:
+    with open('../features_0418_h_new.pkl', 'wb') as f:
         pickle.dump(features, f)
 
     with open('label_names_0418_h_new.pkl', 'wb') as lab_names:
         pickle.dump(labels_names, lab_names)
 
-    with open('count_vect_0418_h_new.pkl', 'wb') as count_v:
+    with open('pickled_files/../pickled_files/count_vect_0418_h_new.pkl', 'wb') as count_v:
         pickle.dump(count_vect, count_v)

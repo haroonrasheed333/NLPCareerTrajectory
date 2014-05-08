@@ -1,7 +1,7 @@
 import csv
 import json
 
-with open('univ_degree_employer_4-11-14_new.csv', 'rb') as univ_degree_employer_file:
+with open('extracted_data/../extracted_data/univ_degree_employer_4-11-14_new.csv', 'rb') as univ_degree_employer_file:
     univ_degree_employer_reader = csv.reader(univ_degree_employer_file)
 
     i = 0

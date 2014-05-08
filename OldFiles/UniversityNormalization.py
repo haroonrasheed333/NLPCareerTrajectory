@@ -24,7 +24,7 @@ def extract_univ_names():
         f.close()
 
         univ_names = list(set(univ_names))
-        f = open('UnivNames.txt', 'w')
+        f = open('../UnivNames.txt', 'w')
         for u in univ_names:
             print >> f, u
 
@@ -32,7 +32,7 @@ def extract_univ_names():
 
 
 def normalize_universities():
-    with open('UnivNames.txt') as u_names:
+    with open('../UnivNames.txt') as u_names:
         univ_names = u_names.readlines()
         univ_dict_normalized = dict()
         j, bar = 0, pbar(100)

@@ -11,7 +11,7 @@ from nltk import bigrams
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from collections import Counter
-from JobTitleNormalization import normalize_job_titles
+from job_title_normalization import normalize_job_titles
 
 nltk.data.path.append('nltk_data')
 user_name = os.environ.get('USER')
@@ -75,7 +75,7 @@ def read_skills_from_json_file(training_data):
     """
 
     skills_dict = dict()
-    temp_dict = json.loads(open("skills_0418.json").read())
+    temp_dict = json.loads(open("extracted_data/skills_0418.json").read())
     training_files = [fname for (resume, resume_label, fname) in training_data]
 
     for title in temp_dict:
@@ -323,7 +323,7 @@ def create_skills_json(data, xml_directory, save_json=False):
 
     if save_json:
         j = json.dumps(skills_dict, indent=4, separators=(',', ': '))
-        f = open('skills_0426.json', 'w')
+        f = open('extracted_data/skills_0426.json', 'w')
         print >> f, j
         f.close()
     else:
@@ -383,7 +383,7 @@ def create_skills_json_no_stemming(data, xml_directory, save_json=False):
 
     if save_json:
         j = json.dumps(skills_dict, indent=4, separators=(',', ': '))
-        f = open('skills_0418_no_stemming.json', 'w')
+        f = open('extracted_data/skills_0418_no_stemming.json', 'w')
         print >> f, j
         f.close()
     else:
@@ -439,7 +439,7 @@ def create_skills_json_no_stemming_full_ds():
                 skills_dict[f] = list(set(slist))
 
         j = json.dumps(skills_dict, indent=4, separators=(',', ': '))
-        f = open('skills_0424_no_stemming_full_ds.json', 'w')
+        f = open('extracted_data/skills_0424_no_stemming_full_ds.json', 'w')
         print >> f, j
         f.close()
 
@@ -595,7 +595,7 @@ def create_skills_map_with_percentage(data, xml_directory, save_json):
 
     if save_json:
         j = json.dumps(skills_map_with_percent, indent=4, separators=(',', ': '))
-        f = open('skills_map_with_percent.json', 'w')
+        f = open('extracted_data/skills_map_with_percent.json', 'w')
         print >> f, j
         f.close()
     else:
@@ -655,7 +655,7 @@ def create_skills_map_with_percentage_new(data, xml_directory, save_json):
 
     if save_json:
         j = json.dumps(skills_map_with_percent, indent=4, separators=(',', ': '))
-        f = open('skills_map_with_percent_new_0429.json', 'w')
+        f = open('extracted_data/skills_map_with_percent_new_0429.json', 'w')
         print >> f, j
         f.close()
     else:

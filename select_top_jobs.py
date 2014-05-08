@@ -3,7 +3,7 @@ import re
 # import progressbar
 from lxml import etree
 from collections import Counter
-from JobTitleNormalization import normalize_job_titles
+from job_title_normalization import normalize_job_titles
 
 user_name = os.environ.get('USER')
 

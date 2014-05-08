@@ -32,7 +32,7 @@ for title in titles_data:
     titles_data_new[title]["trends"] = titles_data[title]["trends"]
 
 j = json.dumps(titles_data_new, indent=4, separators=(',', ': '))
-f = open("titlesData_new.json", "w")
+f = open("extracted_data/titlesData_new.json", "w")
 print >> f, j
 f.close()
 print "hi"

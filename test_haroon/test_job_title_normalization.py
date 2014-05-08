@@ -3,7 +3,7 @@ Verify job title normalization functionality
 """
 
 from nose.tools import *
-from JobTitleNormalization import normalize_job_titles, expand_job_title, title_permutations
+from job_title_normalization import normalize_job_titles, expand_job_title, title_permutations
 
 # Tests
 

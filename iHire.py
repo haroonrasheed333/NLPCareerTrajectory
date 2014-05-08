@@ -6,25 +6,19 @@ import json
 import string
 import pickle
 from cStringIO import StringIO
+from flask import Flask, request
 from collections import OrderedDict
-from flask.templating import render_template
-from flask import Flask, request, redirect, url_for
+from univ_lookup import extract_univ
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
+from univ_lookup import create_data_for_tree
+from univ_lookup import create_data_for_graph
+from flask.templating import render_template
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from univ_lookup import extract_univ
 
-from univ_lookup import create_data_for_graph
-from univ_lookup import create_data_for_tree
-
-
-# global flag
-# global university
-# global results_json
 results_json = dict()
 university = ''
-flag = 1
 
 #Create Flask instance
 iHire = Flask(__name__)
@@ -38,11 +32,8 @@ with open('iBeyond_classifier.pkl', 'rb') as infile:
 with open('iBeyond_labels.pkl', 'rb') as lab_names:
     labels_names = pickle.load(lab_names)
 
-# with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
-#     tfidf_vect = pickle.load(hash_v)
-
 title_title_map = json.loads(open("title_title_map.json").read())
-skills_map_with_percent = json.loads(open("skills_map_with_percent_new_0504_upper.json").read())
+skills_map_with_percent = json.loads(open("skills_map_with_percent.json").read())
 univ_dict = json.loads(open("static/univs_list.json","rb").read())
 univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 skills_employer = json.loads(open("static/networkgraph.json").read())
@@ -51,7 +42,7 @@ employer_second_degree_tree = json.loads(open("static/treegraphemployer0507.json
 univ_major_number = json.loads(open("static/univ_mapping.json").read())
 major_code_lookup = json.loads(open("static/DeptCodes.json").read())
 
-titles_data = json.loads(open("titlesData_new.json").read())
+titles_data = json.loads(open("extracted_data/titlesData_new.json").read())
 
 
 def extract_text_from_pdf(pdf_filename):
@@ -118,14 +109,17 @@ def get_top_predictions(predicted_decision):
 def hello_world():
     return render_template('index_homepage.html')
 
+
 @iHire.route('/results_home')
 def results_home():
     return render_template('index_result.html')
+
 
 @iHire.route('/results')
 def results():
     global results_json
     return json.dumps(results_json)
+
 
 @iHire.route('/clear_results')
 def clear_results():
@@ -133,57 +127,84 @@ def clear_results():
     results_json = dict()
     return json.dumps(results_json)
 
+
 @iHire.route('/network')
 def network():
     global university
     return render_template('network.html', parameter=university)
 
+
 @iHire.route('/about')
 def about():
     return render_template('about.html')
 
+
 @iHire.route('/submit', methods=['POST'])
 def submit():
     global university
-    if request.method == 'POST':
-        print "printing value from ajax call"
-        if "major" in request.form:
-            print "here"
-            major = str(request.form["major"])
-            major = major.strip('"')
-            if "university" in request.form:
-                university_ip = str(request.form["university"])
-                print university_ip
-                university_ip = university_ip.strip('"')
-                create_data_for_graph(university_ip, major, skills_employer, univ_major_number, major_code_lookup)
-                create_data_for_tree(university_ip, major, skills_employer_tree, univ_major_number, major_code_lookup, employer_second_degree_tree)
-            else:
-                create_data_for_graph(university, major, skills_employer, univ_major_number, major_code_lookup)
-                create_data_for_tree(university, major, skills_employer_tree, univ_major_number, major_code_lookup, employer_second_degree_tree)
-        return str(request.form["major"])
+    if "major" in request.form:
+        major = str(request.form["major"]).strip('"')
+        if "university" in request.form:
+            university_ip = str(request.form["university"]).strip('"')
+
+            create_data_for_graph(
+                university_ip,
+                major,
+                skills_employer,
+                univ_major_number,
+                major_code_lookup
+            )
+
+            create_data_for_tree(
+                university_ip,
+                major,
+                skills_employer_tree,
+                univ_major_number,
+                major_code_lookup,
+                employer_second_degree_tree
+            )
+
+        else:
+            create_data_for_graph(
+                university,
+                major,
+                skills_employer,
+                univ_major_number,
+                major_code_lookup
+            )
+
+            create_data_for_tree(
+                university,
+                major,
+                skills_employer_tree,
+                univ_major_number,
+                major_code_lookup,
+                employer_second_degree_tree
+            )
+
+    return str(request.form["major"])
+
 
 @iHire.route('/skill_submit', methods=['POST'])
 def skill_submit():
     titles = []
     if "skill" in request.form:
-        skill = str(request.form["skill"])
-        skill = skill.strip('"')
+        skill = str(request.form["skill"]).strip('"')
         for title in skills_map_with_percent:
             if skill in skills_map_with_percent[title]["skills"]:
                 titles.append(title)
     return json.dumps(titles)
 
+
 @iHire.route("/analyze", methods=['POST','GET'])
 def analyze():
-    global flag
     global results_json
+    global university
     if request.method:
-        flag = 1
         # Get and save file from browser upload
         files = request.files['file']
         if files:
             filename = str(files.filename)
-            print filename
             extension = filename.rsplit('.', 1)[1]
             filename_without_extension = filename.rsplit('.', 1)[0]
             files.save(os.path.join(iHire.config['UPLOAD_FOLDER'], filename))
@@ -198,22 +219,25 @@ def analyze():
             else:
                 textfile_name = filename
 
-            print filename
-            global university
             university = extract_univ(open(textfile_name).read(), univ_dict, univ_normalize)
-            print university
+
             create_data_for_graph(university, "", skills_employer, univ_major_number, major_code_lookup)
-            create_data_for_tree(university, "", skills_employer_tree, univ_major_number, major_code_lookup, employer_second_degree_tree)
+
+            create_data_for_tree(
+                university,
+                "",
+                skills_employer_tree,
+                univ_major_number,
+                major_code_lookup,
+                employer_second_degree_tree
+            )
 
             resume_text = [open(textfile_name).read()]
-            # resume_tfidf = tfidf_vect.transform(resume_text)
-            # predicted_decision = model.decision_function(resume_tfidf)
             predicted_decision = model.decision_function(resume_text)
 
             top_predictions, normalized_prediction_score = get_top_predictions(predicted_decision)
 
             out = dict()
-            out["university"] = university
 
             skills_map_with_percent_list = []
             titles = sorted(skills_map_with_percent.keys())
@@ -222,9 +246,9 @@ def analyze():
                 temp_skill_map[title] = skills_map_with_percent[title]
                 skills_map_with_percent_list.append(temp_skill_map)
 
+            out["university"] = university
             out["skills_map"] = skills_map_with_percent_list
             out["titles"] = titles
-
             out["candidate_skills"] = dict()
             out["title_data"] = dict()
 
@@ -255,10 +279,6 @@ def analyze():
 
             final_score_sorted = sorted(final_score, reverse=True)
 
-            # print normalized_prediction_score
-            # print final_titles_list
-            # print final_score_sorted
-
             out["final_prediction_list"] = final_titles_list
             out["final_score_sorted"] = final_score_sorted
 
@@ -270,11 +290,6 @@ def analyze():
 
             results_json = OrderedDict(out)
             return json.dumps(OrderedDict(out))
-            # return render_template('index_result.html')
-    
+
 if __name__ == '__main__':
     iHire.run(host='0.0.0.0')
-
-
-
-

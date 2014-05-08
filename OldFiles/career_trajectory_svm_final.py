@@ -244,7 +244,7 @@ if __name__ == '__main__':
     with open('svmclassifier_new_0420_marisa.pkl', 'wb') as outfile:
         pickle.dump(clf, outfile)
 
-    with open('label_names_0420_marisa.pkl', 'wb') as lab_names:
+    with open('pickled_files/../pickled_files/label_names_0420_marisa.pkl', 'wb') as lab_names:
         pickle.dump(labels_names, lab_names)
 
     with open('tfidf_vect_0420_marisa.pkl', 'wb') as hash_v:

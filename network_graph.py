@@ -18,7 +18,7 @@ univ_dict = json.loads(open("static/univs_list.json","rb").read())
 univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 print univ_normalize["oakland city university main campus"]
 
-with open('skills_0424_no_stemming_full_ds.json') as skills_json_file:
+with open('extracted_data/skills_0424_no_stemming_full_ds.json') as skills_json_file:
     skills_json = json.loads(skills_json_file.read())
 
 for root, dirs, files in os.walk(xml_directory, topdown=False):
@@ -84,7 +84,6 @@ for root, dirs, files in os.walk(xml_directory, topdown=False):
                     else:
                         univ_major_emp_skill[univ_major_number_map[tum]] = []
                         univ_major_emp_skill[univ_major_number_map[tum]].append(temp_list)
-
 
         except:
             pass

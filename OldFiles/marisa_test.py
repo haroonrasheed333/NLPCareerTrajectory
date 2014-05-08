@@ -21,10 +21,10 @@ def main():
     with open('svmclassifier_new_0420_marisa.pkl', 'rb') as infile:
         model = pickle.load(infile)
 
-    with open('label_names_0420_marisa.pkl', 'rb') as lab_names:
+    with open('pickled_files/../pickled_files/label_names_0420_marisa.pkl', 'rb') as lab_names:
         labels_names = pickle.load(lab_names)
 
-    with open('hash_vect_0420_marisa.pkl', 'rb') as tfidf_v:
+    with open('OldFiles/hash_vect_0420_marisa.pkl', 'rb') as tfidf_v:
         tfidf_vect = pickle.load(tfidf_v)
 
     test_resumes = resume_text
