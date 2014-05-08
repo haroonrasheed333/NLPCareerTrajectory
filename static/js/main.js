@@ -106,7 +106,7 @@ $(document).ready(function () {
 
         $("#predictions-div").empty();
         $('#spinner-id').css('display', 'none');
-        $("#predictions-div").append($('<div class="column-90 column block-title"><h3>Your Top Matches</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Your top job predictions are determined based on various factors like your skills, education, degree level etc. We compare you against others similar to you to help you decide what you prospective next step could be"></i></h3></div>'))
+        $("#predictions-div").append($('<div class="column-90 column block-title"><h3>Your Top Matches</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Your top job predictions are determined based on various factors like your skills, education, degree level etc. We compare you against others similar to you to help you decide what your prospective next step could be"></i></h3></div>'))
         $("#predicted-titles-list" ).remove();
         var predicted_titles_list = $('<ul id="predicted-titles-list"></ul>');
 
@@ -120,11 +120,11 @@ $(document).ready(function () {
             var href = link1.concat(predicted[i].concat(link3));
             cand_skill_list = data.candidate_skills[predicted[i]];
 
-            li.append($('<div>' + predicted[i] + '<div id="score-div"><span class="score" title="Calculated Score">' + scores[i] + '</span><div class="bar-div" title=""><span class="bar" id="bar1-' + i + '"></span><span class="bar" id="bar2-' + i + '"></span><span class="bar" id="bar3-' + i + '"></span></div></div></div>'));
+            li.append($('<div>' + predicted[i] + '<div id="score-div"><span class="score" title="Your Match Score">' + scores[i] + '</span><div class="bar-div" title=""><span class="bar" id="bar1-' + i + '"></span><span class="bar" id="bar2-' + i + '"></span><span class="bar" id="bar3-' + i + '"></span></div></div></div>'));
 
             var skill_div = $('<div class="skills-list-div"></div>');
             var skill_ul = $('<ul class="skills-list"></ul>');
-            skill_ul.append($('<li><strong>Your matching Skills:</strong></li>'));
+            skill_ul.append($('<li><strong>Your Matching Skills:</strong></li>'));
 
             skill_div.append(skill_ul);
 
@@ -138,7 +138,7 @@ $(document).ready(function () {
 
             var more_info = $('<div class="more-info-div" id="more-' + i + '"></div>');
             more_info.append($('<div><span><strong>Salary (US National Average): </strong>' + data.title_data[predicted[i]]["salary"] + '</div></span>'));
-            more_info.append($('<div><span><strong>Education Level: </strong>' + data.title_data[predicted[i]]["education"] + '</div></span>'));
+            more_info.append($('<div><span><strong>Expected Education Level: </strong>' + data.title_data[predicted[i]]["education"] + '</div></span>'));
             // more_info.append($('<div><span><strong>Average Experience: </strong>5 Years</div></span>'));
             more_info.append($('<div><span><strong>Projected Jobs (2012 - 2022): </strong>' + data.title_data[predicted[i]]["trends"]["Projected job openings (2012-2022)"] + '</div></span>'));
             more_info.append($('<div><span><strong>Projected Growth (2012 - 2022): </strong>' + data.title_data[predicted[i]]["trends"]["Projected growth (2012-2022)"] + '</div></span>'));
