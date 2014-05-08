@@ -253,6 +253,10 @@ h3 {
     width: 80%;
 }
 
+.column-85 {
+    width: 85%;
+}
+
 .column-90 {
     width: 90%;
 }
@@ -440,10 +444,13 @@ a:hover {
 
 #skill-submit-button {
   display: inline;
+  width: 15%;
 }
 
-input {
+select, input[type="text"] {
+  border-radius: 0px;
   font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+  margin-bottom: 0px;
 }
 
 h5 {
