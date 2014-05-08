@@ -519,7 +519,7 @@ def create_skills_map(data, xml_directory):
             skills_map[sk].append(top_ten[0])
 
     j = json.dumps(skills_map, indent=4, separators=(',', ': '))
-    f = open('skills_map.json', 'w')
+    f = open('extracted_data/skills_map.json', 'w')
     print >> f, j
     f.close()
 

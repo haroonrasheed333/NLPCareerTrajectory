@@ -3,7 +3,7 @@ import json
 f = open('top_titles.txt', 'rb')
 top_jobs = [t.strip() for t in f.readlines()]
 
-salary_data = json.loads(open('salary_json.json').read())['salary_json']
+salary_data = json.loads(open('extracted_data/salary_json.json').read())['salary_json']
 salary_json = dict()
 
 for sal in salary_data:
