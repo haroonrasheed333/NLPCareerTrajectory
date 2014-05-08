@@ -15,7 +15,10 @@ from collections import defaultdict
 from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
+from univ_lookup import extract_univ
 
+univ_dict = json.loads(open("static/univs_list.json","rb").read())
+univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 
 st = PorterStemmer()
 stopwords = stopwords.words('english')
@@ -135,23 +138,20 @@ def vectorize(count_vect, data):
 def extract_features(res_text, xml_text):
     xml_tree = etree.fromstring(xml_text)
     words = [st.stem(w) for w in nltk.word_tokenize(res_text.lower()) if w not in stopwords and len(w) > 2]
-    # features = Counter(words)
-    features = {}
-    words_set = list(set(words))
-    for w in words_set:
-        features[w] = 1
+    features = Counter(words)
+    # features = {}
+    # words_set = list(set(words))
+    # for w in words_set:
+    #     features[w] = 1
 
     university = xml_tree.xpath('//institution/text()')
     if university:
-        features['university'] = university[0]
+        normalized_univ = extract_univ(university[0], univ_dict, univ_normalize)
+        features['university'] = normalized_univ if normalized_univ else university[0]
 
     degree_level = xml_tree.xpath('//degree/@level')
     if degree_level:
         features['degree_level'] = max(degree_level)
-
-    major_code = xml_tree.xpath('//major/@code')
-    if major_code:
-        features['major_code'] = major_code[0]
 
     return features
 
@@ -175,9 +175,9 @@ if __name__ == '__main__':
 
     # Split the data training and test datasets
     print "Randomly select training and testing samples"
-    train_resumes = traintest_corpus.resumes[0:int(num_resumes*0.9)]
-    test_resumes = traintest_corpus.resumes[int(num_resumes*0.9) + 1:]
-    #
+    train_resumes = traintest_corpus.resumes[0:int(num_resumes * 0.8)]
+    test_resumes = traintest_corpus.resumes[int(num_resumes * 0.8) + 1:]
+
     # train_resumes = traintest_corpus.resumes[0:200]
     # test_resumes = traintest_corpus.resumes[200:220]
 

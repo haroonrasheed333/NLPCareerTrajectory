@@ -1,7 +1,12 @@
 import os
 import csv
 import json
+import nltk
 from lxml import etree
+from nltk.stem.porter import PorterStemmer
+
+
+st = PorterStemmer()
 
 
 def extract_features_for_network_map(xml_directory, save_csv):
@@ -95,6 +100,7 @@ def extract_features_for_network_map(xml_directory, save_csv):
                 school_job_details_dict[sjd[0]] = []
                 school_job_details_dict[sjd[0]].append(sjd)
         return school_job_details_dict
+
 
 def get_top_five_predictions(predicted_decision, labels_names=[]):
     if not predicted_decision:
@@ -204,6 +210,25 @@ def extract_all_skills():
     f.close()
 
     return
+
+
+def get_skill_features(resume_text, top_skills):
+    skill_features = []
+    tokens = nltk.word_tokenize(resume_text.lower())
+    tokens = [st.stem(token) for token in tokens]
+
+    for skill in top_skills:
+        if skill in tokens:
+            skill_features.append(1)
+        else:
+            skill_features.append(0)
+
+    return skill_features
+
+
+def get_skill_features_from_resume(resume_data, top_skills):
+    skill_list = [get_skill_features(resume_text, top_skills) for (resume_text, tag, fname) in resume_data ]
+    return skill_list
 
 
 if __name__ == '__main__':

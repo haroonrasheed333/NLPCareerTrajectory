@@ -83,7 +83,7 @@ $(document).ready(function () {
         var scores = [];
 
         data = $.parseJSON(data);
-        console.log(data);
+        // console.log(data);
 
         data.final_prediction_list.forEach(function(aa){
             predicted.push(aa);
@@ -98,7 +98,7 @@ $(document).ready(function () {
             all_titles.push(aa);
         });
 
-        console.log(data.title_data);
+        // console.log(data.title_data);
 
         var link1 = "http://www.simplyhired.com/k-";
         var link3 = "-jobs.html";
@@ -110,7 +110,7 @@ $(document).ready(function () {
         $("#predicted-titles-list" ).remove();
         var predicted_titles_list = $('<ul id="predicted-titles-list"></ul>');
 
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < predicted.length; i++) {
             var li;
             if (i % 2 == 0) {
                 li = $('<li class="even-row collapse-class" id="collapse-' + i + '"></li>');
@@ -137,8 +137,8 @@ $(document).ready(function () {
             more_info.append($('<div><span><strong>Average Salary: </strong>' + data.title_data[predicted[i]]["salary"] + '</div></span>'));
             more_info.append($('<div><span><strong>Education Level: </strong>' + data.title_data[predicted[i]]["education"] + '</div></span>'));
             // more_info.append($('<div><span><strong>Average Experience: </strong>5 Years</div></span>'));
-            more_info.append($('<div><span><strong>Projected Jobs: </strong>' + data.title_data[predicted[i]]["trends"]["Projected job openings (2012-2022)"] + '</div></span>'));
-            more_info.append($('<div><span><strong>Projected Growth: </strong>' + data.title_data[predicted[i]]["trends"]["Projected growth (2012-2022)"] + '</div></span>'));
+            more_info.append($('<div><span><strong>Projected Jobs (2012 - 2022): </strong>' + data.title_data[predicted[i]]["trends"]["Projected job openings (2012-2022)"] + '</div></span>'));
+            more_info.append($('<div><span><strong>Projected Growth (2012 - 2022): </strong>' + data.title_data[predicted[i]]["trends"]["Projected growth (2012-2022)"] + '</div></span>'));
             var rel_job = '';
             for (var a = 0; a < data.title_data[predicted[i]]["related_titles"].length; a++) {
                 rel_job = rel_job + data.title_data[predicted[i]]["related_titles"][a] + ', '

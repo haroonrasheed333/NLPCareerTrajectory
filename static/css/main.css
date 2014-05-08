@@ -364,7 +364,7 @@ a:hover {
 }
 
 .bar-div {
-  display: inline-block;
+  /*display: inline-block;*/
 }
 
 #predicted-titles-list {

@@ -13,12 +13,14 @@ import nltk
 
 
 punct = re.compile(r'^[^A-Za-z0-9]+|[^a-zA-Z0-9]+$')
-is_word=re.compile(r'[a-z]', re.IGNORECASE)
+is_word = re.compile(r'[a-z]', re.IGNORECASE)
 sentence_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-word_tokenizer=nltk.tokenize.punkt.PunktWordTokenizer()
+word_tokenizer = nltk.tokenize.punkt.PunktWordTokenizer()
+
 
 def get_words(sentence):
     return [punct.sub('',word) for word in word_tokenizer.tokenize(sentence) if is_word.search(word)]
+
 
 def ngrams(text, n):
     for sentence in sentence_tokenizer.tokenize(text.lower()):
@@ -26,27 +28,35 @@ def ngrams(text, n):
         for i in range(len(words)-(n-1)):
             yield(' '.join(words[i:i+n]))
 
+
 def extract_univ(data,univ_dict,univ_normalize):
-    data = stripxml(str(data))
-    data = data.lower()
-    data = data.replace('\xc2\xa0', ' ')
-    #print data
-    data = re.sub ('[^A-Za-z0-9 ]+',' ',str(data))
-    data = re.sub ('  ',' ',str(data))
-    if 'education' in data:
-        parted = data.split('education')[1]
-        second = parted[:150]
-    else:
-        second = data
-    n=10
-    while (n>1):
-        for ngram in ngrams(str(second).lower(), n):
-            if ngram.lower() in univ_normalize:
-                return univ_normalize[str(ngram.lower())]
-            elif ngram.lower() in univ_dict:
-                return ngram.title()
-        n -= 1
-    return ""
+    try:
+        data = stripxml(str(data))
+
+        data = data.lower()
+        data = data.replace('\xc2\xa0', ' ')
+        #print data
+        data = re.sub ('[^A-Za-z0-9 ]+',' ',str(data))
+        data = re.sub ('  ',' ',str(data))
+
+        if 'education' in data:
+            parted = data.split('education')[1]
+            second = parted[:150]
+        else:
+            second = data
+        n = 10
+        while n > 1:
+            for ngram in ngrams(str(second).lower(), n):
+                if ngram.lower() in univ_normalize:
+                    return univ_normalize[str(ngram.lower())]
+                elif ngram.lower() in univ_dict:
+                    return ngram.title()
+            n -= 1
+        return ""
+    except UnicodeEncodeError:
+        return data
+    except UnicodeDecodeError:
+        return data
 
 
 def create_data_for_graph(univ, major, skills_employer, univ_major_map, major_code):

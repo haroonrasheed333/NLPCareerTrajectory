@@ -32,14 +32,14 @@ iHire.config['UPLOAD_FOLDER'] = ""
 iHire.debug = "true"
 
 # Get the pickled classifier model and features
-with open('svmclassifier_new_0420_marisa.pkl', 'rb') as infile:
+with open('iBeyond_classifier.pkl', 'rb') as infile:
     model = pickle.load(infile)
 
-with open('label_names_0420_marisa.pkl', 'rb') as lab_names:
+with open('iBeyond_labels.pkl', 'rb') as lab_names:
     labels_names = pickle.load(lab_names)
 
-with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
-    tfidf_vect = pickle.load(hash_v)
+# with open('tfidf_vect_0420_marisa.pkl', 'rb') as hash_v:
+#     tfidf_vect = pickle.load(hash_v)
 
 title_title_map = json.loads(open("title_title_map.json").read())
 skills_map_with_percent = json.loads(open("skills_map_with_percent_new_0504_upper.json").read())
@@ -105,7 +105,7 @@ def get_top_predictions(predicted_decision):
                 int(float(val - min_s) * 100 / float(max_s - min_s)) for val in predicted_dec_dup_sorted
             ]
 
-        for j in range(5):
+        for j in range(len(predicted_dec_dup)):
             top_predictions.append(
                 labels_names[predicted_decision[i].tolist().index(predicted_dec_dup_sorted[j])]
             )
@@ -204,10 +204,10 @@ def analyze():
             create_data_for_graph(university, "", skills_employer, univ_major_number, major_code_lookup)
             create_data_for_tree(university, "", skills_employer_tree, univ_major_number, major_code_lookup)
 
-
             resume_text = [open(textfile_name).read()]
-            resume_tfidf = tfidf_vect.transform(resume_text)
-            predicted_decision = model.decision_function(resume_tfidf)
+            # resume_tfidf = tfidf_vect.transform(resume_text)
+            # predicted_decision = model.decision_function(resume_tfidf)
+            predicted_decision = model.decision_function(resume_text)
 
             top_predictions, normalized_prediction_score = get_top_predictions(predicted_decision)
 
@@ -234,7 +234,10 @@ def analyze():
 
             skill_score = []
             for pred in top_predictions:
-                top15 = skills_map_with_percent[title_title_map[pred]]["skills"][:15]
+                try:
+                    top15 = skills_map_with_percent[title_title_map[pred]]["skills"][:15]
+                except KeyError:
+                    top15 = []
                 temp_skill_list = [t for t in top15 if len(t) > 1 and t.lower() in tokens]
 
                 out["candidate_skills"][title_title_map[pred]] = temp_skill_list

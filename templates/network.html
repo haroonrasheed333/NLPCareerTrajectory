@@ -2,6 +2,7 @@
 <meta charset="utf-8">
 <head>
 	<title>Network</title>
+	<script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
 	<link href="/static/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/css/network.css">
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
@@ -24,9 +25,9 @@
 {#	<div id="network-graph"></div>#}
     <div id="tree-graph"></div>
 
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
 <script src="{{ url_for('static', filename='js/jquery-1.8.1.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery.autocomplete.min.js') }}"></script>
+<!-- <script src="{{ url_for('static', filename='js/jquery.autocomplete.min.js') }}"></script> -->
 <script src="{{ url_for('static', filename='js/jquery.autocomplete.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jquery.mockjax.js') }}"></script>
 <script src="{{ url_for('static', filename='js/countries.js') }}"></script>

@@ -11,7 +11,6 @@ from sklearn.pipeline import Pipeline
 from nltk.stem.porter import PorterStemmer
 from sklearn.pipeline import FeatureUnion
 from sklearn.grid_search import GridSearchCV
-from sklearn.linear_model import SGDClassifier
 from marisa_vectorizers import MarisaTfidfVectorizer
 from sklearn.cross_validation import train_test_split
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -22,13 +21,13 @@ from pprint import pprint
 from time import time
 import logging
 
-
+user_name = os.environ.get('USER')
 st = PorterStemmer()
 stopwords = stopwords.words('english')
 
 
 def trainsvm(featureset, train_label):
-    clf = LinearSVC(C=1.0, penalty="l2", dual=True).fit(featureset, train_label)
+    clf = LinearSVC().fit(featureset, train_label)
     return clf
 
 
@@ -44,35 +43,22 @@ def tfidftransform(counts):
 
 
 if __name__ == '__main__':
-    user_name = os.environ.get('USER')
     traintest_corpus = ResumeCorpus('/Users/' + user_name + '/Documents/Data')
 
     # Shuffle the corpus
-    # random.seed()
-    # random.shuffle(traintest_corpus.resumes)
+    # print "Shuffle the corpus"
+    random.seed()
+    random.shuffle(traintest_corpus.resumes)
 
-    # Use 90% of the shuffled corpus as training and remaining 10% as testing datasets
-    num_resumes = len(traintest_corpus.resumes)
+    corpus_text = []
+    corpus_labels = []
 
-    # Split the data training and test datasets
-    print "Randomly select training and testing samples"
-    train_resumes = traintest_corpus.resumes[0:int(num_resumes*0.8)]
-    test_resumes = traintest_corpus.resumes[int(num_resumes*0.8) + 1:]
-    #
-    # train_resumes = traintest_corpus.resumes[0:10]
-    # test_resumes = traintest_corpus.resumes[10:12]
+    for (text, label, fname) in traintest_corpus.resumes:
+        corpus_labels.append(label)
+        corpus_text.append(text)
 
-    train_labels = []
-    train_resume_text = []
-    for (text, label, fname) in train_resumes:
-        train_labels.append(label)
-        train_resume_text.append(text)
-
-    test_labels = []
-    test_resume_text = []
-    for (text, label, fname) in test_resumes:
-        test_labels.append(label)
-        test_resume_text.append(text)
+    print "Split training and testing data"
+    train_text, test_text, train_labels, test_labels = train_test_split(corpus_text, corpus_labels, test_size=0.20)
 
     labels_names = sorted(list(set(train_labels)))
 
@@ -109,36 +95,36 @@ if __name__ == '__main__':
     #     print("\t%s: %r" % (param_name, best_parameters[param_name]))
 
     # TfidfVectorizer (unigrams + bigrams)
-    marisa_uni_vect = MarisaTfidfVectorizer(
+    vectorizer = MarisaTfidfVectorizer(
         decode_error='ignore',
         stop_words='english',
         ngram_range=(1, 2),
-        max_df=1.0,
+        max_df=0.75,
         max_features=100000
     )
 
     print "Create pipeline for vectorizer => classifier"
-    vect_clf = Pipeline([('vect', marisa_uni_vect),
+    vect_clf = Pipeline([('vect', vectorizer),
                          ('clf', LinearSVC())])
 
     print "Train Model"
-    vect_clf = vect_clf.fit(train_resume_text, train_labels)
+    vect_clf = vect_clf.fit(train_text, train_labels)
 
     print "Predict test samples"
-    predicted_score = vect_clf.predict(test_resume_text)
-    predicted_decision = vect_clf.decision_function(test_resume_text)
+    predicted_labels = vect_clf.predict(test_text)
+    predicted_decision = vect_clf.decision_function(test_text)
 
-    # accuracy = np.mean(predicted_score == test_labels)
-    # p = precision_score(test_labels, predicted_score, average='macro')
-    # r = recall_score(test_labels, predicted_score, average='macro')
+    # accuracy = np.mean(predicted_labels == test_labels)
+    # p = precision_score(test_labels, predicted_labels, average='macro')
+    # r = recall_score(test_labels, predicted_labels, average='macro')
     #
     # print accuracy
     # print p
     # print r
+    #
+    # print classification_report([t for t in test_labels], [p for p in predicted_labels])
 
-    # print classification_report([t for t in test_labels], [p for p in predicted_score])
     predicted = []
-
     actual_vs_predicted = []
 
     for i in range(len(test_labels)):
@@ -178,12 +164,13 @@ if __name__ == '__main__':
 
     print "New Accuracy (Label present in one of the 5 predictions): " + str(sum(accuracy_list_top_5) / len(accuracy_list_top_5))
 
-    # # Pickle the classifier and training features to test it on the heldout dataset.
-    # with open('svmclassifier_new_0504_marisa.pkl', 'wb') as outfile:
-    #     pickle.dump(vect_clf, outfile)
-    #
-    # with open('label_names_0420_marisa.pkl', 'wb') as lab_names:
-    #     pickle.dump(labels_names, lab_names)
-    #
-    # # with open('tfidf_vect_0420_marisa.pkl', 'wb') as hash_v:
-    # #     pickle.dump(vectorizer, hash_v)
+    # Pickle the classifier and training features to test it on the heldout dataset.
+    print "Pickle classifier"
+    with open('iBeyond_classifier.pkl', 'wb') as outfile:
+        pickle.dump(vect_clf, outfile)
+
+    with open('iBeyond_labels.pkl', 'wb') as lab_names:
+        pickle.dump(labels_names, lab_names)
+
+    # with open('tfidf_vect_0420_marisa.pkl', 'wb') as hash_v:
+    #     pickle.dump(vectorizer, hash_v)
