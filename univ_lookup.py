@@ -132,11 +132,11 @@ def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, majo
                 result["children"].append({"name" : key.title(), "children" : new })
             i += 1
 
-    j = json.dumps(result, indent=4, separators=(',', ': '))
-    f = open("static/treegraph.json", "w")
-    print >> f, j
-    f.close()
-    return
+    # j = json.dumps(result, indent=4, separators=(',', ': '))
+    # f = open("static/treegraph.json", "w")
+    # print >> f, j
+    # f.close()
+    return result
 
 
 def extract_univ_json(data):

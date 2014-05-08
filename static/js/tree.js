@@ -1,46 +1,49 @@
-var university = document.getElementById("university").value;
-console.log(document.getElementById("university").value);
-
-var skillsEmployer, univNumberMap;
-
+var university = '';
 $(document).ready(function () {
 
-$("#inputs").empty;
+  $(window).load(function() {
+        url_pathname = location.pathname;
+        if (url_pathname == "/network") {
+          university = document.getElementById("university").value;
+          $("#inputs").empty;
 
-if (university.length > 2) {
-  var h3 = $('<h3>Displaying top employers from your university first degree connections. Enter your major to personalize your results!</h3><br>');
-  var form = $('<form id="input-form"></form>');
-  var major_div = $('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
-  var submit_button = $('<div class="column-25 column"><input id="tree-submit-button" class="btn btn-primary pull-right" type="submit" value="Re-create network" /></div>');
+          if (university.length > 2) {
+            var h3 = $('<h3>Displaying top employers from your university first degree connections. Enter your major to personalize your results!</h3><br>');
+            var form = $('<form id="input-form"></form>');
+            var major_div = $('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
+            var submit_button = $('<div class="column-25 column"><input id="tree-submit-button" class="btn btn-primary pull-right" type="submit" value="Re-create network" /></div>');
 
-  $("#inputs").append(h3);
-  form.append(major_div);
-  $("#inputs").append(form);
-  $("#inputs").append(submit_button);
-  create_network();
+            $("#inputs").append(h3);
+            form.append(major_div);
+            $("#inputs").append(form);
+            $("#inputs").append(submit_button);
 
-} else {
+            $.ajax({
+             datatype: 'json',
+             url: '/get_tree',
+             success: function(data)
+             {
+                 $("#tree-graph").remove();
+                 $("body").append($('<div id ="tree-graph" class = column-100></div>'));
+                 create_network(data);
+             }
+           });
 
-  var h3 = $('<h3>Enter you university and major to generate employers of your connections</h3><br>');
-  var form = $('<form id="input-form"></form>');
-  var univ_div = $('<div class="column-33 column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
-  var major_div = $('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
-  var submit_button = $('<div class="column-25 column"><input id="tree-submit-button" class="btn btn-primary pull-right" type="submit" value="Create network" /></div>');
+          } else {
 
-  $("#inputs").append(h3);
-  form.append(univ_div);
-  form.append(major_div);
-  $("#inputs").append(form);
-  $("#inputs").append(submit_button);
+            var h3 = $('<h3>Enter you university and major to generate employers of your connections</h3><br>');
+            var form = $('<form id="input-form"></form>');
+            var univ_div = $('<div class="column-33 column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
+            var major_div = $('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
+            var submit_button = $('<div class="column-25 column"><input id="tree-submit-button" class="btn btn-primary pull-right" type="submit" value="Create network" /></div>');
 
-    // $("#inputs").append('<h3> Key in your university and major to generate your alumni network</h3></br>');
-    // $("#inputs").append('<form id = "input-form"><div class="column-33 column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="university" id="university-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>')
-    // $("#inputs").append('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/><input type = "hidden" type="text" name="country" id="major-ajax-x" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/></div>')
-    // $("#inputs").append('<div class="column-25 column"><input id="tree-submit-button" class="btn btn-primary pull-right" type="subimt" value="Create network" style="position: absolute;" /></div></form>');
-//    create_network();
-
-}
-
+            $("#inputs").append(h3);
+            form.append(univ_div);
+            form.append(major_div);
+            $("#inputs").append(form);
+            $("#inputs").append(submit_button);
+          }
+        }
 
 
  $("#tree-submit-button").on('click',function(){
@@ -58,7 +61,7 @@ if (university.length > 2) {
                console.log(data);
                $("#tree-graph").remove();
                $("body").append($('<div id ="tree-graph" class = column-100></div>'));
-               create_network();
+               create_network(data);
            }
          });
 
@@ -77,16 +80,11 @@ if (university.length > 2) {
                console.log(data);
                $("#tree-graph").remove();
                $("body").append($('<div id ="tree-graph" class="column-100"></div>'));
-               create_network();
+               create_network(data);
            }
          });
-
     }
-
-
  })
-
-
 
 // Initialize ajax autocomplete:
 $('#major-ajax').autocomplete({
@@ -129,7 +127,7 @@ $('#university-ajax').autocomplete({
     }
 });
 
-function create_network(){
+function create_network(data) {
 
 
 var margin = {top: 20, right: 80, bottom: 20, left: 80},
@@ -158,8 +156,8 @@ var svg = d3.select("#tree-graph").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("../static/treegraph.json", function(error, flare) {
-  root = flare;
+// d3.json(data, function(error, flare) {
+  root = $.parseJSON(data);
   root.x0 = height / 2;
   root.y0 = 0;
 
@@ -171,8 +169,6 @@ d3.json("../static/treegraph.json", function(error, flare) {
       d.children = null;
     }
   }
-
-
 
   function maxMin(d){
       if (d.children){
@@ -189,7 +185,7 @@ d3.json("../static/treegraph.json", function(error, flare) {
   root.children.forEach(collapse);
   update(root);
 
-});
+// });
 
 d3.select(self.frameElement).style("height", "800px");
 
@@ -311,13 +307,11 @@ function click(d) {
   update(d);
 }
 
-
 }
 
 });
 
-
-
+});
 
 
 

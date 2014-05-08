@@ -19,6 +19,7 @@ from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 
 results_json = dict()
 university = ''
+tree_json = dict()
 
 #Create Flask instance
 iHire = Flask(__name__)
@@ -139,9 +140,16 @@ def about():
     return render_template('about.html')
 
 
+@iHire.route('/get_tree')
+def get_tree():
+    global tree_json
+    return json.dumps(tree_json)
+
+
 @iHire.route('/submit', methods=['POST'])
 def submit():
     global university
+    global tree_json
     if "major" in request.form:
         major = str(request.form["major"]).strip('"')
         if "university" in request.form:
@@ -149,7 +157,7 @@ def submit():
 
             # create_data_for_graph(university_ip, major, skills_employer, univ_major_number, major_code_lookup)
 
-            create_data_for_tree(
+            tree_json = create_data_for_tree(
                 university_ip,
                 major,
                 skills_employer_tree,
@@ -161,7 +169,7 @@ def submit():
         else:
             # create_data_for_graph(university, major, skills_employer, univ_major_number, major_code_lookup)
 
-            create_data_for_tree(
+            tree_json = create_data_for_tree(
                 university,
                 major,
                 skills_employer_tree,
@@ -170,7 +178,7 @@ def submit():
                 employer_second_degree_tree
             )
 
-    return str(request.form["major"])
+    return json.dumps(tree_json)
 
 
 @iHire.route('/skill_submit', methods=['POST'])
@@ -188,6 +196,7 @@ def skill_submit():
 def analyze():
     global results_json
     global university
+    global tree_json
     if request.method:
         # Get and save file from browser upload
         files = request.files['file']
@@ -211,7 +220,7 @@ def analyze():
 
             # create_data_for_graph(university, "", skills_employer, univ_major_number, major_code_lookup)
 
-            create_data_for_tree(
+            tree_json = create_data_for_tree(
                 university,
                 "",
                 skills_employer_tree,
