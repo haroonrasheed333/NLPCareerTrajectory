@@ -33,8 +33,8 @@ with open('iBeyond_classifier.pkl', 'rb') as infile:
 with open('iBeyond_labels.pkl', 'rb') as lab_names:
     labels_names = pickle.load(lab_names)
 
-title_title_map = json.loads(open("title_title_map.json").read())
-skills_map_with_percent = json.loads(open("skills_map_with_percent.json").read())
+title_title_map = json.loads(open("extracted_data/title_title_map.json").read())
+skills_map_with_percent = json.loads(open("extracted_data/skills_map_with_percent.json").read())
 univ_dict = json.loads(open("static/univs_list.json","rb").read())
 univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 # skills_employer = json.loads(open("static/networkgraph.json").read())
@@ -227,6 +227,7 @@ def analyze():
                 textfile_name = filename
 
             university = extract_univ(open(textfile_name).read(), univ_dict, univ_normalize)
+            print filename
 
             # create_data_for_graph(university, "", skills_employer, univ_major_number, major_code_lookup)
 
@@ -288,6 +289,9 @@ def analyze():
 
             out["final_prediction_list"] = final_titles_list
             out["final_score_sorted"] = final_score_sorted
+
+            print final_titles_list[:5]
+            print final_score_sorted[:5]
 
             if os.path.isfile(textfile_name):
                     os.remove(textfile_name)

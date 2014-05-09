@@ -12,7 +12,7 @@ from job_title_normalization import normalize_job_titles
 
 user_name = os.environ.get('USER')
 
-f = open('top_titles.txt', 'rb')
+f = open('extracted_data/top_titles.txt', 'rb')
 top_jobs = [t.strip().lower() for t in f.readlines()]
 
 job_count = defaultdict(int)
