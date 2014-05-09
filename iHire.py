@@ -227,6 +227,7 @@ def analyze():
                 textfile_name = filename
 
             university = extract_univ(open(textfile_name).read(), univ_dict, univ_normalize)
+            print filename
 
             # create_data_for_graph(university, "", skills_employer, univ_major_number, major_code_lookup)
 
@@ -288,6 +289,9 @@ def analyze():
 
             out["final_prediction_list"] = final_titles_list
             out["final_score_sorted"] = final_score_sorted
+
+            print final_titles_list[:5]
+            print final_score_sorted[:5]
 
             if os.path.isfile(textfile_name):
                     os.remove(textfile_name)

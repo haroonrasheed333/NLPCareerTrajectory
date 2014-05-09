@@ -687,7 +687,7 @@ def create_skills_map_with_percentage(data, xml_directory_path, save_json=False)
 
         current_file_directory = os.path.dirname(os.path.realpath(__file__))
 
-        skills_ignore = open(current_file_directory + '/skills_exclude_list').read().splitlines()
+        skills_ignore = open(current_file_directory + '/extracted_data/skills_exclude_list').read().splitlines()
 
         if skill_list:
             slist = []
