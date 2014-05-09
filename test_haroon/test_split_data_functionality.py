@@ -70,12 +70,12 @@ class TestSplitData():
     def test_number_of_training_files_should_be_80_percent_of_sample_plaintext_files(self):
         training_files = next(os.walk(self.training_path))[2]
         plaintext_files = next(os.walk(self.plaintext_directory))[2]
-        assert_equals(len(training_files), 0.8*len(plaintext_files))
+        assert_equals(len(training_files), int(round(0.8 * len(plaintext_files))))
 
     def test_number_of_heldout_files_should_be_20_percent_of_sample_plaintext_files(self):
         heldout_files = next(os.walk(self.heldout_path))[2]
         plaintext_files = next(os.walk(self.plaintext_directory))[2]
-        assert_equals(len(heldout_files), 0.2*len(plaintext_files))
+        assert_equals(len(heldout_files), int(round(0.2 * len(plaintext_files))))
 
     def test_number_of_training_files_should_equal_the_number_of_items_in_labels_file(self):
         training_files = next(os.walk(self.training_path))[2]
