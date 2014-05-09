@@ -2034,7 +2034,6 @@ var univsArray = [
 { "value" : "DATS LLC Dental Assistant School" } ,
 { "value" : "Sanford Brown Institute  Ft Lauderdale" } ,
 { "value" : "Jubilee School" } ,
-{ "value" : "UC Berkeley School of Information" } ,
 { "value" : "Havant College" } ,
 { "value" : "Centre for Development Studies" } ,
 { "value" : "Medical Institute of Palm Beach" } ,
