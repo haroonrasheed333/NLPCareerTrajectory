@@ -108,8 +108,9 @@ footer {
 
 #university-ajax, #major-ajax {
   border-radius: 0px;
-  height: 25px;
+  height: 30px;
   width: 300px;
+  background: #f5f5f5;
 }
 
 #network-submit-button {
@@ -445,6 +446,16 @@ a:hover {
 #skill-submit-button {
   display: inline;
   width: 15%;
+}
+
+#network-input-div {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 800px;
+}
+
+#tree-graph {
+  margin-top: 50px;
 }
 
 select, input[type="text"] {

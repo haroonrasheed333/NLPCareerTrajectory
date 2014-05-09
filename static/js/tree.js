@@ -8,15 +8,17 @@ $(document).ready(function () {
           $("#inputs").empty;
 
           if (university.length > 2) {
-            var h3 = $('<h3>Displaying top employers from your university first degree connections. Enter your major to personalize your results!</h3><br>');
+            var h3 = $('<br><h3>Displaying top employers from your university first degree connections. Enter your major to personalize your results!</h3><br>');
             var form = $('<form id="input-form"></form>');
-            var major_div = $('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
-            var submit_button = $('<div class="column-25 column"><input id="tree-submit-button" class="btn btn-primary pull-right" type="submit" value="Re-create network" /></div>');
+            var major_div = $('<div class="column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2;"/></div>');
+            var submit_button = $('<div class="column"><input id="tree-submit-button" class="btn btn-primary pull-right" type="submit" value="Re-create network" /></div>');
 
             $("#inputs").append(h3);
             form.append(major_div);
-            $("#inputs").append(form);
-            $("#inputs").append(submit_button);
+            var form_div = $('<div id="network-input-div"></div>');
+            form_div.append(form);
+            form_div.append(submit_button);
+            $("#inputs").append(form_div);
 
             $.ajax({
              datatype: 'json',
@@ -31,17 +33,20 @@ $(document).ready(function () {
 
           } else {
 
-            var h3 = $('<h3>Enter you university and major to generate employers of your connections</h3><br>');
+            var h3 = $('<br><h3>Enter you university and major to generate employers of your connections</h3><br>');
             var form = $('<form id="input-form"></form>');
-            var univ_div = $('<div class="column-33 column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
-            var major_div = $('<div class="column-33 column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2; background: transparent;"/></div>');
-            var submit_button = $('<div class="column-25 column"><input id="tree-submit-button" class="btn btn-primary pull-right" type="submit" value="Create network" /></div>');
+            var univ_div = $('<div class="column"><input type="text" name="university" id="university-ajax" style="position: relative; z-index: 2;"/></div>');
+            var major_div = $('<div class="column"><input type="text" name="major" id="major-ajax" style="position: relative; z-index: 2;"/></div>');
+            var submit_button = $('<div class="column"><input id="tree-submit-button" class="btn btn-primary pull-right" type="submit" value="Create network" /></div><br><br>');
 
             $("#inputs").append(h3);
             form.append(univ_div);
             form.append(major_div);
-            $("#inputs").append(form);
-            $("#inputs").append(submit_button);
+            var form_div = $('<div id="network-input-div"></div>');
+            form_div.append(form);
+            form_div.append(submit_button);
+            $("#inputs").append(form_div);
+
           }
         }
 
