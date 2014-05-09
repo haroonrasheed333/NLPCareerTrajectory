@@ -19,17 +19,68 @@ word_tokenizer = nltk.tokenize.punkt.PunktWordTokenizer()
 
 
 def get_words(sentence):
-    return [punct.sub('',word) for word in word_tokenizer.tokenize(sentence) if is_word.search(word)]
+    """
+    This function will tokenize a sentence after removing punctuations
+
+    Parameters:
+    -----------
+    sentence -- string
+        Sentence as string
+
+    Returns:
+    --------
+    tokens -- list.
+        List of tokens for the sentence
+    """
+
+    tokens = [punct.sub('',word) for word in word_tokenizer.tokenize(sentence) if is_word.search(word)]
+    return tokens
 
 
 def ngrams(text, n):
+    """
+    This function generate ngrams for a text
+
+    Parameters:
+    -----------
+    text -- string
+        text as string
+
+    n -- int
+        Order of ngrams to generate
+
+    Returns:
+    --------
+    list
+        List of ngrams
+    """
     for sentence in sentence_tokenizer.tokenize(text.lower()):
         words = get_words(sentence)
         for i in range(len(words)-(n-1)):
             yield(' '.join(words[i:i+n]))
 
 
-def extract_univ(data,univ_dict,univ_normalize):
+def extract_univ(data, univ_dict, univ_normalize):
+    """
+    This function will extract university name from resume text
+
+    Parameters:
+    -----------
+    data -- string
+        Resume text
+
+    univ_dict -- dict
+        University lookup dictionary
+
+    univ_normalize -- dict
+        University alias dictionary
+
+    Returns:
+    --------
+    university -- string
+        University name in string
+
+    """
     try:
         data = stripxml(str(data))
 
@@ -50,7 +101,8 @@ def extract_univ(data,univ_dict,univ_normalize):
                 if ngram.lower() in univ_normalize:
                     return univ_normalize[str(ngram.lower())]
                 elif ngram.lower() in univ_dict:
-                    return ngram.title()
+                    university = ngram.title()
+                    return university
             n -= 1
         return ""
     except UnicodeEncodeError:
@@ -60,6 +112,28 @@ def extract_univ(data,univ_dict,univ_normalize):
 
 
 def create_data_for_graph(univ, major, skills_employer, univ_major_map, major_code):
+    """
+    This function will create a json file that will be used to
+    construct the network graph
+
+    Parameters:
+    -----------
+    univ -- string
+        Name of the university
+
+    major -- string
+        Major of the candidate
+
+    skills_employer -- dict
+        Dictionary of employer and skills
+
+    univ_major_map -- dict
+        Dictionary of university and major
+
+    major_code -- dict
+        Dictionary of major name and major code
+
+    """
     print "Inside create data"
     univ = str(univ).lower()
     result = {}
@@ -92,6 +166,35 @@ def create_data_for_graph(univ, major, skills_employer, univ_major_map, major_co
 
 
 def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, major_code, employer_second_degree_tree):
+    """
+    This function will create a json file that will be used to
+    construct the network graph
+
+    Parameters:
+    -----------
+    univ -- string
+        Name of the university
+
+    major -- string
+        Major of the candidate
+
+    skills_employer_tree -- dict
+        Dictionary of employer and skills. First degree connections
+
+    univ_major_map -- dict
+        Dictionary of university and major
+
+    major_code -- dict
+        Dictionary of major name and major code
+
+    employer_second_degree_tree -- dict
+        Dictionary of employer and skills. Second degree connections
+
+    Returns:
+    --------
+    result -- dict
+
+    """
     if os.path.isfile("static/treegraph.json"):
         os.remove("static/treegraph.json")
 
@@ -140,6 +243,15 @@ def create_data_for_tree(univ, major, skills_employer_tree, univ_major_map, majo
 
 
 def extract_univ_json(data):
+    """
+    This function will extract university name from resume text
+
+    Parameters:
+    -----------
+    data -- string
+        Resume text
+
+    """
     univ_dict = json.loads(open("static/univs_list.json","rb").read())
     n=10
     while (n>1):
@@ -148,7 +260,22 @@ def extract_univ_json(data):
         n = n - 1
     #print "curry college" in univ_dict
 
+
 def extract_from_resume(data):
+    """
+    This function will extract university name from resume text
+
+    Parameters:
+    -----------
+    data -- string
+        Resume text
+
+    Returns:
+    --------
+    out -- dict
+        Dictionary of university details
+
+    """
     out = {}
     data = stripxml(str(data))
     data = data.lower()
@@ -172,6 +299,7 @@ def extract_from_resume(data):
                     break
     return out
 
+
 def ngram_similarity(univ_name):
     out = {}
     with open("static/UniqueFBUnivNames.csv", 'rb') as f:
@@ -185,6 +313,7 @@ def ngram_similarity(univ_name):
                 out['univ'] = str(row)
                 return out
     return out
+
 
 def generate_ngrams(res):
     tokens = str(res).split()

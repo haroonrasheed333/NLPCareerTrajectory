@@ -14,11 +14,11 @@ univ_major_list = []
 univ_major_emp_skill = dict()
 counter = 0
 names = []
-univ_dict = json.loads(open("static/univs_list.json","rb").read())
-univ_normalize = json.loads(open("static/univ_map.json","rb").read())
+univ_dict = json.loads(open("static/../static/univs_list.json","rb").read())
+univ_normalize = json.loads(open("static/../static/univ_map.json","rb").read())
 print univ_normalize["oakland city university main campus"]
 
-with open('extracted_data/skills_0424_no_stemming_full_ds.json') as skills_json_file:
+with open('extracted_data/../extracted_data/skills_0424_no_stemming_full_ds.json') as skills_json_file:
     skills_json = json.loads(skills_json_file.read())
 
 for root, dirs, files in os.walk(xml_directory, topdown=False):

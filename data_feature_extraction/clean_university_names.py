@@ -19,6 +19,6 @@ for emp in result:
                             result[emp.lower()][skills_map[key][i][0][j].title()] = 1
 print "almost there"
 j = json.dumps(result, indent=4, separators=(',', ': '))
-f = open('static/treegraphemployer0507.json', 'w')
+f = open('static/../static/treegraphemployer0507.json', 'w')
 print >> f, j
 f.close()

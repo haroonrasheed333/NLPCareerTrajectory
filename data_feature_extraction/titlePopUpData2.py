@@ -9,7 +9,7 @@ def cell_text(cell):
     return " ".join(cell.stripped_strings)
 
 title_onet_dict = dict()
-with open('title_onet_txt.txt', 'r') as csv_file:
+with open('../extracted_data/title_onet_txt.txt', 'r') as csv_file:
     csv_reader = csv.reader(csv_file)
 
     for row in csv_reader:
@@ -48,7 +48,7 @@ for title in title_onet_dict:
                 title_onet_dict[title][onet]["education"][str(col[0])] = str(col[1])
 
 j = json.dumps(title_onet_dict, indent=4, separators=(',', ': '))
-f = open("static/titlesData_0505.json", "w")
+f = open("static/../static/titlesData_0505.json", "w")
 print >> f, j
 f.close()
 
