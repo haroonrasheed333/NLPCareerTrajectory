@@ -50,12 +50,17 @@ def extract_text_from_pdf(pdf_filename):
     """
     Function to extract the text from pdf documents using pdfminer
 
-    Args:
-        pdf_filename -- File name of the pdf document as string
+    Parameters:
+    -----------
+    pdf_filename -- string
+        File name of the pdf document as string
 
     Returns:
-        extracted_text -- Extracted text as string
+    --------
+    extracted_text -- string
+        Text extracted from pdf as string
     """
+
     resource_manager = PDFResourceManager()
     return_string = StringIO()
     la_params = LAParams()
@@ -77,13 +82,18 @@ def extract_text_from_pdf(pdf_filename):
 
 def get_top_predictions(predicted_decision):
     """
-    Function to find the top predictions and compute scores based on the svm classifier decisions
+    Function to find the top predictions and compute scores based
+    on the svm classifier decision scores
 
-    Args:
-        predicted_decision -- list of svm prediction decisions
+    Parameters:
+    -----------
+    predicted_decision -- list
+        List of svm prediction decision scores
 
     Returns:
-        top_five_predictions, normalized_prediction_score -- List of top five predictions and normalized scores as tuple
+    --------
+    top_five_predictions, normalized_prediction_score -- tuple
+        Top five predictions list and normalized scores list as tuple
     """
     top_predictions = []
     normalized_prediction_score = []

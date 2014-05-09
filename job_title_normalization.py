@@ -38,6 +38,20 @@ expand = [
 
 
 def expand_job_title(actual_title):
+    """
+    This function is used to expand job titles using regex based rules
+
+    Parameters:
+    -----------
+    actual_title -- string
+        Actual job title as string
+
+    Returns:
+    --------
+    expanded_title -- string.
+        Expanded job title as string
+
+    """
     title = actual_title
     for match in expand:
         title = re.sub(r'\b' + match[0] + r'\b', match[1], title.lower().replace('.', ''))
@@ -45,10 +59,26 @@ def expand_job_title(actual_title):
         title = title.replace('& ', '')
         title = title.replace('  ', ' ')
 
-    return title.lower()
+    expanded_title = title.lower()
+    return expanded_title
 
 
 def title_permutations(title_expanded):
+    """
+    This function is used to find all possible permutations of
+    a given job title
+
+    Parameters:
+    -----------
+    title_expanded -- string
+        The expanded job title as string
+
+    Returns:
+    --------
+    title_perms -- list.
+        List of all possible permutations of the job title
+
+    """
     title_tagged = pos_tag(title_expanded.split())
     st = PorterStemmer()
     title_pos = [st.stem(word) for word, pos in title_tagged if pos != 'IN']
@@ -58,6 +88,21 @@ def title_permutations(title_expanded):
 
 
 def normalize_job_titles(original_titles):
+    """
+    This function take a list of job titles as input and return a
+    list of normalized job titles
+
+    Parameters:
+    -----------
+    original_titles -- list
+        List of original job titles extracted from resume
+
+    Returns:
+    --------
+    normalized_titles -- list.
+        List of normalized job titles
+
+    """
     normalized_titles = []
     titles_dict = {}
 
@@ -74,6 +119,20 @@ def normalize_job_titles(original_titles):
             temp_title = temp_title.split('&')[1]
         if temp_title.find(',') > -1:
             temp_title = temp_title.split(',')[1]
+
+        title_expand = expand_job_title(temp_title)
+        title_perms = title_permutations(title_expand)
+
+        flag = 0
+        for tp in title_perms:
+            if tp in titles_dict:
+                title = tp
+                flag = 1
+                break
+
+        if flag == 0:
+            title = title_perms[0]
+            titles_dict[title] = title_expand
 
         ui_ux_design = ['ui/ux design', 'ui design', 'ux design', 'user interface design', 'user experience design']
         ui_ux_develop = ['ui/ux develop', 'ui develop', 'ux develop', 'user interface develop', 'user experience develop']
@@ -94,20 +153,6 @@ def normalize_job_titles(original_titles):
                 break
         if flag:
             continue
-
-        title_expand = expand_job_title(temp_title)
-        title_perms = title_permutations(title_expand)
-
-        flag = 0
-        for tp in title_perms:
-            if tp in titles_dict:
-                title = tp
-                flag = 1
-                break
-
-        if flag == 0:
-            title = title_perms[0]
-            titles_dict[title] = title_expand
 
         normalized_titles.append(titles_dict[title])
 
@@ -132,5 +177,5 @@ if __name__ == '__main__':
     # for i in range(len(normalized_titles)):
     #     print '{:<45}'.format(original_titles[i].rstrip()), '{:<45}'.format(string.capwords(normalized_titles[i]))
 
-    normalized_titles = normalize_job_titles(['user interface developer'])
-    print normalized_titles
+    normalized_job_titles = normalize_job_titles(['user interface developer'])
+    print normalized_job_titles

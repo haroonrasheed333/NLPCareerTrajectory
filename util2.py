@@ -9,7 +9,28 @@ from nltk.stem.porter import PorterStemmer
 st = PorterStemmer()
 
 
-def extract_features_for_network_map(xml_directory, save_csv):
+def extract_features_for_network_map(xml_directory, save_csv=True):
+    """
+    This function will extract various features like university,
+    degree, degree level, major, major code, and employer from
+    resume text
+
+    Parameters:
+    -----------
+    xml_directory -- string
+        The path where the xml resumes are stored
+
+    save_csv -- boolean (default: True)
+        Boolean value to denote if the extracted features should
+        be saved in a csv file or returned back as a dictionary
+
+    Returns:
+    --------
+    school_job_details_dict -- dict
+        Dictionary with resume ids as keys and list of extracted
+        features as values
+
+    """
 
     if not os.path.exists(xml_directory):
         return {}
@@ -103,6 +124,20 @@ def extract_features_for_network_map(xml_directory, save_csv):
 
 
 def get_top_five_predictions(predicted_decision, labels_names=[]):
+    """
+    Function to find the top predictions and compute scores based
+    on the svm classifier decision scores
+
+    Parameters:
+    -----------
+    predicted_decision -- list
+        List of svm prediction decision scores
+
+    Returns:
+    --------
+    top_five_predictions, normalized_prediction_score -- tuple
+        Top five predictions list and normalized scores list as tuple
+    """
     if not predicted_decision:
         return [], []
 
@@ -133,6 +168,20 @@ def get_top_five_predictions(predicted_decision, labels_names=[]):
 
 
 def get_degree(resume_text):
+    """
+    Function to find the degree level from resume text
+
+    Parameters:
+    -----------
+    resume_text -- string
+        The content of candidate resume as string
+
+    Returns:
+    --------
+    degree_level -- float
+        A float value assigned based on the degree level of the
+        candidate
+    """
     resume_text = resume_text.lower()
 
     if 'education' in resume_text:
@@ -186,11 +235,28 @@ def get_degree(resume_text):
 
 
 def get_degree_level_from_resume(resume_data):
+    """
+    Function to find the degree levels of the each resume in the corpus
+
+    Parameters:
+    -----------
+    resume_data -- list
+        List containing the resume text of all resumes in the corpus
+
+    Returns:
+    --------
+    degree_level -- list
+        A list containing the degree level of each resume in the corpus
+    """
     degree_level = [get_degree(resume_text) for (resume_text, tag, fname) in resume_data]
     return degree_level
 
 
 def extract_all_skills():
+    """
+    Function to extract all the skills from skills map json to display
+    in autocomplete suggestion.
+    """
     skill_file = json.loads(open('skills_map_with_percent.json').read())
     skills = []
     for title in skill_file:
@@ -213,6 +279,23 @@ def extract_all_skills():
 
 
 def get_skill_features(resume_text, top_skills):
+    """
+    Function to generate skill based features
+
+    Parameters:
+    -----------
+    resume_text -- string
+        The content of resume as string
+
+    top_skills - list
+        List of top skills
+
+    Returns:
+    --------
+    skill_features -- list
+        A list representing the presence or absence of each top skill
+        in the resume text
+    """
     skill_features = []
     tokens = nltk.word_tokenize(resume_text.lower())
     tokens = [st.stem(token) for token in tokens]
@@ -227,6 +310,22 @@ def get_skill_features(resume_text, top_skills):
 
 
 def get_skill_features_from_resume(resume_data, top_skills):
+    """
+    Function to generate skill based features
+
+    Parameters:
+    -----------
+    resume_data -- list
+        List containing the resume text of all resumes in the corpus
+
+    top_skills - list
+        List of top skills
+
+    Returns:
+    --------
+    skill_list -- list
+        A list containing skill feature list for each resume
+    """
     skill_list = [get_skill_features(resume_text, top_skills) for (resume_text, tag, fname) in resume_data ]
     return skill_list
 

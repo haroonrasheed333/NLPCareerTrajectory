@@ -22,9 +22,13 @@ def split_data(labels_list, paths):
     """
     Function to split the dataset into training and heldout datasets
 
-    Args:
-        labels_list -- list of tuples with filename and tag information for each resume
-        paths -- Dict consisting of source and destination directories for data
+    Parameters:
+    -----------
+    labels_list -- list
+        List of tuples with filename and tag information for each resume
+
+    paths -- dict
+        Dict consisting of source and destination directories for data
     """
 
     # Path where the sample text resumes are present
@@ -62,12 +66,33 @@ def clean_data_and_extract_job_titles(fname, paths, names, job_titles, labels_li
     """
     Function to clean data and extract job titles from resume.
 
-    Args:
-        fname - string. Name of the resume file
-        paths - dict containing paths of source directories
-        names - string. Extracted candidate names from resume. Used to remove duplicate resumes.
-        job_titles - list. Titles extracted from resume
-        labels_list - list. Titles that will be used as labels for classifier.
+    Parameters:
+    -----------
+    fname - string.
+        Name of the resume file
+
+    paths - dict
+        Dict containing paths of source directories
+
+    names - string.
+        Extracted candidate names from resume. Used to remove duplicate resumes.
+
+    job_titles - list.
+        Titles extracted from resume
+
+    labels_list - list.
+        Titles that will be used as labels for classifier.
+
+    Returns:
+    --------
+    names - string.
+        Extracted candidate names from resume. Used to remove duplicate resumes.
+
+    job_titles - list.
+        Titles extracted from resume
+
+    labels_list - list.
+        Titles that will be used as labels for classifier.
 
     """
 
@@ -88,6 +113,7 @@ def clean_data_and_extract_job_titles(fname, paths, names, job_titles, labels_li
         # Extract the candidate name from the resume
         name = xml.xpath('//givenname/text()')[0] + ' ' + xml.xpath('//surname/text()')[0]
 
+        # Avoid duplicate resumes by only choosing resumes with unique names
         if name not in names:
             names.append(name)
         else:
@@ -145,8 +171,10 @@ def prepare_data(paths):
     """
     Function to prepare data and split training and test data.
 
-    Args:
-        paths - dict containing paths of source directories
+    Parameters:
+    -----------
+    paths - dict
+        Dict containing paths of source directories
 
     """
 

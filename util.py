@@ -84,7 +84,9 @@ def read_skills_from_json_file(training_data):
 
     Returns:
     --------
-    skills_dict -- A dictionary with Job Titles as keys and list of all the skills for that Job Title as values
+    skills_dict -- dict.
+        A dictionary with Job Titles as keys and list of all the
+        skills for that Job Title as values
     """
 
     skills_dict = dict()
@@ -108,10 +110,15 @@ def extract_top_skills(training_data):
     """
     Extract Top Skills for each Job Title from the training dataset.
 
-    Args:
-        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+    Parameters:
+    -----------
+    training_data -- list
+        List of tuples containing resume text, tag, filename.
+        Eg. [(resume, tag, filename), (resume, tag, filename)...]
 
     Returns:
+    --------
+    top_job_skills - list
         A consolidated list of top skills for all the Job Titles
 
     """
@@ -134,11 +141,15 @@ def xml_features(data):
     Extract details from selected xml tags
     Strip the xml tags from the xml to make it plaintext
 
-    Args:
-        data -- Resume xml
+    Parameters:
+    -----------
+    data -- string
+        Resume xml as string
 
     Returns:
-        xml_features -- dictionary with plaintext resume without any xml tags and select xml features
+    --------
+    xml_features -- dict
+        Dictionary with plaintext resume without any xml tags and select xml features
     """
     xml_features = {}
     jobs = data.xpath('//job/title/text()')
@@ -165,11 +176,13 @@ def miscellaneous_features(resume_text):
 
     Parameters:
     -----------
-        resume_text -- content of resume as string
+    resume_text -- sting
+        Content of resume as string
 
     Returns:
     --------
-        mis_features -- list of miscellaneous features
+    mis_features -- list
+        List of miscellaneous features
     """
 
     resume_text = re.sub('[^A-Za-z\' ]+', '', str(resume_text))
@@ -197,12 +210,18 @@ def unigram_features(resume_text, top_unigram_list):
     """
     Function to create unigram features from the resume text
 
-    Args:
-        resume_text -- content of resume as string
-        top_unigram_list -- list of top unigrams
+    Parameters:
+    -----------
+    resume_text -- string
+        Content of resume as string
+
+    top_unigram_list -- list
+        List of top unigrams
 
     Returns:
-        uni_features -- list of unigram features
+    --------
+    uni_features -- list
+        List of unigram features
     """
     resume_text = re.sub('[^A-Za-z\' ]+', '', str(resume_text))
     tokens = nltk.word_tokenize(resume_text.lower())
@@ -230,13 +249,20 @@ def bigram_features(resume_text, top_bigram_list):
     """
     Function to create bigram features from the resume text
 
-    Args:
-        resume_text -- content of resume as string
-        top_bigram_list -- list of top bigrams
+    Parameters:
+    -----------
+    resume_text -- string
+        Content of resume as string
+
+    top_bigram_list -- list
+        List of top bigrams
 
     Returns:
-        bi_features -- list of bigram features
+    --------
+    bi_features -- list
+        List of bigram features
     """
+
     tokens = [st.stem(word) for word in resume_text.lower().split() if word not in stopwords]
     bigrs = bigrams(tokens)
     bigram_list = []
@@ -256,15 +282,25 @@ def feature_consolidation(resumes, top_unigram_list, top_bigram_list,  add_true_
     """
     Function to consolidate all the featuresets for the training data
 
-    Args:
-        resumes -- list of tuples [(resume_text, tag, filename), (resume_text, tag, filename)...]
-        top_unigram_list -- list of top unigrams from the training dataset
-        top_bigram_list -- list of top bigrams from the training dataset
-        add_true_score -- boolean (default: False)
+    Parameters:
+    -----------
+    resumes -- list
+        List of tuples [(resume_text, tag, filename), (resume_text, tag, filename)...]
+
+    top_unigram_list -- list
+        List of top unigrams from the training dataset
+
+    top_bigram_list -- list
+        List of top bigrams from the training dataset
+
+    add_true_score -- boolean (default: False)
 
     Returns:
-        consolidated_features -- list of consolidated features
+    --------
+    consolidated_features -- list
+        List of consolidated features
     """
+
     uni_feats = []
     bi_feats = []
     xml_feats = []
@@ -285,14 +321,32 @@ def feature_consolidation(resumes, top_unigram_list, top_bigram_list,  add_true_
     return consolidated_features
 
     
-def create_skills_json(data, xml_directory, save_json=False):
+def create_skills_json(data, xml_directory_path, save_json=False):
     """
-    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
-    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
-    stored as a json file.
+    This function will extract all the skills from the training
+    corpus and create a dictionary with Job Titles as keys and
+    list of dictionaries containing the skills for each resume
+    as values. The dictionary is converted and stored as a json
+    file. The extracted skills will be stemmed.
 
-    Args:
-        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+    Parameters:
+    -----------
+    training_data -- list
+        List of tuples containing resume text, tag, filename.
+        Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    xml_directory_path -- string
+        The path where the xml resumes are stored
+
+    save_json -- boolean (default: False)
+        Boolean value to denote if the skills_dict should
+        be returned back or saved in a file
+
+    Returns:
+    --------
+    skills_dict -- dict
+        Dictionary with job title as keys and list of all skills
+        in resumes under each title as values
 
     """
 
@@ -301,7 +355,7 @@ def create_skills_json(data, xml_directory, save_json=False):
     # Get the skills for each resume from its corresponding xml file.
     for (resume_text, tag_name, filename) in data:
         xml_file = filename.split('_')[0] + '.txt'
-        xml = etree.parse(xml_directory + '/' + xml_file)
+        xml = etree.parse(xml_directory_path + '/' + xml_file)
         skill_list = xml.xpath('//skills/text()')
 
         skills_ignore = open('skills_exclude_list').read().splitlines()
@@ -347,12 +401,30 @@ def create_skills_json(data, xml_directory, save_json=False):
 
 def create_skills_json_no_stemming(data, xml_directory, save_json=False):
     """
-    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
-    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
-    stored as a json file.
+    This function will extract all the skills from the training
+    corpus and create a dictionary with Job Titles as keys and
+    list of dictionaries containing the skills for each resume
+    as values. The dictionary is converted and stored as a json
+    file. The extracted skills will not be stemmed.
 
-    Args:
-        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+    Parameters:
+    -----------
+    training_data -- list
+        List of tuples containing resume text, tag, filename.
+        Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    xml_directory_path -- string
+        The path where the xml resumes are stored
+
+    save_json -- boolean (default: False)
+        Boolean value to denote if the skills_dict should
+        be returned back or saved in a file
+
+    Returns:
+    --------
+    skills_dict -- dict
+        Dictionary with job title as keys and list of all skills
+        in resumes under each title as values
 
     """
 
@@ -407,12 +479,31 @@ def create_skills_json_no_stemming(data, xml_directory, save_json=False):
 
 def create_skills_json_no_stemming_full_ds():
     """
-    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
-    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
-    stored as a json file.
+    This function will extract all the skills from the training
+    corpus and create a dictionary with Job Titles as keys and
+    list of dictionaries containing the skills for each resume
+    as values. The dictionary is converted and stored as a json
+    file. The extracted skills will not be stemmed. Includes all
+    files in the data source
 
-    Args:
-        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+    Parameters:
+    -----------
+    training_data -- list
+        List of tuples containing resume text, tag, filename.
+        Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    xml_directory_path -- string
+        The path where the xml resumes are stored
+
+    save_json -- boolean (default: False)
+        Boolean value to denote if the skills_dict should
+        be returned back or saved in a file
+
+    Returns:
+    --------
+    skills_dict -- dict
+        Dictionary with job title as keys and list of all skills
+        in resumes under each title as values
 
     """
 
@@ -463,25 +554,42 @@ def stripxml(data):
     """
     Strip the xml tags from the xml to make it plaintext
 
-    Args:
-        data -- Resume xml
+    Parameters:
+    -----------
+    data -- string
+        Resume xml as string
 
     Returns:
-        text -- plaintext resume without any xml tags.
+    --------
+    text -- string
+        plaintext resume without any xml tags.
     """
     pattern = re.compile(r'<.*?>')
     text = pattern.sub('', data)
     return text
 
 
-def create_skills_map(data, xml_directory):
+def create_skills_map(data, xml_directory_path):
     """
-    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
-    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
-    stored as a json file.
+    This function will extract all the skills from the training
+    corpus and create a dictionary with Job Titles as keys and
+    list of top 20 most common skills under each job title as
+    values.
 
-    Args:
-        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+    Parameters:
+    -----------
+    data -- list
+        List of tuples containing resume text, tag, filename.
+        Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    xml_directory_path -- string
+        The path where the xml resumes are stored
+
+    Returns:
+    --------
+    skills_map -- dict
+        Dictionary with job title as keys and list of top 20
+        skills for each job title as values
 
     """
     skills_map = dict()
@@ -489,7 +597,7 @@ def create_skills_map(data, xml_directory):
     # Get the skills for each resume from its corresponding xml file.
     for (resume_text, tag_name, filename) in data:
         xml_file = filename.split('_')[0] + '.txt'
-        xml = etree.parse(xml_directory + '/' + xml_file)
+        xml = etree.parse(xml_directory_path + '/' + xml_file)
         skill_list = xml.xpath('//skills/text()')
 
         skills_ignore = \
@@ -539,14 +647,34 @@ def create_skills_map(data, xml_directory):
     f.close()
 
 
-def create_skills_map_with_percentage(data, xml_directory, save_json):
+def create_skills_map_with_percentage(data, xml_directory_path, save_json=False):
     """
-    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
-    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
-    stored as a json file.
+    This function will extract all the skills from the data corpus and
+    create a dictionary with Job Titles as keys and each key is mapped
+    to a dictionary as value. The value dictionary contains contains two
+    keys, "skills" which is a list of all unique skills for the job title
+    and "percent" which is a list of integers representing the percent of
+    total data in which the skill is present
 
-    Args:
-        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+    Parameters:
+    -----------
+    data -- list
+        List of tuples containing resume text, tag, filename.
+        Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    xml_directory_path -- string
+        The path where the xml resumes are stored
+
+    save_json -- boolean (default: False)
+        Boolean value to denote if the skills_map should
+        be returned back or saved in a file
+
+    Returns:
+    --------
+    skills_map -- dict
+        Dictionary with job title as keys and each key in turn  mapped to
+        a dictionary containing two keys "skills" and "percent"
+        Eg. { "customer service associate": { "skills": ['a', 'b', 'c'], "percent": [50, 36, 23] } }
 
     """
     skills_in_files = dict()
@@ -554,7 +682,7 @@ def create_skills_map_with_percentage(data, xml_directory, save_json):
     # Get the skills for each resume from its corresponding xml file.
     for (resume_text, tag_name, filename) in data:
         xml_file = filename.split('_')[0] + '.txt'
-        xml = etree.parse(xml_directory + '/' + xml_file)
+        xml = etree.parse(xml_directory_path + '/' + xml_file)
         skill_list = xml.xpath('//skills/text()')
 
         current_file_directory = os.path.dirname(os.path.realpath(__file__))
@@ -617,14 +745,34 @@ def create_skills_map_with_percentage(data, xml_directory, save_json):
         return skills_map_with_percent
 
 
-def create_skills_map_with_percentage_new(data, xml_directory, save_json):
+def create_skills_map_with_percentage_new(data, xml_directory_path, save_json=False):
     """
-    This function will extract all the skills from the training corpus and create a dictionary with Job Titles as
-    keys and list of dictionaries containing the skills for each resume as values. The dictionary is converted and
-    stored as a json file.
+    This function will extract all the skills from the data corpus and
+    create a dictionary with Job Titles as keys and each key is mapped
+    to a dictionary as value. The value dictionary contains contains two
+    keys, "skills" which is a list of all unique skills for the job title
+    and "percent" which is a list of integers representing the percent of
+    total data in which the skill is present
 
-    Args:
-        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+    Parameters:
+    -----------
+    data -- list
+        List of tuples containing resume text, tag, filename.
+        Eg. [(resume, tag, filename), (resume, tag, filename)...]
+
+    xml_directory_path -- string
+        The path where the xml resumes are stored
+
+    save_json -- boolean (default: False)
+        Boolean value to denote if the skills_map should
+        be returned back or saved in a file
+
+    Returns:
+    --------
+    skills_map -- dict
+        Dictionary with job title as keys and each key in turn  mapped to
+        a dictionary containing two keys "skills" and "percent"
+        Eg. { "customer service associate": { "skills": ['a', 'b', 'c'], "percent": [50, 36, 23] } }
 
     """
     skills_in_files = dict()
@@ -632,7 +780,7 @@ def create_skills_map_with_percentage_new(data, xml_directory, save_json):
     # Get the skills for each resume from its corresponding xml file.
     for (resume_text, tag_name, filename) in data:
         xml_file = filename.split('_')[0] + '.txt'
-        xml = etree.parse(xml_directory + '/' + xml_file)
+        xml = etree.parse(xml_directory_path + '/' + xml_file)
         skill_list = xml.xpath('//variant/text()')
 
         if skill_list:
