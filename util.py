@@ -21,12 +21,16 @@ stopwords = stopwords.words('english')
 
 class ResumeCorpus():
     """
-    Class to read the source files from source directory and create a list of tuples with resume_text, tag and filename
-    for each resume.
+    Class to read the source files from source directory and create a list of tuples with resume_text,
+    tag and filename for each resume.
 
-    Args:
-        source_dir -- string. The path of the source directory.
-        labels_file -- string. The path of the labels file (default: None)
+    Parameters:
+    -----------
+    source_dir -- string.
+        The path of the source directory.
+
+    labels_file -- string.
+        The path of the labels file (default: None)
     """
     def __init__(self, source_dir, labels_file=None):
         
@@ -41,11 +45,14 @@ class ResumeCorpus():
         """
         Method to return a list of tuples with resume_text, tag and filename for the training data
 
-        Args:
-            No Argument
+        Parameters:
+        -----------
+        No Argument
 
         Returns:
-            resumes -- list of tuples with resume_text, tag and filename for the training data
+        --------
+        resumes -- list
+            List of tuples with resume_text, tag and filename for the training data
         """
         resumes = []
 
@@ -64,14 +71,20 @@ class ResumeCorpus():
 
 def read_skills_from_json_file(training_data):
     """
-    This function will read from the skills json file, extract the skills that are part of the training data and create
-    a dictionary with Job Titles as keys and list of all the skills for that Job Title as values
+    This function will read from the skills json file,
+    extract the skills that are part of the training data
+    and create a dictionary with Job Titles as keys and
+    list of all the skills for that Job Title as values
 
-    Args:
-        training_data -- list of tuples. Eg. [(resume, tag, filename), (resume, tag, filename)...]
+    Parameters:
+    -----------
+    training_data -- list
+        List of tuples containing resume text, tag, filename.
+        Eg. [(resume, tag, filename), (resume, tag, filename)...]
 
     Returns:
-        skills_dict -- A dictionary with Job Titles as keys and list of all the skills for that Job Title as values
+    --------
+    skills_dict -- A dictionary with Job Titles as keys and list of all the skills for that Job Title as values
     """
 
     skills_dict = dict()
@@ -150,10 +163,12 @@ def miscellaneous_features(resume_text):
     """
     Function to create miscellaneous features
 
-    Args:
+    Parameters:
+    -----------
         resume_text -- content of resume as string
 
     Returns:
+    --------
         mis_features -- list of miscellaneous features
     """
 
