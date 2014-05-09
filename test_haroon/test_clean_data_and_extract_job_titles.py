@@ -5,7 +5,7 @@ Validate functionality to clean and extract job titles
 import os
 from lxml import etree
 from nose.tools import *
-from corpus_builder import clean_data_and_extract_job_titles
+from corpus_builder_old import clean_data_and_extract_job_titles
 
 
 class TestCleanDataAndExtractJobTitles():

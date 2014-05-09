@@ -3,7 +3,7 @@ Validate functionality to split corpus
 """
 import os
 from nose.tools import *
-from corpus_builder import prepare_data
+from corpus_builder_old import prepare_data
 
 
 class TestSplitData():
