@@ -28,6 +28,10 @@ header {
   margin-left: 100px;
 }
 
+.logo-img:hover {
+  cursor: pointer;
+}
+
 .nav {
   margin-bottom: 0px;
 }
@@ -289,6 +293,17 @@ h3 {
   float:right;
 }
 
+#thanks p {
+    display: block;
+    margin-top: 50px;
+}
+#about-text p {
+    text-align: justify;
+    margin-left: 150px;
+    margin-right: 150px;
+    line-height: 25px;
+
+}
 #top{
 
     width:100%;

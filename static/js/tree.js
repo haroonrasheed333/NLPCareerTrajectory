@@ -50,6 +50,12 @@ $(document).ready(function () {
           }
         }
 
+        $('#logo-img-network').click(function() {
+            sessionStorage.removeItem('response');
+            console.log("hhh");
+            location.href = location.origin + '/';
+        });
+
 
  $("#tree-submit-button").on('click',function(){
 

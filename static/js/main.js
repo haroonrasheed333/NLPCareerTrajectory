@@ -45,35 +45,37 @@ $(document).ready(function () {
         success: function(data) {
 
             response_data = data;
-            // populateData(data);
+            sessionStorage.setItem('response', JSON.stringify(data));
+            populateData(data);
             // console.log(location);
-            location.href = location.origin + '/results_home';
+            // location.href = location.origin + '/results_home';
         }
     });
 
     $(window).load(function() {
         url_pathname = location.pathname;
-        if (url_pathname == "/results_home") {
-            $.ajax({
-               datatype: 'json',
-               url: '/results',
-               success: function(data)
-               {
-                   populateData(data);
-               }
-             });
-        }
+        // if (url_pathname == "/results_home") {
+        //     $.ajax({
+        //        datatype: 'json',
+        //        url: '/results',
+        //        success: function(data)
+        //        {
+        //            populateData(data);
+        //        }
+        //      });
+        // }
 
         if (url_pathname == "/") {
-            $.ajax({
-               datatype: 'json',
-               url: '/clear_results',
-               success: function(data)
-               {
-                   // console.log(data);
-               }
-             });
+            var temp1 = sessionStorage.getItem('response');
+            data =  $.parseJSON(temp1);
+            populateData(data);
         }
+    });
+
+    $('#logo-img-home').click(function() {
+        sessionStorage.removeItem('response');
+        console.log("hhh");
+        location.href = location.origin + '/';
     });
 
     function populateData(data) {
@@ -82,7 +84,7 @@ $(document).ready(function () {
         var all_titles = [];
         var scores = [];
 
-        data = $.parseJSON(data);
+        // data = $.parseJSON(data);
         // console.log(data);
 
         data.final_prediction_list.forEach(function(aa){
@@ -233,6 +235,7 @@ $(document).ready(function () {
 
         $(".more-info-div").hide();
 
+        $('#skill-search').empty();
         $('#skill-search').append($('<div class="column-90 column block-title"><h3>Skill Search</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Have a niche skill? Search for your skills to explore what jobs require your special skill"></i></h3></div>'));
         var skill_input_div = $('<div class="column-100 column"><input type="text" name="skill" id="skill-ajax" style="position: relative; z-index: 2;"/><button id="skill-submit-button" class="btn btn-primary pull-right" type="submit"><i class="fa fa-search"></i></button></div><input type = "hidden" type="text" name="skill" id="skill-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>');
         $('#skill-search').append(skill_input_div);
@@ -279,5 +282,6 @@ $(document).ready(function () {
         });
 
         $('.bar-div').tooltip({ content: '<img src="../static/images/bar.png" />' });
+
     }
 });

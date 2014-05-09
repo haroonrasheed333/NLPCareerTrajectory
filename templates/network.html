@@ -10,9 +10,9 @@
 </head>
 <body>
 	<header class="nav">
-		<a href="/"><img class="logo-img" src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo"></a>
+		<img class="logo-img" id="logo-img-network" src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo">
 		<ul>
-		  <li><h4><a href="/results_home">Home</a></h4></li>
+		  <li><h4><a href="/">Home</a></h4></li>
 		  <li><h4><a href="/network" class="active">Network</a></h4></li>
 		  <li><h4><a href="/about">About</a></h4></li>
 		</ul>
@@ -23,7 +23,7 @@
 		<div id="inputs">
 		</div>
 	</div>
-{#	<div id="network-graph"></div>#}
+<!-- {#	<div id="network-graph"></div>#} -->
     <div id="tree-graph"></div>
 
 <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
@@ -34,9 +34,9 @@
 <script src="{{ url_for('static', filename='js/countries.js') }}"></script>
 <script src="{{ url_for('static', filename='js/majorsLookup.js') }}"></script>
 <script src="{{ url_for('static', filename='js/univsLookup.js') }}"></script>
-{#<script src="{{ url_for('static', filename='js/network.js') }}"></script>#}
+<!-- {#<script src="{{ url_for('static', filename='js/network.js') }}"></script>#} -->
 <script src="{{ url_for('static', filename='js/tree.js') }}"></script>
-<script src="./static/js/main.js"></script>
+<!-- <script src="./static/js/main.js"></script> -->
 
 
 </body>

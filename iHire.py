@@ -121,24 +121,6 @@ def hello_world():
     return render_template('index_homepage.html')
 
 
-@iHire.route('/results_home')
-def results_home():
-    return render_template('index_result.html')
-
-
-@iHire.route('/results')
-def results():
-    global results_json
-    return json.dumps(results_json)
-
-
-@iHire.route('/clear_results')
-def clear_results():
-    global results_json
-    results_json = dict()
-    return json.dumps(results_json)
-
-
 @iHire.route('/network')
 def network():
     global university
@@ -204,7 +186,7 @@ def skill_submit():
 
 @iHire.route("/analyze", methods=['POST','GET'])
 def analyze():
-    global results_json
+    # global results_json
     global university
     global tree_json
     if request.method:
@@ -299,7 +281,7 @@ def analyze():
             if os.path.isfile(filename):
                     os.remove(filename)
 
-            results_json = OrderedDict(out)
+            # results_json = OrderedDict(out)
             return json.dumps(OrderedDict(out))
 
 if __name__ == '__main__':
