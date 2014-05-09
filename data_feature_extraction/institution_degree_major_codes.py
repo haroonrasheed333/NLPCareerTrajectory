@@ -57,7 +57,7 @@ for root, dirs, files in os.walk(xml_directory, topdown=False):
         except:
             pass
 
-with open("extracted_data/institution_degree_job_map.csv", "wb") as csv_file:
+with open("extracted_data/../extracted_data/institution_degree_job_map.csv", "wb") as csv_file:
     writer = csv.writer(csv_file)
     for school_job_detail in school_job_details:
         try:

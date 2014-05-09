@@ -17,8 +17,8 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from univ_lookup import extract_univ
 
-univ_dict = json.loads(open("static/univs_list.json","rb").read())
-univ_normalize = json.loads(open("static/univ_map.json","rb").read())
+univ_dict = json.loads(open("static/../static/univs_list.json","rb").read())
+univ_normalize = json.loads(open("static/../static/univ_map.json","rb").read())
 
 st = PorterStemmer()
 stopwords = stopwords.words('english')
@@ -84,7 +84,7 @@ def read_skills_from_json_file(training_data):
     """
 
     skills_dict = dict()
-    temp_dict = json.loads(open("extracted_data/skills_0426.json").read())
+    temp_dict = json.loads(open("extracted_data/../extracted_data/skills_0426.json").read())
     training_files = [file_name for (resume, resume_xml, resume_label, file_name) in training_data]
 
     for title in temp_dict:

@@ -19,7 +19,7 @@ def cell_text(cell):
 
 result = dict()
 #onet = csv.reader(open("static/onet.csv","rb"))
-titles = csv.reader(open("top_titles.txt", "rb"))
+titles = csv.reader(open("../extracted_data/top_titles.txt", "rb"))
 for line in titles:
     result["%s" %line[0]] = {}
 
@@ -77,6 +77,6 @@ for line in titles:
 
 
 j = json.dumps(result, indent=4, separators=(',', ': '))
-f = open("static/titlesData.json", "w")
+f = open("static/../static/titlesData.json", "w")
 print >> f, j
 f.close()

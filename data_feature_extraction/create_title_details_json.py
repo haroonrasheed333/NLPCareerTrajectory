@@ -1,9 +1,9 @@
 import json
 
-f = open('top_titles.txt', 'rb')
+f = open('../extracted_data/top_titles.txt', 'rb')
 top_jobs = [t.strip() for t in f.readlines()]
 
-salary_data = json.loads(open('extracted_data/salary_json.json').read())['salary_json']
+salary_data = json.loads(open('extracted_data/../extracted_data/salary_json.json').read())['salary_json']
 salary_json = dict()
 
 for sal in salary_data:
@@ -15,7 +15,7 @@ for j in top_jobs:
     except KeyError:
         pass
 
-titles_data = json.loads(open('static/titlesData.json').read())
+titles_data = json.loads(open('static/../static/titlesData.json').read())
 
 titles_data_new = dict()
 
@@ -32,7 +32,7 @@ for title in titles_data:
     titles_data_new[title]["trends"] = titles_data[title]["trends"]
 
 j = json.dumps(titles_data_new, indent=4, separators=(',', ': '))
-f = open("extracted_data/titlesData_new.json", "w")
+f = open("extracted_data/../extracted_data/titlesData_new.json", "w")
 print >> f, j
 f.close()
 print "hi"

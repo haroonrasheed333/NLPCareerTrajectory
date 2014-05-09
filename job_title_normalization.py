@@ -134,26 +134,6 @@ def normalize_job_titles(original_titles):
             title = title_perms[0]
             titles_dict[title] = title_expand
 
-        ui_ux_design = ['ui/ux design', 'ui design', 'ux design', 'user interface design', 'user experience design']
-        ui_ux_develop = ['ui/ux develop', 'ui develop', 'ux develop', 'user interface develop', 'user experience develop']
-
-        flag = False
-        for des in ui_ux_design:
-            if des in original_title.lower():
-                normalized_titles.append("ui/ux designer")
-                flag = True
-                break
-        if flag:
-            continue
-
-        for dev in ui_ux_develop:
-            if dev in original_title.lower():
-                normalized_titles.append("ui/ux developer")
-                flag = True
-                break
-        if flag:
-            continue
-
         normalized_titles.append(titles_dict[title])
 
     return normalized_titles

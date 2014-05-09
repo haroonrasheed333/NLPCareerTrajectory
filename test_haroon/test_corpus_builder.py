@@ -2,8 +2,11 @@
 Verify corpus builder functionality
 """
 import os
+
 from nose.tools import *
-from corpus_builder_old import prepare_data
+
+from data_feature_extraction.corpus_builder_old import prepare_data
+
 
 
 # List of sample resume filenames with their present job title

@@ -257,7 +257,7 @@ def extract_all_skills():
     Function to extract all the skills from skills map json to display
     in autocomplete suggestion.
     """
-    skill_file = json.loads(open('skills_map_with_percent.json').read())
+    skill_file = json.loads(open('extracted_data/skills_map_with_percent.json').read())
     skills = []
     for title in skill_file:
         skills += skill_file[title]['skills']

@@ -1,9 +1,9 @@
 import json
 
-f = open('../top_titles.txt', 'rb')
+f = open('../extracted_data/top_titles.txt', 'rb')
 top_jobs = [t.strip() for t in f.readlines()]
 
-skills_with_percent_dict = json.loads(open('../skills_map_with_percent.json').read())
+skills_with_percent_dict = json.loads(open('../extracted_data/skills_map_with_percent.json').read())
 
 for j in top_jobs:
     try:
