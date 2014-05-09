@@ -278,6 +278,6 @@ $(document).ready(function () {
             });
         });
 
-        $('.bar-div').tooltip({ content: '<img src="../static/images/bar.PNG" />' });
+        $('.bar-div').tooltip({ content: '<img src="../static/images/bar.png" />' });
     }
 });
