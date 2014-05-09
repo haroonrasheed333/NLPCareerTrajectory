@@ -154,7 +154,7 @@ var tree = d3.layout.tree()
 
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.y, d.x]; });
-$('#tree-graph').append('<h3>Click on the nodes to view your second degree connection employers</h3></br>')
+$('#tree-graph').append('<h3>Click on the employers to view your second degree connection employers</h3></br>')
 var svg = d3.select("#tree-graph").append("svg")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)

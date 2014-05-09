@@ -233,7 +233,7 @@ $(document).ready(function () {
 
         $(".more-info-div").hide();
 
-        $('#skill-search').append($('<div class="column-90 column block-title"><h3>Skill Search</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Have a peculiar skill? Search for your skills to explore what jobs require your special skill"></i></h3></div>'));
+        $('#skill-search').append($('<div class="column-90 column block-title"><h3>Skill Search</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Have a niche skill? Search for your skills to explore what jobs require your special skill"></i></h3></div>'));
         var skill_input_div = $('<div class="column-100 column"><input type="text" name="skill" id="skill-ajax" style="position: relative; z-index: 2;"/><input id="skill-submit-button" class="btn btn-primary pull-right" type="submit" value="Go" /></div><input type = "hidden" type="text" name="skill" id="skill-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>');
         $('#skill-search').append(skill_input_div);
 
