@@ -1,7 +1,7 @@
 from fuzzywuzzy import fuzz
 
 job_titles = []
-f = open('JobTitles.txt')
+f = open('../extracted_data/JobTitles.txt')
 for line in f:
     job_titles.append(line.lower().rstrip())
 

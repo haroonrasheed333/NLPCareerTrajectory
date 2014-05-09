@@ -3,9 +3,10 @@ Test xml manipulation and feature extraction functionality
 """
 
 from nose.tools import eq_
-from select_top_jobs import stripxml
-from util import xml_features
 from lxml import etree
+
+from util import xml_features
+
 # Tests
 
 def test_gives_5_features_from_xml():

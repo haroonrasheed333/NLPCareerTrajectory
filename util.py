@@ -358,7 +358,7 @@ def create_skills_json(data, xml_directory_path, save_json=False):
         xml = etree.parse(xml_directory_path + '/' + xml_file)
         skill_list = xml.xpath('//skills/text()')
 
-        skills_ignore = open('skills_exclude_list').read().splitlines()
+        skills_ignore = open('extracted_data/skills_exclude_list').read().splitlines()
 
         if skill_list:
             slist = []
@@ -436,7 +436,7 @@ def create_skills_json_no_stemming(data, xml_directory, save_json=False):
         xml = etree.parse(xml_directory + '/' + xml_file)
         skill_list = xml.xpath('//skills/text()')
 
-        skills_ignore = open('skills_exclude_list').read().splitlines()
+        skills_ignore = open('extracted_data/skills_exclude_list').read().splitlines()
 
         if skill_list:
             slist = []
@@ -512,7 +512,7 @@ def create_skills_json_no_stemming_full_ds():
 
     skills_dict = dict()
 
-    skills_ignore = open('skills_exclude_list').read().splitlines()
+    skills_ignore = open('extracted_data/skills_exclude_list').read().splitlines()
 
     for root, dirs, files in os.walk(xml_directory, topdown=False):
         for f in files:
@@ -738,7 +738,7 @@ def create_skills_map_with_percentage(data, xml_directory_path, save_json=False)
 
     if save_json:
         j = json.dumps(skills_map_with_percent, indent=4, separators=(',', ': '))
-        f = open('extracted_data/skills_map_with_percent.json', 'w')
+        f = open('extracted_data/skills_map_with_percent_old.json', 'w')
         print >> f, j
         f.close()
     else:

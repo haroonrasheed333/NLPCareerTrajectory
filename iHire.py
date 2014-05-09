@@ -33,8 +33,8 @@ with open('iBeyond_classifier.pkl', 'rb') as infile:
 with open('iBeyond_labels.pkl', 'rb') as lab_names:
     labels_names = pickle.load(lab_names)
 
-title_title_map = json.loads(open("title_title_map.json").read())
-skills_map_with_percent = json.loads(open("skills_map_with_percent.json").read())
+title_title_map = json.loads(open("extracted_data/title_title_map.json").read())
+skills_map_with_percent = json.loads(open("extracted_data/skills_map_with_percent.json").read())
 univ_dict = json.loads(open("static/univs_list.json","rb").read())
 univ_normalize = json.loads(open("static/univ_map.json","rb").read())
 # skills_employer = json.loads(open("static/networkgraph.json").read())
