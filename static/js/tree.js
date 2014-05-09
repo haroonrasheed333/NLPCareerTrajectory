@@ -4,8 +4,12 @@ $(document).ready(function () {
   $(window).load(function() {
         url_pathname = location.pathname;
         if (url_pathname == "/network") {
-          university = document.getElementById("university").value;
-          $("#inputs").empty;
+            if (sessionStorage.getItem('university')){
+
+               university = sessionStorage.getItem('university');
+            }
+
+            $("#inputs").empty;
 
           if (university.length > 2) {
             var h3 = $('<br><h3>Displaying top employers from your university first degree connections. Enter your major to personalize your results!</h3><br>');
@@ -19,17 +23,11 @@ $(document).ready(function () {
             form_div.append(form);
             form_div.append(submit_button);
             $("#inputs").append(form_div);
+            tree_data = sessionStorage.getItem('tree_json');
+             $("#tree-graph").remove();
+             $("body").append($('<div id ="tree-graph" class = column-100></div>'));
+             create_network(tree_data);
 
-            $.ajax({
-             datatype: 'json',
-             url: '/get_tree',
-             success: function(data)
-             {
-                 $("#tree-graph").remove();
-                 $("body").append($('<div id ="tree-graph" class = column-100></div>'));
-                 create_network(data);
-             }
-           });
 
           } else {
 
@@ -52,6 +50,8 @@ $(document).ready(function () {
 
         $('#logo-img-network').click(function() {
             sessionStorage.removeItem('response');
+            sessionStorage.removeItem('university');
+            sessionStorage.removeItem('tree_json');
             console.log("hhh");
             location.href = location.origin + '/';
         });
@@ -69,7 +69,7 @@ $(document).ready(function () {
            data : {"major": JSON.stringify(document.getElementById("major-ajax").value)},
            success: function(data)
            {
-               console.log(data);
+
                $("#tree-graph").remove();
                $("body").append($('<div id ="tree-graph" class = column-100></div>'));
                create_network(data);

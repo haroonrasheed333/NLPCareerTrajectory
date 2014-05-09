@@ -18,8 +18,6 @@ from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 
 results_json = dict()
-university = ''
-tree_json = dict()
 
 #Create Flask instance
 iHire = Flask(__name__)
@@ -123,8 +121,7 @@ def hello_world():
 
 @iHire.route('/network')
 def network():
-    global university
-    return render_template('network.html', parameter=university)
+    return render_template('network.html')
 
 
 @iHire.route('/about')
@@ -271,6 +268,7 @@ def analyze():
 
             out["final_prediction_list"] = final_titles_list
             out["final_score_sorted"] = final_score_sorted
+            out["tree_json"] = json.dumps(tree_json)
 
             print final_titles_list[:5]
             print final_score_sorted[:5]

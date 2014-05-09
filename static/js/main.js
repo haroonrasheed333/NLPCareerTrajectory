@@ -46,6 +46,9 @@ $(document).ready(function () {
 
             response_data = data;
             sessionStorage.setItem('response', JSON.stringify(data));
+            var resp_temp = sessionStorage.getItem('response');
+            sessionStorage.setItem('university', $.parseJSON(resp_temp).university);
+            sessionStorage.setItem('tree_json', $.parseJSON(resp_temp).tree_json);
             populateData(data);
             // console.log(location);
             // location.href = location.origin + '/results_home';
@@ -74,7 +77,8 @@ $(document).ready(function () {
 
     $('#logo-img-home').click(function() {
         sessionStorage.removeItem('response');
-        console.log("hhh");
+        sessionStorage.removeItem('university');
+        sessionStorage.removeItem('tree_json');
         location.href = location.origin + '/';
     });
 
