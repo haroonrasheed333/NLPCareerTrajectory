@@ -241,7 +241,7 @@ $(document).ready(function () {
 
         $('#skill-search').empty();
         $('#skill-search').append($('<div class="column-90 column block-title"><h3>Skill Search</h3></div><div class="column-10 column block-title"><h3><i class="fa fa-info-circle" title="Have a niche skill? Search for your skills to explore what jobs require your special skill"></i></h3></div>'));
-        var skill_input_div = $('<div class="column-100 column"><input type="text" name="skill" id="skill-ajax" style="position: relative; z-index: 2;"/><button id="skill-submit-button" class="btn btn-primary pull-right" type="submit"><i class="fa fa-search"></i></button></div><input type = "hidden" type="text" name="skill" id="skill-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>');
+        var skill_input_div = $('<div class="column-100 column" id="skill-search-input"><input type="text" name="skill" id="skill-ajax" style="position: relative; z-index: 2;"/><button id="skill-submit-button" class="btn btn-primary pull-right" type="submit"><i class="fa fa-search"></i></button></div><input type = "hidden" type="text" name="skill" id="skill-ajax-x" disabled="disabled" style="color: #CCC; absolute: relative; background: transparent; z-index: 1;"/></div>');
         $('#skill-search').append(skill_input_div);
 
 
@@ -264,6 +264,7 @@ $(document).ready(function () {
         });
 
         $("#skill-submit-button").on('click',function() {
+            $("#skill-search-input").css("margin-bottom", "10px");
             $("#skill-titles-list").remove();
             var skill_input = document.getElementById("skill-ajax").value;
             $.ajax({
